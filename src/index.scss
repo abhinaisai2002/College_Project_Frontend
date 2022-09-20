@@ -1,0 +1,97 @@
+@import "~bootstrap/scss/bootstrap";
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+// ================== GLOABL VARIABLES & SETTINGS ==================
+
+/* ===== Light Mode ===== */
+/* Font Family's */
+$font-inter: "Inter", sans-serif;
+
+/* Backgrounds */
+$bg-primary: #3c37ff;
+$bg-secondary: #2520e3;
+
+/* Outlines */
+$ol-primary: #d9dae5;
+$ol-secondary: #e4e4ef;
+$ol-light: #f9f8fd;
+
+/* Outlines Selected One's */
+$ols-primary: #322fb2;
+$ols-secondary: #7874fe;
+$ols-light: #d3cfff;
+
+// BORDERS
+$border-primary: #d3d4dd;
+
+/* Text */
+$txt-primary: #fff;
+$txt-secondary: #e6f0ff;
+$txt-grey: #6d7987;
+
+/* Button */
+$btn-primary: #3a38fd;
+$btn-secondary: #f4f7ff;
+
+// asterisk
+$asterisk-col: rgb(255, 56, 56);
+
+/* ===== Dark Mode ===== */
+
+$d-bg-primary: #0a0a0a;
+$d-bg-secondary: #262931;
+
+$d-btn-primary: #3c37ff;
+
+$d-txt-primary: #fff;
+$d-txt-secondary: #7f8394;
+
+*,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+*,
+body {
+  padding: 0;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.form-switch {
+  padding: 0 !important;
+  margin-left: 0.5rem !important;
+  .form-check-input {
+    width: 2.5rem;
+    height: 1.4rem;
+    margin: 0;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.asterisk {
+  color: $asterisk-col;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  font-family: var($font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

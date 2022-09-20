@@ -1,0 +1,22 @@
+@import "../index.scss";
+
+.btn {
+  min-width: 100px;
+  background: $bg-primary !important;
+  border-radius: 10px;
+  padding: 0.8rem 2rem !important;
+  color: #fff !important;
+  font-family: $font-inter !important;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  margin: 0.5rem 0;
+
+  svg {
+    margin-left: 1rem;
+  }
+}
+
+// .btn-secondary {
+//   background: ;
+//   color: ;
+// }
