@@ -1,15 +1,14 @@
 import "./App.scss";
-import Layout from "./Layout";
 import Signup from "./pages/Signup";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route exact path="/" element={<Signup />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route exact path="/signup" element={<Signup />} />
+      <Route exact path="/login" element={<Login />} />
+    </Routes>
   );
 }
 
