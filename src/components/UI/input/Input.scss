@@ -1,4 +1,4 @@
-@import "../index.scss";
+@import "../../../index.scss";
 
 input {
   outline: none !important;
@@ -73,7 +73,7 @@ input.success {
   margin: 0 auto !important;
   box-shadow: none !important;
   &:checked {
-    background-image: url("../assets/RadioInnerCircle.svg") !important;
+    background-image: url("../../../assets/RadioInnerCircle.svg") !important;
     background-color: #fff !important;
     border: 1.5px solid $bg-primary !important;
   }
