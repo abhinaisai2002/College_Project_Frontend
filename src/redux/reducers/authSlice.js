@@ -18,6 +18,13 @@ const authSlice = createSlice({
             state.isAuthenticated = true;
             state.user = data.payload.user;
         },
+        loginDataFromLocal(state,data){
+            state.access = data.payload.access;
+            state.refresh = data.payload.refresh;
+            state.isAuthenticated = true;
+            state.user = data.payload.user;
+        }
+        ,
         login(state,data){
             localStorage.setItem('access',data.payload.access);
             localStorage.setItem('refresh',data.payload.refresh);
@@ -38,7 +45,7 @@ const authSlice = createSlice({
             state.refresh = null;
             state.user = null;
         },
-        
+
     }
 })
 

@@ -15,16 +15,8 @@ import "../styles/LoginSignup.scss";
 
 import { loginAction } from "../redux/actions/loginAction";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import {useNavigate} from 'react-router-dom'
 
 const Login = () => {
-  const navigate = useNavigate();
-  const isAuth = useSelector(state => state.auth.isAuthenticated);
-
-  if(isAuth){
-    navigate('/');
-  }
   const dispatch = useDispatch();
 
   const {

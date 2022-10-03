@@ -18,12 +18,6 @@ import { useSelector } from "react-redux";
 import {useNavigate} from 'react-router-dom'
 
 const Signup = () => {
-  const navigate = useNavigate();
-  const isAuth = useSelector(state => state.auth.isAuthenticated);
-
-  if(isAuth){
-    navigate('/');
-  }
 
   const dispatch = useDispatch();
 
