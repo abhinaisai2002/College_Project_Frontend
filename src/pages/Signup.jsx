@@ -10,9 +10,23 @@ import { Input, RadioInput } from "../components/UI/input/Input";
 import { ReactComponent as Saly } from "../assets/Saly-10.svg";
 import { ReactComponent as ArrowRight } from "../assets/ArrowRight.svg";
 
+import { useDispatch } from "react-redux";
+import {signUpAction} from '../redux/actions/signUpAction'
+
 import "../styles/LoginSignup.scss";
+import { useSelector } from "react-redux";
+import {useNavigate} from 'react-router-dom'
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const isAuth = useSelector(state => state.auth.isAuthenticated);
+
+  if(isAuth){
+    navigate('/');
+  }
+
+  const dispatch = useDispatch();
+
   const {
     value: emailValue,
     isTouched: emailIsTouched,
@@ -43,7 +57,6 @@ const Signup = () => {
   const [accountType, setAccountType] = useState("");
   const [gender, setGender] = useState("");
 
-  console.warn(accountType, gender);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -55,7 +68,6 @@ const Signup = () => {
       alert("Please select your gender");
       return;
     }
-    console.log(emailHasError);
     if (emailHasError || passwordHasError || cpasswordHasError) {
       alert("Please fill out th details properly");
       return;
@@ -68,7 +80,8 @@ const Signup = () => {
       gender,
     };
 
-    console.log(data);
+    dispatch(signUpAction(data));
+
   };
 
   return (

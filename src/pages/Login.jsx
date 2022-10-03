@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -6,14 +6,27 @@ import useInput from "../custom_hooks/useInput";
 
 import { Form, Row, Col } from "react-bootstrap";
 import Button from "../components/UI/button/Button";
-import { Input, RadioInput } from "../components/UI/input/Input";
+import { Input,  } from "../components/UI/input/Input";
 
 import { ReactComponent as Saly } from "../assets/Saly-10.svg";
 import { ReactComponent as ArrowRight } from "../assets/ArrowRight.svg";
 import { toast_properties } from "../Config";
 import "../styles/LoginSignup.scss";
 
+import { loginAction } from "../redux/actions/loginAction";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import {useNavigate} from 'react-router-dom'
+
 const Login = () => {
+  const navigate = useNavigate();
+  const isAuth = useSelector(state => state.auth.isAuthenticated);
+
+  if(isAuth){
+    navigate('/');
+  }
+  const dispatch = useDispatch();
+
   const {
     value: emailValue,
     isTouched: emailIsTouched,
@@ -28,11 +41,18 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    
+    if(emailValue === '' || passwordValue ===''){
+      alert("Please enter the data properly");
+      return;
+    }
+
     const data = {
       email: emailValue,
       password: passwordValue,
-    };
-    console.log(data);
+    }
+
+    dispatch(loginAction(data));
   };
 
   return (
