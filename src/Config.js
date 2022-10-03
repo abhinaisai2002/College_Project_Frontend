@@ -11,12 +11,12 @@ export const toast_properties = {
 export const toast_container_props = {
   position: "top-right",
   autoClose: 1000,
-  hideProgressBar: true,
+  hideProgressBar: false,
   newestOnTop: false,
   closeOnClick: true,
   rtl: false,
   pauseOnFocusLoss: true,
   draggable: true,
   pauseOnHover: true,
-  theme: "dark",
+  // theme: "dark",
 };

@@ -46,6 +46,14 @@ input.success {
   margin-bottom: 0.5rem;
 }
 
+input[type="password"] {
+  font-size: 20px !important;
+  &::placeholder {
+    font-size: 18px !important;
+  }
+}
+
+
 // .form-select {
 //   appearance: none;
 //   -webkit-appearance: none;

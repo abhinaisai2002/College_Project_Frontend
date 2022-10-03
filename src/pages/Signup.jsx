@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { Form, Row, Col } from "react-bootstrap";
-import { Input, RadioInput } from "../components/UI/input/Input";
-import Button from "../components/UI/button/Button";
-import { ReactComponent as Saly } from "../assets/Saly-10.svg";
-import { ReactComponent as ArrowRight } from "../assets/ArrowRight.svg";
+import { Link } from "react-router-dom";
+
 import useInput from "../custom_hooks/useInput";
 
-import "./Signup.scss";
-import { Link } from "react-router-dom";
+import { Form, Row, Col } from "react-bootstrap";
+import Button from "../components/UI/button/Button";
+import { Input, RadioInput } from "../components/UI/input/Input";
+
+import { ReactComponent as Saly } from "../assets/Saly-10.svg";
+import { ReactComponent as ArrowRight } from "../assets/ArrowRight.svg";
+
+import "../styles/LoginSignup.scss";
 
 const Signup = () => {
   const {
@@ -52,7 +55,7 @@ const Signup = () => {
       alert("Please select your gender");
       return;
     }
-    console.log(emailHasError)
+    console.log(emailHasError);
     if (emailHasError || passwordHasError || cpasswordHasError) {
       alert("Please fill out th details properly");
       return;
@@ -83,7 +86,6 @@ const Signup = () => {
 
       <section className="right__section">
         <h1>Signup</h1>
-
         <p>
           Have an account already?{" "}
           <Link to="/login" className="link">
