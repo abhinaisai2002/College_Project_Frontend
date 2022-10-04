@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useRef } from "react";
 
 import { Dropdown } from "react-bootstrap";
@@ -73,3 +74,15 @@ const Home = () => {
 };
 
 export default Home;
+=======
+import React from 'react';
+
+const Home = ()=>{
+    return <div>
+        Home
+    </div>
+
+}
+
+export default Home;
+>>>>>>> ed4519ac69aab03135b8884b8f0ac7c391f7e929
