@@ -23,8 +23,8 @@ function App() {
       localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"));
     if (!access || !refresh || !user) {
     } else {
-      console.log("hi");
-      dispatch(authActions.loginDataFromLocal(user));
+      console.log(access,refresh,user);
+      dispatch(authActions.loginDataFromLocal({access,refresh,user}));
     }
   }, []);
 

@@ -7,6 +7,9 @@ import { ReactComponent as MoonIcon } from "../assets/moon-icon.svg";
 import LordIcon from "../components/UI/lordIcons/LordIcon";
 
 import "../styles/Home.scss";
+import { useDispatch,useSelector } from "react-redux";
+import { authActions } from "../redux/reducers/authSlice";
+import { getNewTokens } from "../redux/actions/loginAction";
 
 const Toogle = () => {
   const toogleRef = useRef();
@@ -25,12 +28,14 @@ const Toogle = () => {
 };
 
 const NavBar = () => {
+
   return (
     <nav>
-      <div className="nav__left"></div>
+      <div className="nav__left m-2">
+        <h1>Assignments</h1>
+      </div>
       <div className="nav__right">
         <Toogle />
-
         <div className="search__wrapper">
           <LordIcon icon="search" className="search_icon" />
           <input className="search__inp" type="text" placeholder="Search" />
@@ -65,6 +70,7 @@ const NavBar = () => {
 };
 
 const Home = () => {
+
   return (
     <>
       <NavBar />

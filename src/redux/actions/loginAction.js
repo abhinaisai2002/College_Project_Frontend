@@ -30,3 +30,32 @@ export const loginAction = (user)=>{
 
     }
 }
+
+export const getNewTokens = (refreshToken)=>{
+    return async (dispatch)=>{
+        const token = {
+            "refresh" : refreshToken
+        }
+        const getToken = async ()=>{
+            const response = await axios.post(
+                'http://localhost:8000/api/auth/o/token',
+                token,
+                {
+                    headers:{
+                        'Content-Type':'application/json'
+                    }
+                }
+            )
+            const {data} = response;
+            return data;
+        }
+
+        try{
+            const data = await getToken();
+            dispatch(authActions.getNewToken(data));
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+}
