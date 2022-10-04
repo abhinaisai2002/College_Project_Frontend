@@ -14,6 +14,23 @@
   svg {
     margin-left: 1rem;
   }
+
+  lord-icon {
+    margin: 0 0.5rem;
+    #shadow-root {
+      border: 1px solid green !important;
+    }
+    div {
+      border: 1px solid red !important;
+    }
+    // svg {
+    //   g {
+    //     path {
+    //       fill: #fff;
+    //     }
+    //   }
+    // }
+  }
 }
 
 // .btn-secondary {

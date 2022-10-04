@@ -1,13 +1,13 @@
 @import "~bootstrap/scss/bootstrap";
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Source+Code+Pro:wght@400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Source+Code+Pro:wght@400;500;600;700;800;900&display=swap");
 
 // ================== GLOABL VARIABLES & SETTINGS ==================
 
 /* ===== Light Mode ===== */
 /* Font Family's */
 $font-inter: "Inter", sans-serif;
-$font-source-code-pro: 'Source Code Pro', monospace;
+$font-source-code-pro: "Source Code Pro", monospace;
 
 /* Backgrounds */
 $bg-primary: #3c37ff;
@@ -47,6 +47,8 @@ $d-btn-primary: #3c37ff;
 
 $d-txt-primary: #fff;
 $d-txt-secondary: #7f8394;
+
+/* ===== Dark Mode Beta ===== */
 
 *,
 body,
@@ -92,9 +94,9 @@ body {
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  font-family: var($font-inter);
+  font-family: var($font-source-code-pro);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  border: 1px solid green;
+  // border: 1px solid green;
 }

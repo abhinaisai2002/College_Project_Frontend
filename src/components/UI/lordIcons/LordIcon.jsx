@@ -14,6 +14,8 @@ const ICONS = {
   book: "kipaqhoz.json",
   article: "vufjamqa.json",
   confetti: "tyvtvbcy.json",
+  upload: "wfadduyp.json",
+  trash: "kfzfxczd.json",
 };
 
 const LordIcon = ({ icon, ...otherProps }) => {
