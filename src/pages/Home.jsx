@@ -13,7 +13,7 @@ const Toogle = () => {
   const ballRef = useRef();
   const toogleClickHandler = () => {
     console.log(ballRef.current.style.left);
-    ballRef.style.left = "25px";
+    // ballRef.style.left = "25px";
   };
   return (
     <div id="toggle" ref={toogleRef} onClick={toogleClickHandler}>
