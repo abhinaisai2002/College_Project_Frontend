@@ -19,12 +19,10 @@ function App() {
   useEffect(() => {
     const access = localStorage.getItem("access");
     const refresh = localStorage.getItem("refresh");
-    const user =
-      localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"));
+    const user = localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"));
     if (!access || !refresh || !user) {
     } else {
-      console.log("hi");
-      dispatch(authActions.loginDataFromLocal(user));
+      dispatch(authActions.loginDataFromLocal({access,refresh,user}));
     }
   }, []);
 
