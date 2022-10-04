@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useRef } from "react";
 
 import { Dropdown } from "react-bootstrap";
@@ -14,7 +13,7 @@ const Toogle = () => {
   const ballRef = useRef();
   const toogleClickHandler = () => {
     console.log(ballRef.current.style.left);
-    ballRef.style.left = "25px"
+    ballRef.style.left = "25px";
   };
   return (
     <div id="toggle" ref={toogleRef} onClick={toogleClickHandler}>
@@ -74,15 +73,3 @@ const Home = () => {
 };
 
 export default Home;
-=======
-import React from 'react';
-
-const Home = ()=>{
-    return <div>
-        Home
-    </div>
-
-}
-
-export default Home;
->>>>>>> ed4519ac69aab03135b8884b8f0ac7c391f7e929
