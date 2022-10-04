@@ -10,16 +10,21 @@ import "../styles/Home.scss";
 import { useDispatch,useSelector } from "react-redux";
 import { authActions } from "../redux/reducers/authSlice";
 import { getNewTokens } from "../redux/actions/loginAction";
+import { useState } from "react";
 
 const Toogle = () => {
-  const toogleRef = useRef();
+  const [toggleState,setToggleState] = useState(false);
   const ballRef = useRef();
   const toogleClickHandler = () => {
-    console.log(ballRef.current.style.left);
-    ballRef.style.left = "25px";
+    ballRef.current.style.transition= 'all .3s ease-in';
+    if(!toggleState)
+      ballRef.current.style.left = "45px";
+    else
+      ballRef.current.style.left = "5px";
+    setToggleState(p=>!p);
   };
   return (
-    <div id="toggle" ref={toogleRef} onClick={toogleClickHandler}>
+    <div id="toggle"  onClick={toogleClickHandler}>
       <div id="ball" ref={ballRef} className=" ball">
         <SunIcon />
       </div>
@@ -28,6 +33,8 @@ const Toogle = () => {
 };
 
 const NavBar = () => {
+  
+  const dispatch = useDispatch();
 
   return (
     <nav>
@@ -44,26 +51,30 @@ const NavBar = () => {
           <LordIcon icon="notification" />
         </div>
 
-        {/* <div className="profile__wrapper">
+        <div className="profile__wrapper">
           <Dropdown>
-            <Dropdown.Toggle
-              id="dropdown-button-dark-example1"
-              variant="secondary"
-            >
-              Dropdown Button
-            </Dropdown.Toggle>
+              <Dropdown.Toggle
+                id="dropdown-button-dark-example1"
+                variant="secondary"
+              >
+                user
+              </Dropdown.Toggle>
+
 
             <Dropdown.Menu variant="dark">
               <Dropdown.Item href="#/action-1" active>
-                Action
+                Profile
               </Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item href="#/action-4">Separated link</Dropdown.Item>
+              <Dropdown.Item  onClick={(event)=>{
+                event.preventDefault();
+                dispatch(authActions.logout())
+              }}>
+                Logout
+              </Dropdown.Item>
+              <Dropdown.Item >Something else</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-        </div> */}
+        </div>
       </div>
     </nav>
   );

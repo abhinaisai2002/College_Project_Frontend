@@ -36,7 +36,7 @@ const authSlice = createSlice({
             console.log(data.payload);
         },
         logout(state){
-            localStorage.removeItem('accesss');
+            localStorage.removeItem('access');
             localStorage.removeItem('refresh');
             localStorage.removeItem('user');
             
