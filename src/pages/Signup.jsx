@@ -31,6 +31,15 @@ const Signup = () => {
   } = useInput("", validateStudentEmail);
 
   const {
+    value: phoneValue,
+    isTouched: phoneIsTouched,
+    handleChange: phoneHandleChange,
+    handleReset: phoneHandleReset,
+    hasError: phoneHasError,
+    handleBlur: phoneHandleBlur,
+  } = useInput("", validatePhoneNumber);
+
+  const {
     value: passwordValue,
     isTouched: passwordIsTouched,
     handleChange: passwordHandleChange,
@@ -48,20 +57,11 @@ const Signup = () => {
     handleBlur: cpasswordHandleBlur,
   } = useInput("", (password) => password.length >= 8);
 
-  const [accountType, setAccountType] = useState("");
   const [gender, setGender] = useState("");
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (accountType === "") {
-      alert("Please select type of the account");
-      return;
-    }
-    if (accountType === "") {
-      alert("Please select your gender");
-      return;
-    }
     if (emailHasError || passwordHasError || cpasswordHasError) {
       alert("Please fill out th details properly");
       return;
@@ -70,7 +70,7 @@ const Signup = () => {
     const data = {
       email: emailValue,
       password: passwordValue,
-      accountType,
+      accountType:'teacher',
       gender,
     };
 
@@ -101,17 +101,6 @@ const Signup = () => {
         </p>
 
         <Form onSubmit={handleSubmit}>
-          <RadioInput
-            label="Account Type"
-            name="accountType"
-            required
-            radioInputs={[
-              { value: "student", label: "Student" },
-              { value: "employee", label: "Employee" },
-            ]}
-            handleChange={(val) => setAccountType(val)}
-            checkedValue={accountType}
-          />
           <Input
             value={emailValue}
             onChange={emailHandleChange}
@@ -125,6 +114,27 @@ const Signup = () => {
             required
             placeholder="Enter your email id."
           />
+          <Row>
+            <Col>
+            <Input
+              value={phoneValue}
+              onChange={phoneHandleChange}
+              onBlur={phoneHandleBlur}
+              error="Please enter your mobile number properly."
+              touched={phoneIsTouched}
+              errorCond={phoneIsTouched && phoneHasError}
+              label="Phone"
+              type="phone"
+              name="phone"
+              required
+              placeholder="Enter your mobile number."
+            />
+            </Col>
+            <Col>
+              <div>Place a dropdown here.</div>
+            </Col>
+          </Row>
+          
           <Row>
             <Col>
               <Input
@@ -187,5 +197,12 @@ const validateStudentEmail = (email) => {
 
   return emailRe.test(email);
 };
+
+const validatePhoneNumber = (phoneNumber) => {
+  let phoneRe = new RegExp(
+    '[1-9][0-9]\{9}'
+  );
+  return phoneRe.test(phoneNumber);
+}
 
 export default Signup;

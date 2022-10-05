@@ -11,6 +11,7 @@ import { ReactComponent as MoonIcon } from "../assets/moon-icon.svg";
 import LordIcon from "../components/UI/lordIcons/LordIcon";
 
 import "../styles/Home.scss";
+import { Link } from "react-router-dom";
 
 const Toogle = () => {
   const [toggleState, setToggleState] = useState(false);
@@ -69,7 +70,11 @@ const NavBar = () => {
               >
                 Logout
               </Dropdown.Item>
-              <Dropdown.Item>Something else</Dropdown.Item>
+              <div>
+                <Link to='/admin'>
+                  Something else
+                </Link>
+              </div>
             </Dropdown.Menu>
           </Dropdown>
         </div>

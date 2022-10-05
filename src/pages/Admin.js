@@ -7,8 +7,11 @@ import { ReactComponent as ProfileIcon } from "../assets/Profile.svg";
 import { ReactComponent as SettingIcon } from "./icon.svg";
 import { ReactComponent as LogoutIcon } from "../assets/Logout.svg";
 import { ReactComponent as NotificationIcon } from "../assets/Notification-1.svg";
+
+import { ReactComponent as UploadIcon } from "../assets/upload-cloud.svg";
 import LordIcon from "../components/UI/lordIcons/LordIcon";
 import "../styles/Admin.scss";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
@@ -37,6 +40,12 @@ const Sidebar = () => {
         <div>
           <LordIcon icon="notification" />
           Notifications
+        </div>
+        <div>
+          <Link to='/admin/upload' className="text-light">
+            <LordIcon icon="upload" />
+            Upload
+          </Link>
         </div>
       </aside>
 
