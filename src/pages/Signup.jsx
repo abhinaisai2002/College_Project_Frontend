@@ -114,19 +114,27 @@ const Signup = () => {
             required
             placeholder="Enter your email id."
           />
-          <Input
-            value={phoneValue}
-            onChange={phoneHandleChange}
-            onBlur={phoneHandleBlur}
-            error="Please enter your mobile number properly."
-            touched={phoneIsTouched}
-            errorCond={phoneIsTouched && phoneHasError}
-            label="Phone"
-            type="phone"
-            name="phone"
-            required
-            placeholder="Enter your mobile number."
-          />
+          <Row>
+            <Col>
+            <Input
+              value={phoneValue}
+              onChange={phoneHandleChange}
+              onBlur={phoneHandleBlur}
+              error="Please enter your mobile number properly."
+              touched={phoneIsTouched}
+              errorCond={phoneIsTouched && phoneHasError}
+              label="Phone"
+              type="phone"
+              name="phone"
+              required
+              placeholder="Enter your mobile number."
+            />
+            </Col>
+            <Col>
+              <div>Place a dropdown here.</div>
+            </Col>
+          </Row>
+          
           <Row>
             <Col>
               <Input

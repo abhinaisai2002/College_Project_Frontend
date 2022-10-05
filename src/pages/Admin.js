@@ -43,7 +43,7 @@ const Sidebar = () => {
         </div>
         <div>
           <Link to='/admin/upload' className="text-light">
-            <UploadIcon icon="notification" />
+            <LordIcon icon="upload" />
             Upload
           </Link>
         </div>

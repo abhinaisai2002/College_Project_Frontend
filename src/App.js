@@ -8,13 +8,14 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Upload from "./pages/admin/Upload";
-import Teachers from "./pages/admin/Teachers";
 import Admin from "./pages/Admin";
 
 import PublicRoute from "./utils/PublicRoute";
-// import PrivateRoute from "./utils/PrivateRoute";
+import PrivateRoute from "./utils/PrivateRoute";
 
 import "./App.scss";
+import ErrorPage from "./pages/ErrorPage";
+import AdminRoute from "./utils/AdminRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,14 +37,17 @@ function App() {
         exact
         path="/"
         element={
-          // <PrivateRoute>
-          <Home />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <Home />
+            </PrivateRoute>
         }
       />
-      <Route exact path="admin" element={<Admin />} />
-      <Route exact path="admin/upload" element={<Upload />} />
-      <Route exact path="admin/teachers" element={<Teachers />} />
+      <Route exact path="admin" element={ <AdminRoute>
+                                            <Admin />
+                                          </AdminRoute>} />
+      <Route exact path="admin/upload" element={ <AdminRoute>
+                                                    <Upload />
+                                                  </AdminRoute>} />
 
       <Route
         exact
@@ -61,6 +65,13 @@ function App() {
           <PublicRoute>
             <Login />
           </PublicRoute>
+        }
+      />
+      <Route 
+        exact
+        path="*"
+        element={
+          <ErrorPage />
         }
       />
     </Routes>
