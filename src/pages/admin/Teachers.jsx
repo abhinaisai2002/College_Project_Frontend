@@ -1,7 +1,10 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 
 import { Table } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { Input } from "../../components/UI/input/Input";
 import "../../styles/Teachers.scss";
 
 const DUMMY_TEACHERS = [
@@ -41,6 +44,7 @@ const DUMMY_TEACHERS = [
 
 const TeachersTable = ({ teachersData }) => {
   const [data, setData] = useState(null);
+  const user = useSelector(state => state.auth);
 
   useEffect(() => {
     setData(
@@ -49,6 +53,7 @@ const TeachersTable = ({ teachersData }) => {
           ...teacher,
           value: teacher.name.split(" ").join("_"),
           isChecked: false,
+          approved:false
         };
       })
     );
@@ -79,6 +84,59 @@ const TeachersTable = ({ teachersData }) => {
     );
   };
 
+  const handleApprove= async (id)=>{
+
+    const sendReq = async () => {
+      const response = await axios.post("URL",{id},{
+        headers:{
+          'Content-Type':'applications/json',
+          'Authorization':`Bearer ${user.access}`
+        }
+      })
+    }  
+
+    try{
+      await sendReq();
+    }
+    catch(err){
+      console.log(err);
+    }
+    const dummyData = [...data];
+    const dummyTeacherIndex = dummyData.findIndex(teacher => teacher.id === id);
+    const dummyTeacher = dummyData[dummyTeacherIndex];
+    dummyTeacher.approved = true;
+    dummyData[dummyTeacherIndex] = dummyTeacher;
+    setData(p=>dummyData);
+
+  }
+
+  const handleDissapprove = async (id)=>{
+
+    const sendReq = async () => {
+      const response = await axios.post("URL",{id},{
+        headers:{
+          'Content-Type':'applications/json',
+          'Authorization':`Bearer ${user.access}`
+        }
+      })
+    }  
+
+
+    try{
+      await sendReq();
+    }
+    catch(err){
+      console.log(err);
+    }
+    
+    const dummyData = [...data];
+    const dummyTeacherIndex = dummyData.findIndex(teacher => teacher.id === id);
+    const dummyTeacher = dummyData[dummyTeacherIndex];
+    dummyTeacher.approved = false;
+    dummyData[dummyTeacherIndex] = dummyTeacher;
+    setData(p=>dummyData);
+  }
+
   return (
     <Table striped bordered hover variant="dark">
       <thead>
@@ -96,7 +154,7 @@ const TeachersTable = ({ teachersData }) => {
             )
           )}
           <th>
-            <Button title="Approve All" className="btn-success" />
+            <Button title="Approve All" className="btn-success"/>
           </th>
           <th>
             <Button title="Disapprove All" className="btn-danger" />
@@ -122,9 +180,10 @@ const TeachersTable = ({ teachersData }) => {
               <td>{teacher.phone}</td>
               <td>
                 <Button
-                  title="Approve"
-                  className="btn-success"
+                  title={`${teacher.approved? 'approved':'approve'}`}
+                  className={`${teacher.approved? 'btn-success':'btn-danger'}`}
                   disabled={teacher.isChecked}
+                  onClick={()=>handleApprove(teacher.id)}
                 />
               </td>
               <td>
@@ -132,6 +191,7 @@ const TeachersTable = ({ teachersData }) => {
                   title="Disapprove"
                   className="btn-danger"
                   disabled={teacher.isChecked}
+                  onClick={()=>handleDissapprove(teacher.id)}
                 />
               </td>
             </tr>
@@ -150,6 +210,33 @@ const Button = ({ title, className, ...otherprops }) => {
 };
 
 const Teachers = () => {
+
+  const [phone,setPhone] = useState('');
+  const [teachers,setTeachers] = useState([]);
+  const [realTeachers,setRealTeachers] = useState([]);
+
+  useEffect( ()=>{
+    //get teachers from api
+    setTeachers(p=>DUMMY_TEACHERS);
+    setRealTeachers( p => DUMMY_TEACHERS);
+  }, [] );
+
+  useEffect( ()=>{
+    if(phone!=''){
+      let dummyTeachers = [...teachers];
+      dummyTeachers = realTeachers.filter((teacher)=> teacher.phone.startsWith(phone));
+      setTeachers(p=>dummyTeachers);
+    }
+    else{
+      setTeachers(realTeachers);
+    }
+
+  },[realTeachers,phone])
+
+  const handlePhoneChange = (event)=>{
+    setPhone(p => event.target.value);
+  }
+
   return (
     <>
       <div className="teachers_page__wrapper">
@@ -157,9 +244,19 @@ const Teachers = () => {
           <h1>
             Teachers <span>Approval/Disapproval</span>
           </h1>
+          <span className="text-white">
+            <div>
+              <Input 
+                type="phone" 
+                placeholder="Search by phone."
+                value={phone}
+                onChange={handlePhoneChange}
+              />
+            </div>
+          </span>
         </header>
         <main>
-          <TeachersTable teachersData={DUMMY_TEACHERS} />
+          <TeachersTable teachersData={teachers} />
         </main>
       </div>
     </>
