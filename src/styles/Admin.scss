@@ -22,6 +22,9 @@
           color: #fff;
           font-family: $font-source-code-pro;
           font-weight: 700;
+          &:hover {
+            color: #86d9ca;
+          }
         }
       }
       .header__right {
@@ -29,8 +32,21 @@
           width: 1.5rem;
           height: 1.5rem;
           cursor: pointer;
+          padding: 0.4rem;
+          box-sizing: content-box;
           path {
             stroke: #fff;
+          }
+
+          &:hover {
+            // width: 1.55rem;
+            // height: 1.55rem;
+            background: #16181d;
+
+            border-radius: 50%;
+            path {
+              stroke: #86d9ca;
+            }
           }
         }
       }
@@ -49,6 +65,7 @@
         color: #9ba1b1;
         font-family: $font-source-code-pro;
         font-size: 16px;
+        // font-weight: 600;
         border: none;
         outline: none;
         background: transparent;
@@ -56,6 +73,7 @@
         &:focus {
           border: none !important;
           background: none !important;
+          color: #86d9ca;
         }
       }
 

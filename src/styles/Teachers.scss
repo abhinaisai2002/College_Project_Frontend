@@ -11,6 +11,7 @@
 
   header {
     margin-bottom: 2rem;
+    border-bottom: 2px solid ;
     h1 {
       color: #f6f7f9;
       font-weight: 700;
@@ -34,6 +35,7 @@
         &:hover {
           td {
             color: #86d9ca;
+            font-weight: 700;
           }
         }
       }
