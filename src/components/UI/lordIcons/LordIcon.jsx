@@ -18,6 +18,14 @@ const ICONS = {
   trash: "kfzfxczd.json",
   profile: "bhfjfgqz.json",
   share: "wxhtpnnk.json",
+  flatArrow: "zmkotitn.json",
+  arrowUp: "xsdtfyne.json",
+  arrowDown: "rxufjlal.json",
+  folder: "fpmskzsv.json",
+  bookmark: "gigfpovs.json",
+  book: "kipaqhoz.json",
+  autoNew: "akuwjdzh.json",
+  
 };
 
 const LordIcon = ({ icon, ...otherProps }) => {

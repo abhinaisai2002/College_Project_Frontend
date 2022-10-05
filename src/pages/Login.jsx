@@ -61,7 +61,7 @@ const Login = () => {
       </section>
 
       <section className="right__section">
-        <h1>Signup</h1>
+        <h1>Sign In</h1>
 
         <p>
           New to this website?{" "}

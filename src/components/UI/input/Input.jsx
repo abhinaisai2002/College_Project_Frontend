@@ -94,3 +94,66 @@ export const RadioInput = ({
     </Form.Group>
   );
 };
+
+export const Select = ({
+  label,
+  required,
+  error,
+  success,
+  errorCond,
+  touched,
+  name,
+  value,
+  onChange,
+  disabled,
+  optionInitialValue,
+  options,
+  optionKey,
+  optionValue,
+  valueLength,
+}) => {
+  return (
+    <Form.Group className="input__wrapper">
+      {label && (
+        <Form.Label>
+          {label}
+          {required && <span className="asterisk">*</span>}
+        </Form.Label>
+      )}
+      <Form.Select
+        name={name}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+      >
+        {optionInitialValue === "" && (
+          <option value={optionInitialValue}>Select</option>
+        )}
+        {options && Array.isArray(options) && (
+          <>
+            {options.map((item) => {
+              const value = optionValue ? item[optionValue] : item;
+              const key = optionKey ? item[optionKey] : item;
+              const vl = valueLength ? valueLength : 40;
+
+              return (
+                <option key={value} value={value}>
+                  {key.length > vl ? key.substring(0, vl) + "..." : key}
+                </option>
+              );
+            })}
+          </>
+        )}
+        {options && !Array.isArray(options) && (
+          <>
+            {Object.entries(options).map(([key, value]) => (
+              <option key={key} value={value}>
+                {key}
+              </option>
+            ))}
+          </>
+        )}
+      </Form.Select>
+    </Form.Group>
+  );
+};

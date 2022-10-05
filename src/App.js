@@ -37,17 +37,29 @@ function App() {
         exact
         path="/"
         element={
-          <PrivateRoute>
+          // <PrivateRoute>
             <Home />
-            </PrivateRoute>
+          // </PrivateRoute>
         }
       />
-      <Route exact path="admin" element={ <AdminRoute>
-                                            <Admin />
-                                          </AdminRoute>} />
-      <Route exact path="admin/upload" element={ <AdminRoute>
-                                                    <Upload />
-                                                  </AdminRoute>} />
+      <Route
+        exact
+        path="admin"
+        element={
+          // <AdminRoute>
+            <Admin />
+          // </AdminRoute>
+        }
+      />
+      <Route
+        exact
+        path="admin/upload"
+        element={
+          // <AdminRoute>
+            <Upload />
+          // </AdminRoute>
+        }
+      />
 
       <Route
         exact
@@ -58,6 +70,7 @@ function App() {
           </PublicRoute>
         }
       />
+
       <Route
         exact
         path="/login"
@@ -67,13 +80,8 @@ function App() {
           </PublicRoute>
         }
       />
-      <Route 
-        exact
-        path="*"
-        element={
-          <ErrorPage />
-        }
-      />
+
+      <Route exact path="*" element={<ErrorPage />} />
     </Routes>
   );
 }

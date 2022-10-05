@@ -88,7 +88,6 @@
 
     aside {
       div {
-        // border: 1px solid white;
         padding: 0.5rem;
         margin: 0.6rem 0;
         font-weight: 600;
@@ -111,14 +110,23 @@
           }
         }
 
+        img {
+          width: 32px;
+          height: 32px;
+          margin-right: 1rem;
+        }
+
         &:hover {
           background: rgba(88, 175, 223, 0.1);
-          color: #86d9ca;
+          color: #86d9ca !important;
           border-radius: 0.2rem;
           svg {
             path {
               fill: #86d9ca;
             }
+          }
+          a {
+            color: #86d9ca !important;
           }
         }
       }

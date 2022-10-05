@@ -1,24 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { signUpAction } from "../redux/actions/signUpAction";
 
 import useInput from "../custom_hooks/useInput";
 
 import { Form, Row, Col } from "react-bootstrap";
+import { Input, RadioInput, Select } from "../components/UI/input/Input";
 import Button from "../components/UI/button/Button";
-import { Input, RadioInput } from "../components/UI/input/Input";
 
 import { ReactComponent as Saly } from "../assets/Saly-10.svg";
 import { ReactComponent as ArrowRight } from "../assets/ArrowRight.svg";
 
-import { useDispatch } from "react-redux";
-import {signUpAction} from '../redux/actions/signUpAction'
-
 import "../styles/LoginSignup.scss";
-import { useSelector } from "react-redux";
-import {useNavigate} from 'react-router-dom'
 
 const Signup = () => {
-
   const dispatch = useDispatch();
 
   const {
@@ -59,7 +56,6 @@ const Signup = () => {
 
   const [gender, setGender] = useState("");
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
     if (emailHasError || passwordHasError || cpasswordHasError) {
@@ -70,12 +66,11 @@ const Signup = () => {
     const data = {
       email: emailValue,
       password: passwordValue,
-      accountType:'teacher',
+      accountType: "teacher",
       gender,
     };
 
     dispatch(signUpAction(data));
-
   };
 
   return (
@@ -116,25 +111,40 @@ const Signup = () => {
           />
           <Row>
             <Col>
-            <Input
-              value={phoneValue}
-              onChange={phoneHandleChange}
-              onBlur={phoneHandleBlur}
-              error="Please enter your mobile number properly."
-              touched={phoneIsTouched}
-              errorCond={phoneIsTouched && phoneHasError}
-              label="Phone"
-              type="phone"
-              name="phone"
-              required
-              placeholder="Enter your mobile number."
-            />
+              <Input
+                value={phoneValue}
+                onChange={phoneHandleChange}
+                onBlur={phoneHandleBlur}
+                error="Please enter your mobile number properly."
+                touched={phoneIsTouched}
+                errorCond={phoneIsTouched && phoneHasError}
+                label="Phone"
+                type="phone"
+                name="phone"
+                required
+                placeholder="Enter your mobile number."
+              />
             </Col>
             <Col>
-              <div>Place a dropdown here.</div>
+              <Select
+                name="branch"
+                // value=""
+                onChange={(e) => console.log(e.target.value)}
+                label="Branch or Department"
+                optionInitialValue=""
+                required
+                options={[
+                  "CSE - Compute Science Engineering",
+                  "IT - Information Technology",
+                  "ECE - Electronics and Communications Engineering",
+                  "EEE - Electrical and Electronics Engineering",
+                  "CIVIL - Construction Investigation Various Information Levelling",
+                  "MECH - Mechanical engineering",
+                ]}
+              />
             </Col>
           </Row>
-          
+
           <Row>
             <Col>
               <Input
@@ -199,10 +209,8 @@ const validateStudentEmail = (email) => {
 };
 
 const validatePhoneNumber = (phoneNumber) => {
-  let phoneRe = new RegExp(
-    '[1-9][0-9]\{9}'
-  );
+  let phoneRe = new RegExp("[1-9][0-9]{9}");
   return phoneRe.test(phoneNumber);
-}
+};
 
 export default Signup;

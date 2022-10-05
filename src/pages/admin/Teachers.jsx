@@ -1,10 +1,12 @@
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import React, { useState } from "react";
-import { useEffect } from "react";
-
-import { Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { Input } from "../../components/UI/input/Input";
+
+import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
+import { ReactComponent as MoreIcon } from "../../assets/more-vertical.svg";
+import { Table } from "react-bootstrap";
+// import { Input } from "../../components/UI/input/Input";
+
 import "../../styles/Teachers.scss";
 
 const DUMMY_TEACHERS = [
@@ -44,7 +46,7 @@ const DUMMY_TEACHERS = [
 
 const TeachersTable = ({ teachersData }) => {
   const [data, setData] = useState(null);
-  const user = useSelector(state => state.auth);
+  const user = useSelector((state) => state.auth);
 
   useEffect(() => {
     setData(
@@ -53,7 +55,7 @@ const TeachersTable = ({ teachersData }) => {
           ...teacher,
           value: teacher.name.split(" ").join("_"),
           isChecked: false,
-          approved:false
+          approved: false,
         };
       })
     );
@@ -84,58 +86,64 @@ const TeachersTable = ({ teachersData }) => {
     );
   };
 
-  const handleApprove= async (id)=>{
-
+  const handleApprove = async (id) => {
     const sendReq = async () => {
-      const response = await axios.post("URL",{id},{
-        headers:{
-          'Content-Type':'applications/json',
-          'Authorization':`Bearer ${user.access}`
+      const response = await axios.post(
+        "URL",
+        { id },
+        {
+          headers: {
+            "Content-Type": "applications/json",
+            Authorization: `Bearer ${user.access}`,
+          },
         }
-      })
-    }  
+      );
+    };
 
-    try{
+    try {
       await sendReq();
-    }
-    catch(err){
+    } catch (err) {
       console.log(err);
     }
     const dummyData = [...data];
-    const dummyTeacherIndex = dummyData.findIndex(teacher => teacher.id === id);
+    const dummyTeacherIndex = dummyData.findIndex(
+      (teacher) => teacher.id === id
+    );
     const dummyTeacher = dummyData[dummyTeacherIndex];
     dummyTeacher.approved = true;
     dummyData[dummyTeacherIndex] = dummyTeacher;
-    setData(p=>dummyData);
+    setData((p) => dummyData);
+  };
 
-  }
-
-  const handleDissapprove = async (id)=>{
-
+  const handleDissapprove = async (id) => {
     const sendReq = async () => {
-      const response = await axios.post("URL",{id},{
-        headers:{
-          'Content-Type':'applications/json',
-          'Authorization':`Bearer ${user.access}`
+      const response = await axios.post(
+        "URL",
+        { id },
+        {
+          headers: {
+            "Content-Type": "applications/json",
+            Authorization: `Bearer ${user.access}`,
+          },
         }
-      })
-    }  
+      );
+    };
 
-
-    try{
+    try {
       await sendReq();
-    }
-    catch(err){
+    } catch (err) {
       console.log(err);
     }
-    
+
     const dummyData = [...data];
-    const dummyTeacherIndex = dummyData.findIndex(teacher => teacher.id === id);
+    const dummyTeacherIndex = dummyData.findIndex(
+      (teacher) => teacher.id === id
+    );
     const dummyTeacher = dummyData[dummyTeacherIndex];
     dummyTeacher.approved = false;
     dummyData[dummyTeacherIndex] = dummyTeacher;
-    setData(p=>dummyData);
-  }
+    setData((p) => dummyData);
+  };
 
   return (
     <Table striped bordered hover variant="dark">
@@ -154,7 +162,7 @@ const TeachersTable = ({ teachersData }) => {
             )
           )}
           <th>
-            <Button title="Approve All" className="btn-success"/>
+            <Button title="Approve All" className="btn-success" />
           </th>
           <th>
             <Button title="Disapprove All" className="btn-danger" />
@@ -180,10 +188,12 @@ const TeachersTable = ({ teachersData }) => {
               <td>{teacher.phone}</td>
               <td>
                 <Button
-                  title={`${teacher.approved? 'approved':'approve'}`}
-                  className={`${teacher.approved? 'btn-success':'btn-danger'}`}
+                  title={`${teacher.approved ? "Approved" : "Approve"}`}
+                  className={`${
+                    teacher.approved ? "btn-success" : "btn-danger"
+                  }`}
                   disabled={teacher.isChecked}
-                  onClick={()=>handleApprove(teacher.id)}
+                  onClick={() => handleApprove(teacher.id)}
                 />
               </td>
               <td>
@@ -191,7 +201,7 @@ const TeachersTable = ({ teachersData }) => {
                   title="Disapprove"
                   className="btn-danger"
                   disabled={teacher.isChecked}
-                  onClick={()=>handleDissapprove(teacher.id)}
+                  onClick={() => handleDissapprove(teacher.id)}
                 />
               </td>
             </tr>
@@ -210,50 +220,55 @@ const Button = ({ title, className, ...otherprops }) => {
 };
 
 const Teachers = () => {
+  const [teachers, setTeachers] = useState([]);
+  const [realTeachers, setRealTeachers] = useState([]);
 
-  const [phone,setPhone] = useState('');
-  const [teachers,setTeachers] = useState([]);
-  const [realTeachers,setRealTeachers] = useState([]);
+  const [query, setQuery] = useState("");
 
-  useEffect( ()=>{
-    //get teachers from api
-    setTeachers(p=>DUMMY_TEACHERS);
-    setRealTeachers( p => DUMMY_TEACHERS);
-  }, [] );
+  useEffect(() => {
+    //TODO: get teachers from api
+    setRealTeachers((prev) => DUMMY_TEACHERS);
+    setTeachers((prev) => DUMMY_TEACHERS);
+  }, []);
 
-  useEffect( ()=>{
-    if(phone!=''){
-      let dummyTeachers = [...teachers];
-      dummyTeachers = realTeachers.filter((teacher)=> teacher.phone.startsWith(phone));
-      setTeachers(p=>dummyTeachers);
-    }
-    else{
-      setTeachers(realTeachers);
-    }
+  useEffect(() => {
+    if (query !== "") {
+      let tempTeachers = [...teachers];
+      tempTeachers = realTeachers.filter((teacher) =>
+        ["name", "phone", "mail"].some((key) =>
+          teacher[key].toLowerCase().includes(query)
+        )
+      );
+      setTeachers((prev) => tempTeachers);
+    } else setTeachers(realTeachers);
+  }, [query, teachers, realTeachers]);
 
-  },[realTeachers,phone])
-
-  const handlePhoneChange = (event)=>{
-    setPhone(p => event.target.value);
-  }
+  const onSearchHandler = (e) => setQuery(e.target.value);
 
   return (
     <>
       <div className="teachers_page__wrapper">
         <header>
-          <h1>
-            Teachers <span>Approval/Disapproval</span>
-          </h1>
-          <span className="text-white">
-            <div>
-              <Input 
-                type="phone" 
-                placeholder="Search by phone."
-                value={phone}
-                onChange={handlePhoneChange}
+          <div className="header__left">
+            <h1>
+              Teachers <span>Approval/Disapproval</span>
+            </h1>
+          </div>
+          <div className="header__right">
+            <div className="search__wrapper">
+              <SearchIcon className="search_icon" />
+              <input
+                className="search__inp"
+                type="text"
+                placeholder="Search by Name, Mail, Phone..."
+                value={query}
+                onChange={onSearchHandler}
               />
             </div>
-          </span>
+            <div className="more__wrapper">
+              <MoreIcon />
+            </div>
+          </div>
         </header>
         <main>
           <TeachersTable teachersData={teachers} />
@@ -264,5 +279,3 @@ const Teachers = () => {
 };
 
 export default Teachers;
-
-

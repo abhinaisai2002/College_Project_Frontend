@@ -1,16 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import Teachers from "./admin/Teachers";
 
 import { ReactComponent as SunIcon } from "../assets/sun.svg";
 import { ReactComponent as SearchIcon } from "../assets/Search.svg";
-import { ReactComponent as SettingIcon } from "./icon.svg";
+// import { ReactComponent as SettingIcon } from "../assets/Setting.svg";
 import { ReactComponent as LogoutIcon } from "../assets/Logout.svg";
-import { ReactComponent as NotificationIcon } from "../assets/Notification-1.svg";
+import SettingIcon from "../assets/setting-gif.gif";
 
-import { ReactComponent as UploadIcon } from "../assets/upload-cloud.svg";
 import LordIcon from "../components/UI/lordIcons/LordIcon";
+
 import "../styles/Admin.scss";
-import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
@@ -33,7 +34,8 @@ const Sidebar = () => {
           Profile
         </div>
         <div>
-          <SettingIcon />
+          {/* <SettingIcon /> */}
+          <img src={SettingIcon} alt="" />
           Settings
         </div>
         <div>
@@ -41,7 +43,7 @@ const Sidebar = () => {
           Notifications
         </div>
         <div>
-          <Link to="/admin/upload" className="text-light">
+          <Link to="/admin/upload" className="text-white">
             <LordIcon icon="upload" />
             Upload
           </Link>
