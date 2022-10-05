@@ -16,15 +16,18 @@ const ICONS = {
   confetti: "tyvtvbcy.json",
   upload: "wfadduyp.json",
   trash: "kfzfxczd.json",
+  profile: "bhfjfgqz.json",
+  share: "wxhtpnnk.json",
 };
 
 const LordIcon = ({ icon, ...otherProps }) => {
   return (
     <lord-icon
-      {...otherProps}
+      colors="primary:#fff"
       src={`https://cdn.lordicon.com/${ICONS[icon]}`}
       trigger="hover"
       style={{ width: "32px", height: "32px" }}
+      {...otherProps}
     />
   );
 };
