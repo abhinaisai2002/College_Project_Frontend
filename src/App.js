@@ -7,9 +7,12 @@ import { authActions } from "./redux/reducers/authSlice";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import Upload from "./pages/admin/Upload";
+import Teachers from "./pages/admin/Teachers";
+import Admin from "./pages/Admin";
 
 import PublicRoute from "./utils/PublicRoute";
-import PrivateRoute from "./utils/PrivateRoute";
+// import PrivateRoute from "./utils/PrivateRoute";
 
 import "./App.scss";
 
@@ -19,10 +22,11 @@ function App() {
   useEffect(() => {
     const access = localStorage.getItem("access");
     const refresh = localStorage.getItem("refresh");
-    const user = localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"));
+    const user =
+      localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"));
     if (!access || !refresh || !user) {
     } else {
-      dispatch(authActions.loginDataFromLocal({access,refresh,user}));
+      dispatch(authActions.loginDataFromLocal({ access, refresh, user }));
     }
   }, []);
 
@@ -32,11 +36,15 @@ function App() {
         exact
         path="/"
         element={
-          <PrivateRoute>
-            <Home />
-          </PrivateRoute>
+          // <PrivateRoute>
+          <Home />
+          // </PrivateRoute>
         }
       />
+      <Route exact path="admin" element={<Admin />} />
+      <Route exact path="admin/upload" element={<Upload />} />
+      <Route exact path="admin/teachers" element={<Teachers />} />
+
       <Route
         exact
         path="/signup"
