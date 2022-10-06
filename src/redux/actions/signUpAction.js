@@ -2,15 +2,13 @@
 
 import axios from "axios"
 
-import {authActions} from '../reducers/authSlice'
+import { modalActions } from "../reducers/modalSlice";
 
 export const signUpAction = (user)=>{
     return async (dispatch)=>{
-        user = {...user,'user_type':user.accountType};
-        const {accountType,...body} = user;
         const signup = async () => {
             const response  = await axios.post(
-                `http://localhost:8000/api/auth/signup`,body,
+                `http://localhost:8000/api/auth/signupteacher`,user,
                 {
                     headers:{
                         'Content-Type':'application/json'
@@ -23,7 +21,7 @@ export const signUpAction = (user)=>{
 
         try{
             const data = await signup();
-            dispatch(authActions.signup(data));
+            dispatch(modalActions.showModal("Your account is in pending state, consult your admin to activate your account"));
         }
         catch(err){
             console.log(err);

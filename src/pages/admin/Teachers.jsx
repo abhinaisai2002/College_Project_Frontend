@@ -5,8 +5,6 @@ import { useSelector } from "react-redux";
 import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
 import { ReactComponent as MoreIcon } from "../../assets/more-vertical.svg";
 import { Table } from "react-bootstrap";
-// import { Input } from "../../components/UI/input/Input";
-
 import "../../styles/Teachers.scss";
 
 const DUMMY_TEACHERS = [
@@ -44,20 +42,13 @@ const DUMMY_TEACHERS = [
   },
 ];
 
-const TeachersTable = ({ teachersData }) => {
+const TeachersTable = ({ teachersData}) => {
   const [data, setData] = useState(null);
   const user = useSelector((state) => state.auth);
 
   useEffect(() => {
     setData(
-      teachersData.map((teacher) => {
-        return {
-          ...teacher,
-          value: teacher.name.split(" ").join("_"),
-          isChecked: false,
-          approved: false,
-        };
-      })
+      p => teachersData
     );
   }, [teachersData]);
 
@@ -87,14 +78,14 @@ const TeachersTable = ({ teachersData }) => {
   };
 
   const handleApprove = async (id) => {
+    console.log(id)
     const sendReq = async () => {
       const response = await axios.post(
-        "URL",
+        "http://localhost:8000/api/auth/approve",
         { id },
         {
           headers: {
-            "Content-Type": "applications/json",
-            Authorization: `Bearer ${user.access}`,
+            "Content-Type": "application/json",
           },
         }
       );
@@ -104,6 +95,7 @@ const TeachersTable = ({ teachersData }) => {
       await sendReq();
     } catch (err) {
       console.log(err);
+      return
     }
     const dummyData = [...data];
     const dummyTeacherIndex = dummyData.findIndex(
@@ -118,12 +110,11 @@ const TeachersTable = ({ teachersData }) => {
   const handleDissapprove = async (id) => {
     const sendReq = async () => {
       const response = await axios.post(
-        "URL",
+        "http://localhost:8000/api/auth/approve",
         { id },
         {
           headers: {
-            "Content-Type": "applications/json",
-            Authorization: `Bearer ${user.access}`,
+            "Content-Type": "application/json",
           },
         }
       );
@@ -224,12 +215,22 @@ const Teachers = () => {
   const [realTeachers, setRealTeachers] = useState([]);
 
   const [query, setQuery] = useState("");
+  const [refreshCounter,setRefreshCounter] = useState(0);
 
-  useEffect(() => {
+  useEffect( () => {
     //TODO: get teachers from api
-    setRealTeachers((prev) => DUMMY_TEACHERS);
-    setTeachers((prev) => DUMMY_TEACHERS);
-  }, []);
+    const getTeachers = async ()=>{
+      const response = await axios.get('http://localhost:8000/api/auth/getteachers');
+      
+      return response;
+    }
+    getTeachers().then(res=>{
+      const {data} = res;
+      setRealTeachers((prev) => data.teachers);
+      setTeachers((prev) =>data.teachers);
+    })
+    
+  }, [refreshCounter]);
 
   useEffect(() => {
     if (query !== "") {
@@ -245,6 +246,10 @@ const Teachers = () => {
 
   const onSearchHandler = (e) => setQuery(e.target.value);
 
+  const handleRefresh = () => {
+    setRefreshCounter(p => p+1);
+  }
+
   return (
     <>
       <div className="teachers_page__wrapper">
@@ -255,7 +260,13 @@ const Teachers = () => {
             </h1>
           </div>
           <div className="header__right">
+              <div>
+                <button onClick={handleRefresh}>
+                  reload 
+                </button>
+              </div>
             <div className="search__wrapper">
+              
               <SearchIcon className="search_icon" />
               <input
                 className="search__inp"

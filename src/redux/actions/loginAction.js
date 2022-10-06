@@ -1,31 +1,35 @@
 /// ACTION CREATORS
 
 import axios from "axios"
+import { toast } from "react-toastify"
 
 import {authActions} from '../reducers/authSlice'
+import { modalActions } from "../reducers/modalSlice"
 
 export const loginAction = (user)=>{
     return async (dispatch)=>{
         const login = async () => {
-            // const response  = await axios.post(
-            //     `http://${process.env.BACK_END_HOST}/login`,
-            //     user,
-            //     {
-            //         headers:{
-            //             'Content-Type':'application/json'
-            //         }
-            //     }
-            // );
-            // const {data} = response;
-            return user;
+            const response  = await axios.post(
+                `http://localhost:8000/api/auth/login`,
+                user,
+                {
+                    headers:{
+                        'Content-Type':'application/json'
+                    }
+                }
+            );
+            const {data} = response;
+            return data;
         }
 
         try{
             const data = await login();
             dispatch(authActions.login(data));
+            toast.success("Login successfully");
         }
         catch(err){
-            console.log(err);
+            const {message} = err.response.data;
+            dispatch(modalActions.showModal(message));
         }
 
     }

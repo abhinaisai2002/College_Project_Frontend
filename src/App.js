@@ -16,6 +16,7 @@ import PrivateRoute from "./utils/PrivateRoute";
 import "./App.scss";
 import ErrorPage from "./pages/ErrorPage";
 import AdminRoute from "./utils/AdminRoute";
+import ModalComp from "./utils/Modal";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,57 +33,64 @@ function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route
-        exact
-        path="/"
-        element={
-          // <PrivateRoute>
-            <Home />
-          // </PrivateRoute>
-        }
-      />
-      <Route
-        exact
-        path="admin"
-        element={
-          // <AdminRoute>
-            <Admin />
-          // </AdminRoute>
-        }
-      />
-      <Route
-        exact
-        path="admin/upload"
-        element={
-          // <AdminRoute>
-            <Upload />
-          // </AdminRoute>
-        }
-      />
+    <>
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path="admin"
+          element={
+            <AdminRoute>
+              <Admin />
+            </AdminRoute>
+          }
+        />
+        <Route
+          exact
+          path="admin/upload"
+          element={
+            <AdminRoute>
+              <Upload />
+            </AdminRoute>
+          }
+        />
 
-      <Route
-        exact
-        path="/signup"
-        element={
-          <PublicRoute>
-            <Signup />
-          </PublicRoute>
-        }
-      />
+        <Route
+          exact
+          path="/signup"
+          element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          }
+        />
 
-      <Route
-        exact
-        path="/login"
-        element={
-          <PublicRoute>
-            <Login />
-          </PublicRoute>
-        }
-      />
+        <Route
+          exact
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
 
-      <Route exact path="*" element={<ErrorPage />} />
-    </Routes>
+        <Route exact path="*" element={<ErrorPage />} />
+      </Routes>
+
+      <div>
+        <ModalComp />
+      </div>
+    </>
+
   );
 }
 export default App;
