@@ -98,7 +98,6 @@ const Login = () => {
             type="submit"
             text="Login"
             rightIcon={<ArrowRight />}
-            onClick={() => toast.success("Login succesfully")}
           />
         </Form>
       </section>

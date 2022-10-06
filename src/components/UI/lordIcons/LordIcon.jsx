@@ -25,7 +25,6 @@ const ICONS = {
   bookmark: "gigfpovs.json",
   book: "kipaqhoz.json",
   autoNew: "akuwjdzh.json",
-  
 };
 
 const LordIcon = ({ icon, ...otherProps }) => {

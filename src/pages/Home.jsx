@@ -12,6 +12,8 @@ import LordIcon from "../components/UI/lordIcons/LordIcon";
 
 import "../styles/Home.scss";
 import { Link } from "react-router-dom";
+import Modal from "../utils/Modal";
+import ModalComp from "../utils/Modal";
 
 const Toogle = () => {
   const [toggleState, setToggleState] = useState(false);

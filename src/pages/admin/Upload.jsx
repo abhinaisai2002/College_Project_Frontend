@@ -40,8 +40,8 @@ const Upload = () => {
       });
       const {data} = response;
       return data;
-      throw new Error("dsfs");
-      return body;
+      // throw new Error("dsfs");
+      // return body;
     }
 
     try{

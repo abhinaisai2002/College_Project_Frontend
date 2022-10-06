@@ -18,6 +18,7 @@ import "../styles/LoginSignup.scss";
 const Signup = () => {
   const dispatch = useDispatch();
 
+  const [department,setDepartment] = useState('');
   const {
     value: emailValue,
     isTouched: emailIsTouched,
@@ -25,8 +26,17 @@ const Signup = () => {
     handleReset: emailHandleReset,
     hasError: emailHasError,
     handleBlur: emailHandleBlur,
-  } = useInput("", validateStudentEmail);
+  } = useInput("", validateEmail);
 
+  const {
+    value: nameValue,
+    isTouched: nameIsTouched,
+    handleChange: nameHandleChange,
+    handleReset: nameHandleReset,
+    hasError: nameHasError,
+    handleBlur: nameHandleBlur,
+  } = useInput("", (name)=>name.length > 0);
+  
   const {
     value: phoneValue,
     isTouched: phoneIsTouched,
@@ -68,8 +78,11 @@ const Signup = () => {
       password: passwordValue,
       accountType: "teacher",
       gender,
+      phone : phoneValue,
+      department,
+      name:nameValue
     };
-
+    // console.log(data);
     dispatch(signUpAction(data));
   };
 
@@ -96,19 +109,39 @@ const Signup = () => {
         </p>
 
         <Form onSubmit={handleSubmit}>
-          <Input
-            value={emailValue}
-            onChange={emailHandleChange}
-            onBlur={emailHandleBlur}
-            error="Please enter your college email id."
-            touched={emailIsTouched}
-            errorCond={emailIsTouched && emailHasError}
-            label="Email"
-            type="email"
-            name="email"
-            required
-            placeholder="Enter your email id."
-          />
+          <Row>
+            <Col>
+              <Input
+                value={emailValue}
+                onChange={emailHandleChange}
+                onBlur={emailHandleBlur}
+                error="Please enter your college email id."
+                touched={emailIsTouched}
+                errorCond={emailIsTouched && emailHasError}
+                label="Email"
+                type="email"
+                name="email"
+                required
+                placeholder="Enter your email id."
+              />
+            </Col>
+            <Col>
+              <Input 
+                value={nameValue}
+                onChange={nameHandleChange}
+                onBlur={nameHandleBlur}
+                error="Name cant be empty."
+                touched={nameIsTouched}
+                errorCond={nameIsTouched && nameHasError}
+                label="Name"
+                type="text"
+                name="name"
+                required
+                placeholder="Enter your name."
+              />
+            </Col>
+          </Row>
+          
           <Row>
             <Col>
               <Input
@@ -129,17 +162,17 @@ const Signup = () => {
               <Select
                 name="branch"
                 // value=""
-                onChange={(e) => console.log(e.target.value)}
+                onChange={(e) => setDepartment(e.target.value)}
                 label="Branch or Department"
                 optionInitialValue=""
                 required
                 options={[
-                  "CSE - Compute Science Engineering",
-                  "IT - Information Technology",
-                  "ECE - Electronics and Communications Engineering",
-                  "EEE - Electrical and Electronics Engineering",
-                  "CIVIL - Construction Investigation Various Information Levelling",
-                  "MECH - Mechanical engineering",
+                  "CSE",
+                  "IT",
+                  "ECE",
+                  "EEE",
+                  "CIVIL",
+                  "MECH",
                 ]}
               />
             </Col>
@@ -200,11 +233,8 @@ const Signup = () => {
   );
 };
 
-const validateStudentEmail = (email) => {
-  let emailRe = new RegExp(
-    "[0-9][0-9][bB][qQ]1[aA][0-1][0-5][0-9A-Za-z][0-9]@vvit.net"
-  );
-
+const validateEmail = (email) => {
+  let emailRe = new RegExp('[a-zA-Z0-9]+@[a-z]+.[a-z]+');
   return emailRe.test(email);
 };
 
