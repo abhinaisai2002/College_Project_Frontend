@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { ReactComponent as SunIcon } from "../../assets/sun.svg";
 import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
@@ -9,13 +9,23 @@ import SettingIcon from "../../assets/setting-gif.gif";
 import LordIcon from "../../components/UI/lordIcons/LordIcon";
 
 import "../../styles/Sidebar.scss";
+import { useEffect } from "react";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    document.addEventListener("keydown", detectKeyDown, true);
+  }, []);
+
+  const detectKeyDown = (e) => {
+    console.log(e);
+  };
+
   return (
     <div className="sidebar__wrapper">
       <header>
         <div className="header__left">
-          <h3>Assignments</h3>
+          <h3 onClick={() => navigate("/")}>Assignments</h3>
         </div>
         <div className="header__right">
           <SunIcon />

@@ -52,8 +52,7 @@ const Login = () => {
       <section className="left__section">
         <h1>Start your journey with us.</h1>
         <p>
-          Discover the world’s best community of freelancers and business
-          owners.
+          Discover the world’s best platform for students and teachers to review and submit assignments.
         </p>
         <div className="image_wrapper">
           <Saly className="image" />

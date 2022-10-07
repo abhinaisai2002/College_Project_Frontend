@@ -23,8 +23,8 @@ const ICONS = {
   arrowDown: "rxufjlal.json",
   folder: "fpmskzsv.json",
   bookmark: "gigfpovs.json",
-  book: "kipaqhoz.json",
   autoNew: "akuwjdzh.json",
+  close: "nhfyhmlt.json",
 };
 
 const LordIcon = ({ icon, ...otherProps }) => {

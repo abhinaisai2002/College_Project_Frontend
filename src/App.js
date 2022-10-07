@@ -6,8 +6,8 @@ import { authActions } from "./redux/reducers/authSlice";
 
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import Home from "./pages/HomeD";
-import Upload from "./pages/admin/Upload";
+import Home from "./pages/Home";
+import Upload from "./pages/admin/UploadPage";
 import Admin from "./pages/Admin";
 
 import PublicRoute from "./utils/PublicRoute";
@@ -18,6 +18,7 @@ import AdminRoute from "./utils/AdminRoute";
 import ModalComp from "./utils/Modal";
 import Layout from "./Layout";
 import Teachers from "./pages/admin/Teachers";
+import Assignment from "./pages/assignments/Assignment";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +46,17 @@ function App() {
             // </PrivateRoute>
           }
         />
+
+        <Route
+          exact
+          path=":id"
+          element={
+            // <PrivateRoute>
+            <Assignment />
+            // </PrivateRoute>
+          }
+        />
+
         <Route
           exact
           path="admin"

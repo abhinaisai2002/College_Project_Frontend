@@ -1,0 +1,67 @@
+@import "../../../index.scss";
+
+.custom-modal-backdrop {
+    opacity: 0.8 !important;
+}
+
+.modal {
+  .modal-dialog {
+    .modal-content {
+      background: #24272e !important;
+      color: #fff !important;
+      font-family: $font-source-code-pro;
+      .modal-header {
+        border-bottom: 2px solid #2f333d;
+        .modal-title {
+          font-weight: 600 !important;
+          font-size: 25px !important;
+        }
+        .btn-close {
+          color: #fff !important;
+          display: none !important;
+        }
+        button {
+          border: none !important;
+          outline: none !important;
+          background: transparent !important;
+        }
+      }
+      .modal-body {
+        background: #24272e !important;
+        max-height: 40rem;
+        overflow: scroll;
+      }
+      .modal-footer {
+        border-top: 2px solid #2f333d;
+        padding: 0.5rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        .footer__left {
+          p {
+            margin: 0 !important;
+          }
+          .file__name {
+            color: #77b7d7 !important;
+            font-weight: 600;
+            span {
+              color: #86d9ca !important;
+            }
+          }
+        }
+        .footer__right {
+          .btn {
+            padding: 0.5rem 1rem !important;
+            margin: 0 !important;
+            lord-icon {
+              width: 28px !important;
+              height: 28px !important;
+              margin: 0 !important;
+              margin-right: 0.5rem !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

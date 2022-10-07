@@ -127,15 +127,18 @@ body {
     height: 100vh;
     font-family: $font-source-code-pro;
     display: flex;
+    background: #24272e;
 
     .app_content {
-      background: #24272e;
       width: 100%;
       height: 100vh;
       overflow-y: scroll;
-      padding: 2rem 2.5rem;
+      padding: 2rem 0;
+      margin: 0 2.5rem;
       padding-top: 1rem;
-      
+      padding-bottom: 0rem;
+      position: relative;
+
       header {
         padding-bottom: 0.5rem;
         margin-bottom: 2rem;
@@ -227,6 +230,32 @@ body {
                 color: #86d9ca;
                 font-weight: 700;
               }
+            }
+          }
+        }
+      }
+
+      footer {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        box-sizing: border-box;
+        padding: 0.2rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 3px solid #2f333d;
+        background: #24272e;
+        z-index: 10;
+        .footer_right {
+          .btn {
+            padding: 0.4rem 1rem !important;
+            lord-icon {
+              width: 28px !important;
+              height: 28px !important;
+              margin: 0 !important;
+              margin-right: 0.5rem !important;
             }
           }
         }
