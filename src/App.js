@@ -6,17 +6,18 @@ import { authActions } from "./redux/reducers/authSlice";
 
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import Home from "./pages/Home";
+import Home from "./pages/HomeD";
 import Upload from "./pages/admin/Upload";
 import Admin from "./pages/Admin";
 
 import PublicRoute from "./utils/PublicRoute";
 import PrivateRoute from "./utils/PrivateRoute";
 
-import "./App.scss";
 import ErrorPage from "./pages/ErrorPage";
 import AdminRoute from "./utils/AdminRoute";
 import ModalComp from "./utils/Modal";
+import Layout from "./Layout";
+import Teachers from "./pages/admin/Teachers";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,33 +34,36 @@ function App() {
   }, []);
 
   return (
-    <>
+    <Layout>
       <Routes>
         <Route
           exact
           path="/"
           element={
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
+            // <PrivateRoute>
+            <Home />
+            // </PrivateRoute>
           }
         />
         <Route
           exact
           path="admin"
           element={
-            <AdminRoute>
-              <Admin />
-            </AdminRoute>
+            // <AdminRoute>
+            <Admin />
+            // </AdminRoute>
           }
         />
+
+        <Route exact path="admin/teachers" element={<Teachers />} />
+
         <Route
           exact
           path="admin/upload"
           element={
-            <AdminRoute>
-              <Upload />
-            </AdminRoute>
+            // <AdminRoute>
+            <Upload />
+            // </AdminRoute>
           }
         />
 
@@ -89,8 +93,7 @@ function App() {
       <div>
         <ModalComp />
       </div>
-    </>
-
+    </Layout>
   );
 }
 export default App;

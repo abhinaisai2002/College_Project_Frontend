@@ -1,21 +1,20 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 import { FileUploader } from "react-drag-drop-files";
 import { RadioInput } from "../../components/UI/input/Input";
 import Button from "../../components/UI/button/Button";
 
-import "../../styles/Upload.scss";
-import axios from "axios";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import "../../styles/Upload.scss";
 
 const fileTypes = ["CSV", "JPEG"];
 
 const Upload = () => {
   const [file, setFile] = useState(null);
   const [filePurpose, setFilePurpose] = useState("");
-  const user = useSelector(state => state.auth);
+  const user = useSelector((state) => state.auth);
   const handleChange = (file) => {
     setFile(file);
   };
@@ -24,41 +23,39 @@ const Upload = () => {
     console.log(file);
   }, [file]);
 
-  const handleSubmitUpload = async ()=>{
-
-    if(!file || !filePurpose){
+  const handleSubmitUpload = async () => {
+    if (!file || !filePurpose) {
       alert("Please fill the options properly");
       return;
     }
 
     const uploadData = async (body) => {
-      const response = await axios.post('ENDPOINT',body,{
-        headers:{
-          'Content-Type':'multipart/form-data',
-          'Authorization':`Bearer ${user.access}` 
-        }
+      const response = await axios.post("ENDPOINT", body, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user.access}`,
+        },
       });
-      const {data} = response;
+      const { data } = response;
       return data;
-      // throw new Error("dsfs");
-      // return body;
-    }
+    };
 
-    try{
-      const data = await uploadData({file,filePurpose});
+    try {
+      const data = await uploadData({ file, filePurpose });
       toast.success("Uploaded succesfully");
+    } catch (err) {
+      toast.error("Upload failed");
     }
-    catch(err){
-      toast.error("Upload failed")
-    }
-  }
+  };
 
   return (
-    <div className="upload_page__wrapper">
+    <>
       <header>
-        <h1>Upload</h1>
+        <div className="header__left">
+          <h1>Upload <span>for Branch/Students Data (only .csv file supported)</span></h1>
+        </div>
       </header>
-      <main>
+      <section className="upload_page__wrapper">
         <div className="file_upload__wrapper">
           <FileUploader
             multiple={false}
@@ -82,13 +79,9 @@ const Upload = () => {
           checkedValue={filePurpose}
         />
 
-        <Button
-          onClick={handleSubmitUpload}
-          text="Upload"
-          // leftIcon={<LordIcon icon="upload" />}
-        />
-      </main>
-    </div>
+        <Button onClick={handleSubmitUpload} text="Upload" />
+      </section>
+    </>
   );
 };
 

@@ -42,14 +42,12 @@ const DUMMY_TEACHERS = [
   },
 ];
 
-const TeachersTable = ({ teachersData}) => {
+const TeachersTable = ({ teachersData }) => {
   const [data, setData] = useState(null);
   const user = useSelector((state) => state.auth);
 
   useEffect(() => {
-    setData(
-      p => teachersData
-    );
+    setData((p) => teachersData);
   }, [teachersData]);
 
   const handleAllCheckHandler = (e) => {
@@ -78,7 +76,7 @@ const TeachersTable = ({ teachersData}) => {
   };
 
   const handleApprove = async (id) => {
-    console.log(id)
+    console.log(id);
     const sendReq = async () => {
       const response = await axios.post(
         "http://localhost:8000/api/auth/approve",
@@ -95,7 +93,7 @@ const TeachersTable = ({ teachersData}) => {
       await sendReq();
     } catch (err) {
       console.log(err);
-      return
+      return;
     }
     const dummyData = [...data];
     const dummyTeacherIndex = dummyData.findIndex(
@@ -215,21 +213,22 @@ const Teachers = () => {
   const [realTeachers, setRealTeachers] = useState([]);
 
   const [query, setQuery] = useState("");
-  const [refreshCounter,setRefreshCounter] = useState(0);
+  const [refreshCounter, setRefreshCounter] = useState(0);
 
-  useEffect( () => {
+  useEffect(() => {
     //TODO: get teachers from api
-    const getTeachers = async ()=>{
-      const response = await axios.get('http://localhost:8000/api/auth/getteachers');
-      
+    const getTeachers = async () => {
+      const response = await axios.get(
+        "http://localhost:8000/api/auth/getteachers"
+      );
+
       return response;
-    }
-    getTeachers().then(res=>{
-      const {data} = res;
+    };
+    getTeachers().then((res) => {
+      const { data } = res;
       setRealTeachers((prev) => data.teachers);
-      setTeachers((prev) =>data.teachers);
-    })
-    
+      setTeachers((prev) => data.teachers);
+    });
   }, [refreshCounter]);
 
   useEffect(() => {
@@ -247,44 +246,39 @@ const Teachers = () => {
   const onSearchHandler = (e) => setQuery(e.target.value);
 
   const handleRefresh = () => {
-    setRefreshCounter(p => p+1);
-  }
+    setRefreshCounter((p) => p + 1);
+  };
 
   return (
     <>
-      <div className="teachers_page__wrapper">
-        <header>
-          <div className="header__left">
-            <h1>
-              Teachers <span>Approval/Disapproval</span>
-            </h1>
+      <header>
+        <div className="header__left">
+          <h1>
+            Teachers <span>Approval/Disapproval</span>
+          </h1>
+        </div>
+        <div className="header__right">
+          <div>
+            <button onClick={handleRefresh}>reload</button>
           </div>
-          <div className="header__right">
-              <div>
-                <button onClick={handleRefresh}>
-                  reload 
-                </button>
-              </div>
-            <div className="search__wrapper">
-              
-              <SearchIcon className="search_icon" />
-              <input
-                className="search__inp"
-                type="text"
-                placeholder="Search by Name, Mail, Phone..."
-                value={query}
-                onChange={onSearchHandler}
-              />
-            </div>
-            <div className="more__wrapper">
-              <MoreIcon />
-            </div>
+          <div className="search__wrapper">
+            <SearchIcon className="search_icon" />
+            <input
+              className="search__inp"
+              type="text"
+              placeholder="Search by Name, Mail, Phone..."
+              value={query}
+              onChange={onSearchHandler}
+            />
           </div>
-        </header>
-        <main>
-          <TeachersTable teachersData={teachers} />
-        </main>
-      </div>
+          <div className="more__wrapper">
+            <MoreIcon />
+          </div>
+        </div>
+      </header>
+      <section>
+        <TeachersTable teachersData={teachers} />
+      </section>
     </>
   );
 };

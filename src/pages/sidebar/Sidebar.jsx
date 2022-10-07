@@ -1,17 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import Teachers from "./admin/Teachers";
+import { ReactComponent as SunIcon } from "../../assets/sun.svg";
+import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
+import { ReactComponent as LogoutIcon } from "../../assets/Logout.svg";
+import SettingIcon from "../../assets/setting-gif.gif";
 
-import { ReactComponent as SunIcon } from "../assets/sun.svg";
-import { ReactComponent as SearchIcon } from "../assets/Search.svg";
-// import { ReactComponent as SettingIcon } from "../assets/Setting.svg";
-import { ReactComponent as LogoutIcon } from "../assets/Logout.svg";
-import SettingIcon from "../assets/setting-gif.gif";
+import LordIcon from "../../components/UI/lordIcons/LordIcon";
 
-import LordIcon from "../components/UI/lordIcons/LordIcon";
-
-import "../styles/Admin.scss";
+import "../../styles/Sidebar.scss";
 
 const Sidebar = () => {
   return (
@@ -60,13 +57,4 @@ const Sidebar = () => {
   );
 };
 
-const Admin = () => {
-  return (
-    <div className="admin_app">
-      <Sidebar />
-      <Teachers />
-    </div>
-  );
-};
-
-export default Admin;
+export default Sidebar;
