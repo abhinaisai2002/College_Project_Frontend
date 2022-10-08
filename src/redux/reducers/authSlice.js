@@ -13,7 +13,6 @@ const authSlice = createSlice({
       localStorage.setItem("access", data.payload.access);
       localStorage.setItem("refresh", data.payload.refresh);
       localStorage.setItem("user", JSON.stringify(data.payload.user));
-      localStorage.setItem("isAuthenticated", true);
       state.access = data.payload.access;
       state.refresh = data.payload.refresh;
       state.isAuthenticated = true;
@@ -29,7 +28,6 @@ const authSlice = createSlice({
       localStorage.setItem("access", data.payload.access);
       localStorage.setItem("refresh", data.payload.refresh);
       localStorage.setItem("user", JSON.stringify(data.payload.user));
-      localStorage.setItem("isAuthenticated", true);
       state.access = data.payload.access;
       state.refresh = data.payload.refresh;
       state.isAuthenticated = true;
@@ -40,7 +38,6 @@ const authSlice = createSlice({
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
       localStorage.removeItem("user");
-      localStorage.removeItem("isAuthenticated");
 
       state.isAuthenticated = false;
       state.access = null;

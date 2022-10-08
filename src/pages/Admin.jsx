@@ -5,6 +5,7 @@ import "../styles/Admin.scss";
 
 const Admin = () => {
   const navigate = useNavigate();
+  console.log('hi era');
   return (
     <>
       <header>

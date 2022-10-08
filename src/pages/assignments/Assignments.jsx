@@ -14,7 +14,7 @@ const Assignments = ({ subjectColors, assignments }) => {
 
   useEffect(() => {
     if (query !== "") {
-      const tempAssignments = subjectAssignments.filter((assignment) =>
+      const tempAssignments = realSubjectAssignments.filter((assignment) =>
         ["title", "subject_short_code"].some((key) =>
           assignment[key].toLowerCase().includes(query.toLowerCase())
         )
@@ -30,7 +30,6 @@ const Assignments = ({ subjectColors, assignments }) => {
 
     if (filteredAssignments) {
       setSubjectAssignments(filteredAssignments);
-      setRealSubjectAssignments(filteredAssignments);
     }
   };
 

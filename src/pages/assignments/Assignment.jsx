@@ -65,13 +65,14 @@ const useAssignment = (id) => {
 
   useEffect(() => {
     const getAssignment = () => {
-      // TODO: Call Backend API
       setState((prev) => {
         return {
           ...prev,
           isLoading: true,
         };
       });
+
+      // TODO: Call Backend API
       const filteredAssignment = DUMMY_ASSIGNMENTS.filter(
         (assignment) => assignment.id === parseInt(id)
       )[0];

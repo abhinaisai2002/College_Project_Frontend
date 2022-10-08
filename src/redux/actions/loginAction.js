@@ -63,3 +63,32 @@ export const getNewTokens = (refreshToken)=>{
         }
     }
 }
+
+export const logOut = (refresh)=>{
+    return async (dispatch)=>{
+        const logout = async ()=>{
+            const response = await axios.post(
+                'http://127.0.0.1:8000/api/auth/logout',
+                {
+                    refresh,
+                },
+                {
+                    headers:{
+                        'Content-Type':'application/json'
+                    }
+                }
+            );
+            const {data} = response;
+            return data;
+        }
+
+        try{
+            const data = await logOut();
+            dispatch(authActions.logout());
+            toast.success('Logout success');
+        }
+        catch(err){
+            toast.warning('Something went wrong');
+        }
+    }
+}

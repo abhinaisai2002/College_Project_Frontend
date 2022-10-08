@@ -1,6 +1,6 @@
 import React from "react";
 import { Tab, Nav } from "react-bootstrap";
-import Assignment from "./assignments/Assignments";
+import Assignments from "./assignments/Assignments";
 import "../styles/Home.scss";
 
 const SUBJECT_COLORS = {
@@ -12,7 +12,7 @@ const SUBJECT_COLORS = {
 const DUMMY_ASSIGNMENTS = [
   {
     id: 1,
-    title: "Assignment - 1",
+    title: "Abhinai - 1",
     subject_short_code: "ML",
     subject_full_code: "Machine Learning",
     due_date: "08/08/2022",
@@ -20,7 +20,7 @@ const DUMMY_ASSIGNMENTS = [
   },
   {
     id: 2,
-    title: "Assignment - 1",
+    title: "Abhi - 1",
     subject_short_code: "UML",
     subject_full_code: "Unified Modelling Language",
     due_date: "09/01/2022",
@@ -79,7 +79,7 @@ const Home = () => {
           </Nav>
           <Tab.Content>
             <Tab.Pane eventKey="first">
-              <Assignment
+              <Assignments
                 subjectColors={SUBJECT_COLORS}
                 assignments={DUMMY_ASSIGNMENTS}
               />

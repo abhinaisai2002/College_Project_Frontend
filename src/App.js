@@ -41,41 +41,38 @@ function App() {
           exact
           path="/"
           element={
-            // <PrivateRoute>
-            <Home />
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
           }
         />
 
         <Route
           exact
-          path=":id"
+          path="/:id"
           element={
-            // <PrivateRoute>
-            <Assignment />
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Assignment />
+            </PrivateRoute>
           }
         />
 
         <Route
           exact
-          path="admin"
+          path="/admin"
           element={
-            // <AdminRoute>
-            <Admin />
-            // </AdminRoute>
+            <AdminRoute>
+              <Admin />
+            </AdminRoute>
           }
         />
-
-        <Route exact path="admin/teachers" element={<Teachers />} />
-
         <Route
           exact
-          path="admin/upload"
+          path="/admin/upload"
           element={
-            // <AdminRoute>
-            <Upload />
-            // </AdminRoute>
+            <AdminRoute>
+              <Upload />
+            </AdminRoute>
           }
         />
 
@@ -99,6 +96,16 @@ function App() {
           }
         />
 
+        <Route
+          exact
+          path="/admin/teachers"
+          element={
+            <AdminRoute>
+              <Teachers />
+            </AdminRoute>
+          }
+        />
+
         <Route exact path="*" element={<ErrorPage />} />
       </Routes>
 
@@ -106,6 +113,7 @@ function App() {
         <ModalComp />
       </div>
     </Layout>
+
   );
 }
 export default App;

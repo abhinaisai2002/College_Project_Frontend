@@ -9,9 +9,16 @@ import SettingIcon from "../../assets/setting-gif.gif";
 import LordIcon from "../../components/UI/lordIcons/LordIcon";
 
 import "../../styles/Sidebar.scss";
+import { useDispatch, useSelector } from "react-redux";
+
+import { logOut } from "../../redux/actions/loginAction";
+  
+
 import { useEffect } from "react";
 
 const Sidebar = () => {
+
+
   const navigate = useNavigate();
   useEffect(() => {
     document.addEventListener("keydown", detectKeyDown, true);
@@ -21,6 +28,12 @@ const Sidebar = () => {
     console.log(e);
   };
 
+  const dispatch = useDispatch();
+  const refresh = useSelector(state => state.auth.refresh);
+
+  const handleLogout = ()=>{
+    dispatch(logOut(refresh));
+  }
   return (
     <div className="sidebar__wrapper">
       <header>
@@ -29,7 +42,7 @@ const Sidebar = () => {
         </div>
         <div className="header__right">
           <SunIcon />
-        </div>
+        </div> 
       </header>
       <div className="search__wrapper">
         <SearchIcon className="search_icon" />
@@ -58,7 +71,7 @@ const Sidebar = () => {
       </aside>
 
       <footer>
-        <div className="logout__wrapper">
+        <div className="logout__wrapper" onClick={handleLogout}>
           <LogoutIcon />
           Logout
         </div>
