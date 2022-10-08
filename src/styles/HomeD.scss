@@ -76,6 +76,10 @@
         // border: 1px solid red;
         .assignment__wrapper {
           //   border: 1px solid green;
+          &:hover{
+            transform: scale(1.02);
+            cursor: pointer;
+          }
           width: 100%;
           height: 3.5rem;
           margin: 1rem 0;

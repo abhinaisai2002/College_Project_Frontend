@@ -9,8 +9,19 @@ import SettingIcon from "../../assets/setting-gif.gif";
 import LordIcon from "../../components/UI/lordIcons/LordIcon";
 
 import "../../styles/Sidebar.scss";
+import { useDispatch, useSelector } from "react-redux";
+
+import { logOut } from "../../redux/actions/loginAction";
 
 const Sidebar = () => {
+
+  const dispatch = useDispatch();
+  const refresh = useSelector(state => state.auth.refresh);
+
+  const handleLogout = ()=>{
+    dispatch(logOut(refresh));
+  }
+
   return (
     <div className="sidebar__wrapper">
       <header>
@@ -48,7 +59,7 @@ const Sidebar = () => {
       </aside>
 
       <footer>
-        <div className="logout__wrapper">
+        <div className="logout__wrapper" onClick={handleLogout}>
           <LogoutIcon />
           Logout
         </div>

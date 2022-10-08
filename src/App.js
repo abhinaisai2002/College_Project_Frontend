@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Home from "./pages/HomeD";
 import Upload from "./pages/admin/Upload";
 import Admin from "./pages/Admin";
+import Layout from './Layout'
 
 import PublicRoute from "./utils/PublicRoute";
 import PrivateRoute from "./utils/PrivateRoute";
@@ -16,8 +17,6 @@ import PrivateRoute from "./utils/PrivateRoute";
 import ErrorPage from "./pages/ErrorPage";
 import AdminRoute from "./utils/AdminRoute";
 import ModalComp from "./utils/Modal";
-import Layout from "./Layout";
-import Teachers from "./pages/admin/Teachers";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,30 +39,27 @@ function App() {
           exact
           path="/"
           element={
-            // <PrivateRoute>
-            <Home />
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
           }
         />
         <Route
           exact
           path="admin"
           element={
-            // <AdminRoute>
-            <Admin />
-            // </AdminRoute>
+            <AdminRoute>
+              <Admin />
+            </AdminRoute>
           }
         />
-
-        <Route exact path="admin/teachers" element={<Teachers />} />
-
         <Route
           exact
           path="admin/upload"
           element={
-            // <AdminRoute>
-            <Upload />
-            // </AdminRoute>
+            <AdminRoute>
+              <Upload />
+            </AdminRoute>
           }
         />
 
@@ -94,6 +90,7 @@ function App() {
         <ModalComp />
       </div>
     </Layout>
+
   );
 }
 export default App;
