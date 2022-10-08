@@ -8,7 +8,7 @@ export const signUpAction = (user)=>{
     return async (dispatch)=>{
         const signup = async () => {
             const response  = await axios.post(
-                `http://localhost:8000/api/auth/signupteacher`,user,
+                `http://localhost:8000/api/auth/signup`,user,
                 {
                     headers:{
                         'Content-Type':'application/json'

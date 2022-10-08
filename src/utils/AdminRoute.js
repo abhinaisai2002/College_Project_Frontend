@@ -8,9 +8,6 @@ const AdminRoute = ({ children }) => {
   });
   console.log(user,isAuthenticated);
   if(!user && !isAuthenticated){
-    return <Navigate to='/login'/>
-  }
-  if(!user){
     return <p>Loading......</p>
   }
   if (!isAuthenticated) {

@@ -49,17 +49,17 @@ function App() {
 
         <Route
           exact
-          path=":id"
+          path="/:id"
           element={
-            // <PrivateRoute>
-            <Assignment />
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Assignment />
+            </PrivateRoute>
           }
         />
 
         <Route
           exact
-          path="admin"
+          path="/admin"
           element={
             <AdminRoute>
               <Admin />
@@ -68,7 +68,7 @@ function App() {
         />
         <Route
           exact
-          path="admin/upload"
+          path="/admin/upload"
           element={
             <AdminRoute>
               <Upload />
@@ -93,6 +93,16 @@ function App() {
             <PublicRoute>
               <Login />
             </PublicRoute>
+          }
+        />
+
+        <Route
+          exact
+          path="/admin/teachers"
+          element={
+            <AdminRoute>
+              <Teachers />
+            </AdminRoute>
           }
         />
 

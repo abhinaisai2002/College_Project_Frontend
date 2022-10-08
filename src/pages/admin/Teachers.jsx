@@ -81,7 +81,7 @@ const TeachersTable = ({ teachersData }) => {
     console.log(id);
     const sendReq = async () => {
       const response = await axios.post(
-        "http://localhost:8000/api/auth/approve",
+        "http://localhost:8000/api/approve",
         { id },
         {
           headers: {
@@ -110,7 +110,7 @@ const TeachersTable = ({ teachersData }) => {
   const handleDissapprove = async (id) => {
     const sendReq = async () => {
       const response = await axios.post(
-        "http://localhost:8000/api/auth/approve",
+        "http://localhost:8000/api/approve",
         { id },
         {
           headers: {
@@ -221,7 +221,7 @@ const Teachers = () => {
     //TODO: get teachers from api
     const getTeachers = async () => {
       const response = await axios.get(
-        "http://localhost:8000/api/auth/getteachers"
+        "http://localhost:8000/api/getteachers"
       );
 
       return response;
