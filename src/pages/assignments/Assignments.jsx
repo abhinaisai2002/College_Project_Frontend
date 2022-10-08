@@ -14,7 +14,6 @@ const Assignments = ({ subjectColors, assignments }) => {
 
   useEffect(() => {
     if (query !== "") {
-      // let tempAssignments = [...subjectAssignments];
       const tempAssignments = subjectAssignments.filter((assignment) =>
         ["title", "subject_short_code"].some((key) =>
           assignment[key].toLowerCase().includes(query.toLowerCase())
@@ -97,6 +96,18 @@ const Assignments = ({ subjectColors, assignments }) => {
             </div>
           </div>
         ))}
+        {!null && (
+          <div className="assignment__wrapper is-loading">
+            <div className="assignment_subject_color_code"></div>
+            <div className="assignment_subject">
+              <span></span>
+            </div>
+            <div className="assignment_body">
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
