@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { ReactComponent as SunIcon } from "../../assets/sun.svg";
 import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
@@ -12,8 +12,21 @@ import "../../styles/Sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logOut } from "../../redux/actions/loginAction";
+  
+
+import { useEffect } from "react";
 
 const Sidebar = () => {
+
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    document.addEventListener("keydown", detectKeyDown, true);
+  }, []);
+
+  const detectKeyDown = (e) => {
+    console.log(e);
+  };
 
   const dispatch = useDispatch();
   const refresh = useSelector(state => state.auth.refresh);
@@ -21,16 +34,15 @@ const Sidebar = () => {
   const handleLogout = ()=>{
     dispatch(logOut(refresh));
   }
-
   return (
     <div className="sidebar__wrapper">
       <header>
         <div className="header__left">
-          <h3>Assignments</h3>
+          <h3 onClick={() => navigate("/")}>Assignments</h3>
         </div>
         <div className="header__right">
           <SunIcon />
-        </div>
+        </div> 
       </header>
       <div className="search__wrapper">
         <SearchIcon className="search_icon" />

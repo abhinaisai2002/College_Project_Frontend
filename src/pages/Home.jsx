@@ -1,92 +1,94 @@
-import React, { useRef, useState } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../redux/reducers/authSlice";
-import { getNewTokens } from "../redux/actions/loginAction";
-
-import { Dropdown } from "react-bootstrap";
-
-import { ReactComponent as SunIcon } from "../assets/sun.svg";
-import { ReactComponent as MoonIcon } from "../assets/moon-icon.svg";
-import LordIcon from "../components/UI/lordIcons/LordIcon";
-
+import React from "react";
+import { Tab, Nav } from "react-bootstrap";
+import Assignment from "./assignments/Assignments";
 import "../styles/Home.scss";
-import { Link } from "react-router-dom";
 
-const Toogle = () => {
-  const [toggleState, setToggleState] = useState(false);
-  const ballRef = useRef();
-  const toogleClickHandler = () => {
-    ballRef.current.style.transition = "all .2s ease-in";
-    if (!toggleState) ballRef.current.style.left = "45px";
-    else ballRef.current.style.left = "5px";
-    setToggleState((p) => !p);
-  };
-  return (
-    <div id="toggle" onClick={toogleClickHandler}>
-      <div id="ball" ref={ballRef} className=" ball">
-        <SunIcon />
-      </div>
-    </div>
-  );
+const SUBJECT_COLORS = {
+  ML: "#FF7A00",
+  UML: "#00B607",
+  IOT: "#0085FF",
 };
 
-const NavBar = () => {
-  const dispatch = useDispatch();
-
-  return (
-    <nav>
-      <div className="nav__left m-2">
-        <h1>Assignments</h1>
-      </div>
-      <div className="nav__right">
-        <Toogle />
-        <div className="search__wrapper">
-          <LordIcon icon="search" className="search_icon" />
-          <input className="search__inp" type="text" placeholder="Search" />
-        </div>
-        <div className="notification__wrapper">
-          <LordIcon icon="notification" />
-        </div>
-
-        <div className="profile__wrapper">
-          <Dropdown>
-            <Dropdown.Toggle
-              id="dropdown-button-dark-example1"
-              variant="secondary"
-            >
-              user
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu variant="dark">
-              <Dropdown.Item href="#/action-1" active>
-                Profile
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={(event) => {
-                  event.preventDefault();
-                  dispatch(authActions.logout());
-                }}
-              >
-                Logout
-              </Dropdown.Item>
-              <div>
-                <Link to='/admin'>
-                  Something else
-                </Link>
-              </div>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-      </div>
-    </nav>
-  );
-};
+const DUMMY_ASSIGNMENTS = [
+  {
+    id: 1,
+    title: "Abhinai - 1",
+    subject_short_code: "ML",
+    subject_full_code: "Machine Learning",
+    due_date: "08/08/2022",
+    color_code: "#FF7A00",
+  },
+  {
+    id: 2,
+    title: "Abhi - 1",
+    subject_short_code: "UML",
+    subject_full_code: "Unified Modelling Language",
+    due_date: "09/01/2022",
+    color_code: "#00B607",
+  },
+  {
+    id: 3,
+    title: "Assignment - 1",
+    subject_short_code: "IOT",
+    subject_full_code: "Internet Of Things",
+    due_date: "26/06/2023",
+    color_code: "#0085FF",
+  },
+  {
+    id: 4,
+    title: "IOT Assignment - 1",
+    subject_short_code: "IOT",
+    subject_full_code: "Internet Of Things",
+    due_date: "26/06/2023",
+    color_code: "#0085FF",
+  },
+  {
+    id: 5,
+    title: "WIFI Assignment - 1",
+    subject_short_code: "IOT",
+    subject_full_code: "Internet Of Things",
+    due_date: "26/06/2023",
+    color_code: "#0085FF",
+  },
+];
 
 const Home = () => {
   return (
     <>
-      <NavBar />
+      <section className="dashboard">
+        <Tab.Container id="tabs" defaultActiveKey="first">
+          <Nav variant="pills">
+            <Nav.Item>
+              <Nav.Link eventKey="first">
+                <div className="pending" />
+                Pending Assignments
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="second">
+                <div className="submitted" />
+                Submitted Assignments
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="third">
+                <div className="reviewed" />
+                Reviewed Assignments
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+          <Tab.Content>
+            <Tab.Pane eventKey="first">
+              <Assignment
+                subjectColors={SUBJECT_COLORS}
+                assignments={DUMMY_ASSIGNMENTS}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="second">tab 2</Tab.Pane>
+            <Tab.Pane eventKey="third">tab 3</Tab.Pane>
+          </Tab.Content>
+        </Tab.Container>
+      </section>
     </>
   );
 };

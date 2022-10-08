@@ -18,7 +18,7 @@ import "../styles/LoginSignup.scss";
 const Signup = () => {
   const dispatch = useDispatch();
 
-  const [department,setDepartment] = useState('');
+  const [department, setDepartment] = useState("");
   const {
     value: emailValue,
     isTouched: emailIsTouched,
@@ -35,8 +35,8 @@ const Signup = () => {
     handleReset: nameHandleReset,
     hasError: nameHasError,
     handleBlur: nameHandleBlur,
-  } = useInput("", (name)=>name.length > 0);
-  
+  } = useInput("", (name) => name.length > 0);
+
   const {
     value: phoneValue,
     isTouched: phoneIsTouched,
@@ -78,9 +78,9 @@ const Signup = () => {
       password: passwordValue,
       accountType: "teacher",
       gender,
-      phone : phoneValue,
+      phone: phoneValue,
       department,
-      name:nameValue
+      name: nameValue,
     };
     // console.log(data);
     dispatch(signUpAction(data));
@@ -91,8 +91,8 @@ const Signup = () => {
       <section className="left__section">
         <h1>Start your journey with us.</h1>
         <p>
-          Discover the world’s best community of freelancers and business
-          owners.
+          Discover the world’s best platform for students and teachers to review
+          and submit assignments.
         </p>
         <div className="image_wrapper">
           <Saly className="image" />
@@ -126,7 +126,7 @@ const Signup = () => {
               />
             </Col>
             <Col>
-              <Input 
+              <Input
                 value={nameValue}
                 onChange={nameHandleChange}
                 onBlur={nameHandleBlur}
@@ -141,7 +141,7 @@ const Signup = () => {
               />
             </Col>
           </Row>
-          
+
           <Row>
             <Col>
               <Input
@@ -166,14 +166,7 @@ const Signup = () => {
                 label="Branch or Department"
                 optionInitialValue=""
                 required
-                options={[
-                  "CSE",
-                  "IT",
-                  "ECE",
-                  "EEE",
-                  "CIVIL",
-                  "MECH",
-                ]}
+                options={["CSE", "IT", "ECE", "EEE", "CIVIL", "MECH"]}
               />
             </Col>
           </Row>
@@ -234,7 +227,7 @@ const Signup = () => {
 };
 
 const validateEmail = (email) => {
-  let emailRe = new RegExp('[a-zA-Z0-9]+@[a-z]+.[a-z]+');
+  let emailRe = new RegExp("[a-zA-Z0-9]+@[a-z]+.[a-z]+");
   return emailRe.test(email);
 };
 

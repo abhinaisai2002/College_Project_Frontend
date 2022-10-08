@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
+import { Table, Dropdown } from "react-bootstrap";
+import LordIcon from "../../components/UI/lordIcons/LordIcon";
+
 import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
 import { ReactComponent as MoreIcon } from "../../assets/more-vertical.svg";
-import { Table } from "react-bootstrap";
 import "../../styles/Teachers.scss";
 
 const DUMMY_TEACHERS = [
@@ -258,9 +260,6 @@ const Teachers = () => {
           </h1>
         </div>
         <div className="header__right">
-          <div>
-            <button onClick={handleRefresh}>reload</button>
-          </div>
           <div className="search__wrapper">
             <SearchIcon className="search_icon" />
             <input
@@ -271,9 +270,28 @@ const Teachers = () => {
               onChange={onSearchHandler}
             />
           </div>
-          <div className="more__wrapper">
-            <MoreIcon />
-          </div>
+          <button className="reload__wrapper" onClick={handleRefresh}>
+            <LordIcon icon="autoNew" />
+          </button>
+          <Dropdown>
+            <Dropdown.Toggle
+              variant="secondary"
+              id="dropdown-basic"
+              className="more__wrapper"
+            >
+              {/* <div className="more__wrapper"> */}
+              <MoreIcon />
+              {/* </div> */}
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu variant="dark">
+              <Dropdown.Item href="#/action-1">Approve All</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href="#/action-2">Disapprove All</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href="#/action-3">Reload</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       </header>
       <section>
