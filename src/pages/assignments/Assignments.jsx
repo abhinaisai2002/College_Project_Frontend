@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
+import DatePickerComponent from "../../components/UI/datePicker/DatePickerComponent";
 
 import "../../styles/Assignments.scss";
 
@@ -80,7 +81,7 @@ const Assignments = ({ subjectColors, assignments }) => {
           <div
             key={assignment.id}
             className="assignment__wrapper"
-            onClick={() => navigate(`${assignment.id}`)}
+            onClick={() => navigate(`assignment/${assignment.id}`)}
           >
             <div
               className="assignment_subject_color_code"

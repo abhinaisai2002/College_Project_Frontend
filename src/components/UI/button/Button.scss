@@ -4,12 +4,15 @@
   min-width: 100px;
   background: $bg-primary !important;
   border-radius: 10px;
+  border: none !important;
+  outline: none !important;
   padding: 0.8rem 2rem !important;
   color: #fff !important;
   font-family: $font-inter !important;
   font-weight: 600 !important;
   font-size: 18px !important;
   margin: 0.5rem 0;
+  box-shadow: none !important;
 
   svg {
     margin-left: 1rem;

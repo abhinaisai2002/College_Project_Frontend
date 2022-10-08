@@ -9,6 +9,7 @@ import Button from "../../components/UI/button/Button";
 import LordIcon from "../../components/UI/lordIcons/LordIcon";
 import ModalComponent from "../../components/UI/modal/ModalComponent";
 import Upload from "../../components/Upload";
+import Spinner from "../../components/UI/spinners/Spinner";
 
 import "../../styles/Assignment.scss";
 
@@ -133,9 +134,7 @@ const Assignment = () => {
     };
   }, [file]);
 
-  const handleChange = (file) => {
-    setFile(file);
-  };
+  const handleChange = (file) => setFile(file);
 
   return (
     <>
@@ -165,40 +164,40 @@ const Assignment = () => {
           </>
         }
       />
-      <header className="assignment__header">
-        <div className="header__left">
-          <h1>
-            {assignment && assignment.title}
-            <span
-              style={{
-                background: assignment ? assignment.color_code : "",
-                color: "#fff",
-              }}
-            >
-              {assignment &&
-                assignment.subject_short_code +
-                  " - " +
-                  assignment.subject_full_code}
-            </span>
-          </h1>
-        </div>
-      </header>
-      <section className="assignment__section">
-        <div className="PDF-viewer">
-          <PdfViewerComponent document={pdf} />
-        </div>
-      </section>
-      <footer>
-        <div className="footer_left">{/* <Button text="Upload" /> */}</div>
-        <div className="footer_right">
-          <Button
-            text="Upload"
-            leftIcon={<LordIcon icon="upload" />}
-            onClick={() => setUploadModalShow(true)}
-          />
-        </div>
-      </footer>
-    </>
+          <header className="assignment__header">
+            <div className="header__left">
+              <h1>
+                {assignment && assignment.title}
+                <span
+                  style={{
+                    background: assignment ? assignment.color_code : "",
+                    color: "#fff",
+                  }}
+                >
+                  {assignment &&
+                    assignment.subject_short_code +
+                      " - " +
+                      assignment.subject_full_code}
+                </span>
+              </h1>
+            </div>
+          </header>
+          <section className="assignment__section">
+            <div className="PDF-viewer">
+              <PdfViewerComponent document={pdf} />
+            </div>
+          </section>
+          <footer>
+            <div className="footer_left">{/* <Button text="Upload" /> */}</div>
+            <div className="footer_right">
+              <Button
+                text="Upload"
+                leftIcon={<LordIcon icon="upload" />}
+                onClick={() => setUploadModalShow(true)}
+              />
+            </div>
+          </footer>
+        </>
   );
 };
 
