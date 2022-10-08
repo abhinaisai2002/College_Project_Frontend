@@ -44,10 +44,9 @@ const DUMMY_TEACHERS = [
   },
 ];
 
-const TeachersTable = ({ teachersData }) => {
+const TeachersTable = ({ teachersData,token }) => {
   const [data, setData] = useState(null);
   const user = useSelector((state) => state.auth);
-
   useEffect(() => {
     setData((p) => teachersData);
   }, [teachersData]);
@@ -82,10 +81,11 @@ const TeachersTable = ({ teachersData }) => {
     const sendReq = async () => {
       const response = await axios.post(
         "http://localhost:8000/api/approve",
-        { id },
+        { id,approve:true },
         {
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
         }
       );
@@ -111,10 +111,11 @@ const TeachersTable = ({ teachersData }) => {
     const sendReq = async () => {
       const response = await axios.post(
         "http://localhost:8000/api/approve",
-        { id },
+        { id,aprrove:false },
         {
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
         }
       );
@@ -214,14 +215,20 @@ const Teachers = () => {
   const [teachers, setTeachers] = useState([]);
   const [realTeachers, setRealTeachers] = useState([]);
 
+  const auth = useSelector(state => state.auth);
   const [query, setQuery] = useState("");
   const [refreshCounter, setRefreshCounter] = useState(0);
 
   useEffect(() => {
     //TODO: get teachers from api
+    if(!auth.access)return ;
     const getTeachers = async () => {
       const response = await axios.get(
-        "http://localhost:8000/api/getteachers"
+        "http://localhost:8000/api/getteachers",{
+          headers:{
+            'Authorization': `Bearer ${auth.access}`
+          }
+        }
       );
 
       return response;
@@ -295,7 +302,7 @@ const Teachers = () => {
         </div>
       </header>
       <section>
-        <TeachersTable teachersData={teachers} />
+        <TeachersTable teachersData={teachers} token={auth.access}/>
       </section>
     </>
   );
