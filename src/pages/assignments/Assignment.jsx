@@ -39,7 +39,7 @@ const DUMMY_ASSIGNMENTS = [
   },
   {
     id: 4,
-    title: "Assignment - 1",
+    title: "IOT Assignment - 1",
     subject_short_code: "IOT",
     subject_full_code: "Internet Of Things",
     due_date: "26/06/2023",
@@ -47,14 +47,13 @@ const DUMMY_ASSIGNMENTS = [
   },
   {
     id: 5,
-    title: "Assignment - 1",
+    title: "WIFI Assignment - 1",
     subject_short_code: "IOT",
     subject_full_code: "Internet Of Things",
     due_date: "26/06/2023",
     color_code: "#0085FF",
   },
 ];
-
 const useAssignment = (id) => {
   const [state, setState] = useState({
     assignment: null,

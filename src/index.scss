@@ -175,7 +175,7 @@ body {
             display: flex;
             align-items: center;
             border-radius: 0.4rem;
-            margin: 0 1rem;
+            margin: 0 0.5rem;
             .search__inp {
               min-width: 18rem;
               padding: 0.2rem;
@@ -184,9 +184,7 @@ body {
               font-family: $font-source-code-pro;
               word-spacing: 0.01em;
               letter-spacing: 0.01em;
-
               font-size: 16px;
-              // font-weight: 600;
               border: none;
               outline: none;
               background: transparent;
@@ -207,15 +205,28 @@ body {
             }
           }
 
+          .reload__wrapper {
+            padding: 0.5rem 0 !important;
+            border-radius: 0.2rem !important;
+            background: #353a45 !important;
+            width: 3rem !important;
+            height: 100%;
+            margin: 0 0.5rem;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            border: none !important;
+          }
+
           .more__wrapper {
-            background: #353a45;
-            padding: 0.5rem 0;
-            border-radius: 0.2rem;
+            background: #353a45 !important;
+            min-width: 2rem !important;
+            margin: 0 0.5rem;
             svg {
-              width: 32px;
-              height: 32px;
+              width: 32px !important;
+              height: 32px !important;
               path {
-                stroke: #fff;
+                stroke: #fff !important;
               }
             }
           }
@@ -260,6 +271,34 @@ body {
           }
         }
       }
+    }
+  }
+}
+
+.dropdown {
+  .dropdown-toggle {
+    padding: 0.5rem 0 !important;
+    box-shadow: none !important;
+    border-radius: 0.2rem !important;
+    border: none !important;
+    svg {
+      margin-left: 0 !important;
+    }
+    &::after {
+      display: none !important;
+    }
+  }
+
+  .dropdown-menu {
+    .dropdown-item {
+      background: #353a45 !important;
+
+      &:hover {
+        background: #494d5a !important;
+      }
+    }
+    .dropdown-divider {
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
     }
   }
 }

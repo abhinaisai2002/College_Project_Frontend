@@ -9,16 +9,6 @@ const SUBJECT_COLORS = {
   IOT: "#0085FF",
 };
 
-// const SUBJECT_COLORS = [
-//   { ML: "#FF7A00" },
-//   {
-//     UML: "#00B607",
-//   },
-//   {
-//     IOT: "#0085FF",
-//   },
-// ];
-
 const DUMMY_ASSIGNMENTS = [
   {
     id: 1,
@@ -62,7 +52,7 @@ const DUMMY_ASSIGNMENTS = [
   },
 ];
 
-const HomeD = () => {
+const Home = () => {
   return (
     <>
       <section className="dashboard">
@@ -80,12 +70,22 @@ const HomeD = () => {
                 Submitted Assignments
               </Nav.Link>
             </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="third">
+                <div className="reviewed" />
+                Reviewed Assignments
+              </Nav.Link>
+            </Nav.Item>
           </Nav>
           <Tab.Content>
             <Tab.Pane eventKey="first">
-              <Assignment subjectColors={SUBJECT_COLORS} assignments={DUMMY_ASSIGNMENTS}  />
+              <Assignment
+                subjectColors={SUBJECT_COLORS}
+                assignments={DUMMY_ASSIGNMENTS}
+              />
             </Tab.Pane>
             <Tab.Pane eventKey="second">tab 2</Tab.Pane>
+            <Tab.Pane eventKey="third">tab 3</Tab.Pane>
           </Tab.Content>
         </Tab.Container>
       </section>
@@ -93,4 +93,4 @@ const HomeD = () => {
   );
 };
 
-export default HomeD;
+export default Home;

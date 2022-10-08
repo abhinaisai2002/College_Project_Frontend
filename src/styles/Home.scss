@@ -21,22 +21,24 @@
         color: #fff;
         display: flex;
         align-items: center;
-        .pending {
-          width: 1rem !important;
-          height: 1rem !important;
-          border: 1px solid #fff;
-          border-radius: 50%;
-          background: rgb(255, 255, 73);
-          margin-right: 0.5rem;
-        }
 
-        .submitted {
+        .pending,
+        .submitted,
+        .reviewed {
           width: 1rem !important;
           height: 1rem !important;
-          border: 1px solid #fff;
-          border-radius: 50%;
-          background: rgb(113, 255, 113);
+          // border: 1px solid #fff;
           margin-right: 0.5rem;
+          border-radius: 50%;
+        }
+        .pending {
+          background: rgb(255, 255, 73);
+        }
+        .submitted {
+          background: rgb(58, 133, 255);
+        }
+        .reviewed {
+          background: rgb(113, 255, 113);
         }
       }
       .active {
