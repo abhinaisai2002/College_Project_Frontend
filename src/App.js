@@ -19,11 +19,14 @@ import ModalComp from "./utils/Modal";
 import Layout from "./Layout";
 import Teachers from "./pages/admin/Teachers";
 import Assignment from "./pages/assignments/Assignment";
+import { loaderActions } from "./redux/reducers/loaderSlice";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // dispatch(loaderActions.showLoading());
+    ////////////////////////
     const access = localStorage.getItem("access");
     const refresh = localStorage.getItem("refresh");
     const user =
@@ -32,6 +35,8 @@ function App() {
     } else {
       dispatch(authActions.loginDataFromLocal({ access, refresh, user }));
     }
+    ////////////////////////
+    dispatch(loaderActions.stopLoading());
   }, []);
 
   return (
@@ -49,7 +54,7 @@ function App() {
 
         <Route
           exact
-          path="/:id"
+          path="/assignment/:id"
           element={
             <PrivateRoute>
               <Assignment />
@@ -61,18 +66,23 @@ function App() {
           exact
           path="/admin"
           element={
-            <AdminRoute>
-              <Admin />
-            </AdminRoute>
+            <PrivateRoute>
+              <AdminRoute>
+                  <Admin />
+              </AdminRoute>
+            </PrivateRoute>
           }
         />
         <Route
           exact
           path="/admin/upload"
           element={
-            <AdminRoute>
-              <Upload />
-            </AdminRoute>
+            <PrivateRoute>
+              <AdminRoute>
+                <Upload />
+              </AdminRoute>
+
+            </PrivateRoute>
           }
         />
 
@@ -100,9 +110,11 @@ function App() {
           exact
           path="/admin/teachers"
           element={
-            <AdminRoute>
-              <Teachers />
-            </AdminRoute>
+            <PrivateRoute>
+              <AdminRoute>
+                <Teachers />
+              </AdminRoute>
+            </PrivateRoute>
           }
         />
 

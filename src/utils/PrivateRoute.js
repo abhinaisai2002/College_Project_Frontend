@@ -1,11 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import Spinner from "../components/UI/spinners/Spinner";
 
 const PrivateRoute = ({ children }) => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const {user,isAuthenticated} = useSelector((state) => state.auth);
 
-  if (!isAuthenticated) {
+  const isLoading = useSelector(state => state.loader.showLoader);
+
+  console.log(isLoading);
+  if(isLoading)
+    return <Spinner />
+
+  if (!user) {
     return <Navigate to="/login" />;
   }
   return children;

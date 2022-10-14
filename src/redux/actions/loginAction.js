@@ -82,7 +82,6 @@ export const logOut = (refresh) => {
     try {
       const data = await logOut();
       dispatch(authActions.logout());
-      toast.success("Logout success");
     } catch (err) {
       toast.warning("Something went wrong");
     }
