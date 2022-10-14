@@ -1,23 +1,27 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-import { ReactComponent as SunIcon } from "../../assets/sun.svg";
-import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
-import { ReactComponent as LogoutIcon } from "../../assets/Logout.svg";
-import SettingIcon from "../../assets/setting-gif.gif";
-
-import LordIcon from "../../components/UI/lordIcons/LordIcon";
-
-import "../../styles/Sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logOut } from "../../redux/actions/loginAction";
 
-import { useEffect } from "react";
+import { ReactComponent as SunIcon } from "../../assets/sun.svg";
+import { ReactComponent as MoonIcon } from "../../assets/moon.svg";
+import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
+import { ReactComponent as LogoutIcon } from "../../assets/Logout.svg";
+import SettingIcon from "../../assets/setting-gif.gif";
+import SettingDarkIcon from "../../assets/settings-dark.gif";
+
+import LordIcon from "../../components/UI/lordIcons/LordIcon";
+
+import "../../styles/Sidebar.scss";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
   const user_type = useSelector((state) => state.auth.user.user_type);
   const refresh = useSelector((state) => state.auth.refresh);
 
@@ -33,16 +37,24 @@ const Sidebar = () => {
     dispatch(logOut(refresh));
   };
   return (
-    <div className="sidebar__wrapper">
+    <div
+      className={`sidebar__wrapper ${
+        theme === "dark" ? "sidebar__wrapper-dark" : "sidebar__wrapper-light"
+      }`}
+    >
       <header>
         <div className="header__left">
           <h3 onClick={() => navigate("/")}>Assignments</h3>
         </div>
         <div className="header__right">
-          <SunIcon />
+          {theme === "light" ? (
+            <MoonIcon onClick={toggleTheme} />
+          ) : (
+            <SunIcon onClick={toggleTheme} />
+          )}
         </div>
       </header>
-      <div className="search__wrapper">
+      <div className={`search__wrapper ${theme === "dark" ? "dark" : "light"}`}>
         <SearchIcon className="search_icon" />
         <input className="search__inp" type="text" placeholder="Search" />
       </div>
@@ -52,7 +64,7 @@ const Sidebar = () => {
           Profile
         </div>
         <div>
-          <img src={SettingIcon} alt="" />
+          <img src={theme === "light" ? SettingDarkIcon : SettingIcon} alt="" />
           Settings
         </div>
         <div>

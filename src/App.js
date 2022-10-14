@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 
 import { authActions } from "./redux/reducers/authSlice";
+import { loaderActions } from "./redux/reducers/loaderSlice";
+
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -19,7 +22,7 @@ import ModalComp from "./utils/Modal";
 import Layout from "./Layout";
 import Teachers from "./pages/admin/Teachers";
 import Assignment from "./pages/assignments/AssignmentD";
-import { loaderActions } from "./redux/reducers/loaderSlice";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,92 +43,102 @@ function App() {
   }, []);
 
   return (
-    <Layout>
-      <Routes>
-        <Route
-          exact
-          path="/"
-          element={
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
-          }
-        />
+    <ThemeProvider>
+      <Layout>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
 
-        <Route
-          exact
-          path="/assignment/:id"
-          element={
-            <PrivateRoute>
-              <Assignment />
-            </PrivateRoute>
-          }
-        />
+          <Route
+            exact
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <ProfilePage />
+              </PrivateRoute>
+            }
+          />
 
-        <Route
-          exact
-          path="/admin"
-          element={
-            <PrivateRoute>
-              <AdminRoute>
+          <Route
+            exact
+            path="/assignment/:id"
+            element={
+              <PrivateRoute>
+                <Assignment />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            exact
+            path="/admin"
+            element={
+              <PrivateRoute>
+                {/* <AdminRoute> */}
                   <Admin />
-              </AdminRoute>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          exact
-          path="/admin/upload"
-          element={
-            <PrivateRoute>
-              <AdminRoute>
-                <Upload />
-              </AdminRoute>
+                {/* </AdminRoute> */}
+              </PrivateRoute>
+            }
+          />
+          <Route
+            exact
+            path="/admin/upload"
+            element={
+              <PrivateRoute>
+                {/* <AdminRoute> */}
+                  <Upload />
+                {/* </AdminRoute> */}
+              </PrivateRoute>
+            }
+          />
 
-            </PrivateRoute>
-          }
-        />
+          <Route
+            exact
+            path="/signup"
+            element={
+              <PublicRoute>
+                <Signup />
+              </PublicRoute>
+            }
+          />
 
-        <Route
-          exact
-          path="/signup"
-          element={
-            <PublicRoute>
-              <Signup />
-            </PublicRoute>
-          }
-        />
+          <Route
+            exact
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
 
-        <Route
-          exact
-          path="/login"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
-        />
+          <Route
+            exact
+            path="/admin/teachers"
+            element={
+              <PrivateRoute>
+                {/* <AdminRoute> */}
+                  <Teachers />
+                {/* </AdminRoute> */}
+              </PrivateRoute>
+            }
+          />
 
-        <Route
-          exact
-          path="/admin/teachers"
-          element={
-            <PrivateRoute>
-              <AdminRoute>
-                <Teachers />
-              </AdminRoute>
-            </PrivateRoute>
-          }
-        />
+          <Route exact path="*" element={<ErrorPage />} />
+        </Routes>
 
-        <Route exact path="*" element={<ErrorPage />} />
-      </Routes>
-
-      <div>
-        <ModalComp />
-      </div>
-    </Layout>
-
+        <div>
+          <ModalComp />
+        </div>
+      </Layout>
+    </ThemeProvider>
   );
 }
 export default App;

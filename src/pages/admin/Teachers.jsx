@@ -8,22 +8,24 @@ import LordIcon from "../../components/UI/lordIcons/LordIcon";
 import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
 import { ReactComponent as MoreIcon } from "../../assets/more-vertical.svg";
 import "../../styles/Teachers.scss";
+import { useContext } from "react";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const DUMMY_TEACHERS = [
   {
     id: 1,
-    name: "N Praveen Kumar",
+    name: "Person 1",
     department: "CSE",
-    job_title: "Associate Professor",
-    mail: "praveen@gmail.com",
+    job_title: "Professor",
+    mail: "person1@gmail.com",
     phone: "8523490246",
   },
   {
     id: 2,
-    name: "Putta Abhinai Sai",
+    name: "Person 2",
     department: "CSE",
     job_title: "Professor",
-    mail: "abhinaisai@gmail.com",
+    mail: "person2@gmail.com",
     phone: "6782348792",
   },
   {
@@ -31,20 +33,13 @@ const DUMMY_TEACHERS = [
     name: "Hemanth VMK",
     department: "CSE",
     job_title: "HOD",
-    mail: "hemujunior@gmail.com",
+    mail: "person3@gmail.com",
     phone: "8923748367",
-  },
-  {
-    id: 4,
-    name: "Jinna",
-    department: "CSE",
-    job_title: "Assistant Professor",
-    mail: "jinnamanchu@gmail.com",
-    phone: "7898394389",
   },
 ];
 
-const TeachersTable = ({ teachersData,token }) => {
+const TeachersTable = ({ teachersData, token }) => {
+  const { theme } = useContext(ThemeContext);
   const [data, setData] = useState(null);
   const user = useSelector((state) => state.auth);
   useEffect(() => {
@@ -81,11 +76,11 @@ const TeachersTable = ({ teachersData,token }) => {
     const sendReq = async () => {
       const response = await axios.post(
         "http://localhost:8000/api/approve",
-        { id,approve:true },
+        { id, approve: true },
         {
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -111,11 +106,11 @@ const TeachersTable = ({ teachersData,token }) => {
     const sendReq = async () => {
       const response = await axios.post(
         "http://localhost:8000/api/approve",
-        { id,aprrove:false },
+        { id, aprrove: false },
         {
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -138,7 +133,7 @@ const TeachersTable = ({ teachersData,token }) => {
   };
 
   return (
-    <Table striped bordered hover variant="dark">
+    <Table striped bordered hover variant={theme === "dark" ? "dark" : "light"}>
       <thead>
         <tr>
           <th>
@@ -215,19 +210,20 @@ const Teachers = () => {
   const [teachers, setTeachers] = useState([]);
   const [realTeachers, setRealTeachers] = useState([]);
 
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
   const [query, setQuery] = useState("");
   const [refreshCounter, setRefreshCounter] = useState(0);
 
   useEffect(() => {
     //TODO: get teachers from api
-    if(!auth.access)return ;
+    if (!auth.access) return;
     const getTeachers = async () => {
       const response = await axios.get(
-        "http://localhost:8000/api/getteachers",{
-          headers:{
-            'Authorization': `Bearer ${auth.access}`
-          }
+        "http://localhost:8000/api/getteachers",
+        {
+          headers: {
+            Authorization: `Bearer ${auth.access}`,
+          },
         }
       );
 
@@ -302,7 +298,7 @@ const Teachers = () => {
         </div>
       </header>
       <section>
-        <TeachersTable teachersData={teachers} token={auth.access}/>
+        <TeachersTable teachersData={teachers} token={auth.access} />
       </section>
     </>
   );

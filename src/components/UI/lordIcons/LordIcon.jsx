@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "../../../contexts/ThemeContext";
 
 const ICONS = {
   notification: "psnhyobz.json",
@@ -26,13 +27,14 @@ const ICONS = {
   autoNew: "akuwjdzh.json",
   close: "nhfyhmlt.json",
   heart: "pnhskdva.json",
-  
 };
 
 const LordIcon = ({ icon, ...otherProps }) => {
+  const { theme } = useContext(ThemeContext);
   return (
     <lord-icon
-      colors="primary:#fff"
+      // colors="primary:#fff"
+      colors={`primary:${theme === "dark" ? "#fff" : "#24282e"}`}
       src={`https://cdn.lordicon.com/${ICONS[icon]}`}
       trigger="hover"
       style={{ width: "32px", height: "32px" }}
