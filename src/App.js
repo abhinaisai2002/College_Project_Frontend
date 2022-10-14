@@ -18,7 +18,7 @@ import AdminRoute from "./utils/AdminRoute";
 import ModalComp from "./utils/Modal";
 import Layout from "./Layout";
 import Teachers from "./pages/admin/Teachers";
-import Assignment from "./pages/assignments/Assignment";
+import Assignment from "./pages/assignments/AssignmentD";
 import { loaderActions } from "./redux/reducers/loaderSlice";
 
 function App() {

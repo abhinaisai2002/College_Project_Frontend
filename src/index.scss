@@ -280,6 +280,14 @@ body {
   }
 }
 
+.file__name {
+  color: #77b7d7 !important;
+  font-weight: 600;
+  span {
+    color: #86d9ca !important;
+  }
+}
+
 .dropdown {
   .dropdown-toggle {
     padding: 0.5rem 0 !important;

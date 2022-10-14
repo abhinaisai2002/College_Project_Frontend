@@ -9,7 +9,7 @@ import Button from "../../components/UI/button/Button";
 import LordIcon from "../../components/UI/lordIcons/LordIcon";
 import ModalComponent from "../../components/UI/modal/ModalComponent";
 import Upload from "../../components/Upload";
-import Spinner from "../../components/UI/spinners/Spinner";
+// import Spinner from "../../components/UI/spinners/Spinner";
 
 import "../../styles/Assignment.scss";
 
@@ -55,6 +55,23 @@ const DUMMY_ASSIGNMENTS = [
     color_code: "#0085FF",
   },
 ];
+
+const DUMMY_ASSIGNMENTS1 = [
+  {
+    id: 1,
+    title: "First Assigment",
+    assignmentLink: "",
+    datePosted: "",
+    submissionDate: "",
+    assignedBy: {},
+    marks: "",
+    reviewed: true,
+    submitted: false,
+    color: "#FF7A00",
+    answerLink: "",
+  },
+];
+
 const useAssignment = (id) => {
   const [state, setState] = useState({
     assignment: null,
