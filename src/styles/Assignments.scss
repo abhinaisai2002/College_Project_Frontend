@@ -1,16 +1,32 @@
 @import "../index.scss";
 
+.assignments__header.light {
+  .header__right {
+    button {
+      background: $light-bg-tertiary;
+      color: $text-dark;
+    }
+  }
+}
+
+.assignments__header.dark {
+  .header__right {
+    button {
+      background: $dark-bg-secondary;
+      color: rgb(232, 232, 232);
+    }
+  }
+}
+
 .assignments__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  // border: 1px solid white;
   margin-bottom: 1rem;
   .header__left {
     .subject_code__wrapper {
       display: flex;
       align-items: center;
-      // margin-bottom: 0.5rem;
       .subject {
         cursor: pointer;
         display: flex;
@@ -34,17 +50,12 @@
     button {
       outline: none;
       border: none;
-      background: #353a45;
       padding: 0.2rem 1rem;
-      color: rgb(232, 232, 232);
       border-radius: 1rem;
       font-size: 15px;
     }
     .search__wrapper {
       padding: 0.2rem 0.2rem;
-      background: #353a45;
-      display: flex;
-      align-items: center;
       border-radius: 1rem;
       height: 100%;
 
@@ -52,18 +63,8 @@
         width: 8rem !important;
         margin: 0 0.5rem;
         color: #9ba1b1;
-        font-family: $font-source-code-pro;
         font-size: 14px;
-        border: none;
-        outline: none;
-        background: transparent;
         display: none;
-
-        &:focus {
-          border: none !important;
-          background: none !important;
-          color: #86d9ca;
-        }
       }
 
       .search_icon {
@@ -84,6 +85,32 @@
   }
 }
 
+.assignments__wrapper.light {
+  .assignment__wrapper {
+    background: $light-bg-primary;
+    .assignment_subject {
+      background: $light-bg-tertiary;
+      color: #000;
+    }
+    .assignment_body {
+      color: #000;
+    }
+  }
+}
+
+.assignments__wrapper.dark {
+  .assignment__wrapper {
+    background: #25272c;
+    .assignment_subject {
+      background: $dark-bg-secondary;
+      color: $text-white;
+    }
+    .assignment_body {
+      color: $text-white;
+    }
+  }
+}
+
 .assignments__wrapper {
   width: 100%;
   height: 32rem;
@@ -93,7 +120,6 @@
     height: 3.5rem;
     margin-bottom: 1rem;
     display: flex;
-    background: #25272c;
     border-radius: 0.2rem;
     cursor: pointer;
 
@@ -106,8 +132,6 @@
     .assignment_subject {
       width: 5rem;
       height: 100%;
-      background: #353a45;
-      color: #fff;
       display: grid;
       place-items: center;
     }
@@ -117,7 +141,6 @@
       align-items: center;
       flex-wrap: wrap;
       justify-content: space-between;
-      color: #fff;
       width: 100% !important;
     }
   }

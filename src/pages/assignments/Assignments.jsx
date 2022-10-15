@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
 import DatePickerComponent from "../../components/UI/datePicker/DatePickerComponent";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 import "../../styles/Assignments.scss";
 
 const Assignments = ({ subjectColors, assignments }) => {
   const navigate = useNavigate();
+
+  const { theme } = useContext(ThemeContext);
+
   const [subjectAssignments, setSubjectAssignments] = useState(assignments);
   const [realSubjectAssignments, setRealSubjectAssignments] =
     useState(subjectAssignments);
@@ -38,7 +43,7 @@ const Assignments = ({ subjectColors, assignments }) => {
 
   return (
     <>
-      <div className="assignments__header">
+      <div className={`assignments__header ${theme}`}>
         <div className="header__left">
           <div className="subject_code__wrapper">
             {Object.entries(subjectColors)?.map(([subject, color]) => (
@@ -63,7 +68,7 @@ const Assignments = ({ subjectColors, assignments }) => {
           <button onClick={() => setSubjectAssignments(assignments)}>
             Show All
           </button>
-          <div className="search__wrapper">
+          <div className={`search__wrapper ${theme}`}>
             <SearchIcon className="search_icon" />
             <input
               className="search__inp"
@@ -76,7 +81,7 @@ const Assignments = ({ subjectColors, assignments }) => {
         </div>
       </div>
 
-      <div className="assignments__wrapper">
+      <div className={`assignments__wrapper ${theme}`}>
         {subjectAssignments?.map((assignment) => (
           <div
             key={assignment.id}
@@ -96,7 +101,7 @@ const Assignments = ({ subjectColors, assignments }) => {
             </div>
           </div>
         ))}
-        {!null && (
+        {/* {!null && (
           <div className="assignment__wrapper is-loading">
             <div className="assignment_subject_color_code"></div>
             <div className="assignment_subject">
@@ -107,7 +112,7 @@ const Assignments = ({ subjectColors, assignments }) => {
               <span></span>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );

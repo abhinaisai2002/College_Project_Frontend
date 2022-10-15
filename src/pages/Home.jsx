@@ -2,6 +2,8 @@ import React from "react";
 import { Tab, Nav } from "react-bootstrap";
 import Assignments from "./assignments/Assignments";
 import "../styles/Home.scss";
+import { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 const SUBJECT_COLORS = {
   ML: "#FF7A00",
@@ -53,9 +55,10 @@ const DUMMY_ASSIGNMENTS = [
 ];
 
 const Home = () => {
+  const {theme} = useContext(ThemeContext)
   return (
     <>
-      <section className="dashboard">
+      <section className={`dashboard ${theme}`}>
         <Tab.Container id="tabs" defaultActiveKey="first">
           <Nav variant="pills">
             <Nav.Item>

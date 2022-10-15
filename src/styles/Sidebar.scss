@@ -33,15 +33,16 @@
       // color: $text-white;
       svg {
         path {
-          fill: $light-text-secondary;
+          fill: $text-white;
         }
       }
       &:hover {
-        background: #f6f7f9;
-        color: $text-darkblue !important;
+        // background: #f6f7f9;
+        background: #0d6efd;
+        color: $text-white !important;
         svg {
           path {
-            fill: $text-darkblue;
+            fill: $text-white;
           }
         }
       }

@@ -81,9 +81,9 @@ function App() {
             path="/admin"
             element={
               <PrivateRoute>
-                {/* <AdminRoute> */}
+                <AdminRoute>
                   <Admin />
-                {/* </AdminRoute> */}
+                </AdminRoute>
               </PrivateRoute>
             }
           />
@@ -92,9 +92,9 @@ function App() {
             path="/admin/upload"
             element={
               <PrivateRoute>
-                {/* <AdminRoute> */}
+                <AdminRoute>
                   <Upload />
-                {/* </AdminRoute> */}
+                </AdminRoute>
               </PrivateRoute>
             }
           />
@@ -124,9 +124,9 @@ function App() {
             path="/admin/teachers"
             element={
               <PrivateRoute>
-                {/* <AdminRoute> */}
+                <AdminRoute>
                   <Teachers />
-                {/* </AdminRoute> */}
+                </AdminRoute>
               </PrivateRoute>
             }
           />

@@ -108,7 +108,6 @@ const ProfilePage = () => {
                 type="email"
                 name="email"
                 required
-                placeholder="Enter your email id."
               />
             </Col>
             <Col>
@@ -123,7 +122,6 @@ const ProfilePage = () => {
                 type="text"
                 name="name"
                 required
-                placeholder="Enter your name."
               />
             </Col>
           </Row>
@@ -141,7 +139,6 @@ const ProfilePage = () => {
                 type="phone"
                 name="phone"
                 required
-                placeholder="Enter your mobile number."
               />
             </Col>
             <Col>
@@ -157,38 +154,7 @@ const ProfilePage = () => {
             </Col>
           </Row>
 
-          <Row>
-            <Col>
-              <Input
-                value={passwordValue}
-                onChange={passwordHandleChange}
-                onBlur={passwordHandleBlur}
-                error="Please enter a strong password."
-                touched={passwordIsTouched}
-                errorCond={passwordIsTouched && passwordHasError}
-                label="Password"
-                type="password"
-                name="password"
-                placeholder="Please enter a strong password"
-                required
-              />
-            </Col>
-            <Col>
-              <Input
-                value={cpasswordValue}
-                onChange={cpasswordHandleChange}
-                onBlur={cpasswordHandleBlur}
-                error="Please enter the same password."
-                touched={cpasswordIsTouched}
-                errorCond={cpasswordIsTouched && cpasswordHasError}
-                placeholder="Confirm password"
-                label="Confirm Password"
-                type="password"
-                name="confirmPassword"
-                required
-              />
-            </Col>
-          </Row>
+          
           <RadioInput
             label="Gender"
             name="gender"
@@ -203,7 +169,7 @@ const ProfilePage = () => {
           />
           <Button
             type="submit"
-            text="Create Account"
+            text="Update Account"
             rightIcon={<ArrowRight />}
           />
         </Form>

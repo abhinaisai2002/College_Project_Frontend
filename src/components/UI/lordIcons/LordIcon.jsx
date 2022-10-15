@@ -34,10 +34,12 @@ const LordIcon = ({ icon, ...otherProps }) => {
   return (
     <lord-icon
       // colors="primary:#fff"
+      // colors={`primary:${theme === "dark" ? "#fff" : "#24282e"}`}
       colors={`primary:${theme === "dark" ? "#fff" : "#24282e"}`}
       src={`https://cdn.lordicon.com/${ICONS[icon]}`}
       trigger="hover"
       style={{ width: "32px", height: "32px" }}
+      
       {...otherProps}
     />
   );

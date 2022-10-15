@@ -59,7 +59,7 @@ const Sidebar = () => {
         <input className="search__inp" type="text" placeholder="Search" />
       </div>
       <aside>
-        <div>
+        <div onClick={() => navigate("/profile")}>
           <LordIcon icon="profile" />
           Profile
         </div>
@@ -72,11 +72,11 @@ const Sidebar = () => {
           Notifications
         </div>
         {user_type === "admin" && (
-          <div>
-            <Link to="/admin/upload" className="text-white">
-              <LordIcon icon="upload" />
-              Upload
-            </Link>
+          <div onClick={() => navigate("admin/upload")}>
+            {/* <Link to="/admin/upload" className="text-white"> */}
+            <LordIcon icon="upload" />
+            Upload
+            {/* </Link> */}
           </div>
         )}
       </aside>
