@@ -18,7 +18,15 @@ import "../styles/LoginSignup.scss";
 const ProfilePage = () => {
   const dispatch = useDispatch();
 
-  const [department, setDepartment] = useState("");
+  const {
+    email:initialEmail,
+    department:initialDepartment,
+    phone:initialPhone,
+    name:initialName,
+    gender:initialGender,
+  } = useSelector((state) => state.auth.user);
+
+  const [department, setDepartment] = useState(initialDepartment);
   const {
     value: emailValue,
     isTouched: emailIsTouched,
@@ -26,7 +34,7 @@ const ProfilePage = () => {
     handleReset: emailHandleReset,
     hasError: emailHasError,
     handleBlur: emailHandleBlur,
-  } = useInput("", validateEmail);
+  } = useInput(initialEmail, validateEmail);
 
   const {
     value: nameValue,
@@ -35,7 +43,7 @@ const ProfilePage = () => {
     handleReset: nameHandleReset,
     hasError: nameHasError,
     handleBlur: nameHandleBlur,
-  } = useInput("", (name) => name.length > 0);
+  } = useInput(initialName, (name) => name.length > 0);
 
   const {
     value: phoneValue,
@@ -44,44 +52,25 @@ const ProfilePage = () => {
     handleReset: phoneHandleReset,
     hasError: phoneHasError,
     handleBlur: phoneHandleBlur,
-  } = useInput("", validatePhoneNumber);
+  } = useInput(initialPhone, validatePhoneNumber);
 
-  const {
-    value: passwordValue,
-    isTouched: passwordIsTouched,
-    handleChange: passwordHandleChange,
-    handleReset: passwordHandleReset,
-    hasError: passwordHasError,
-    handleBlur: passwordHandleBlur,
-  } = useInput("", (password) => password.length >= 8);
-
-  const {
-    value: cpasswordValue,
-    isTouched: cpasswordIsTouched,
-    handleChange: cpasswordHandleChange,
-    handleReset: cpasswordHandleReset,
-    hasError: cpasswordHasError,
-    handleBlur: cpasswordHandleBlur,
-  } = useInput("", (password) => password.length >= 8);
-
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState(initialGender);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (emailHasError || passwordHasError || cpasswordHasError) {
-      alert("Please fill out th details properly");
-      return;
-    }
-
-    const data = {
-      email: emailValue,
-      password: passwordValue,
-      accountType: "teacher",
-      gender,
-      phone: phoneValue,
-      department,
-      name: nameValue,
-    };
+    // if (emailHasError || passwordHasError || cpasswordHasError) {
+    //   alert("Please fill out th details properly");
+    //   return;
+    // }
+    // const data = {
+    //   email: emailValue,
+    //   password: passwordValue,
+    //   accountType: "teacher",
+    //   gender,
+    //   phone: phoneValue,
+    //   department,
+    //   name: nameValue,
+    // };
     // console.log(data);
     //   dispatch(signUpAction(data));
   };
@@ -90,11 +79,11 @@ const ProfilePage = () => {
     <>
       <header>
         <div className="header__left">
-            <h1>Profile</h1>
+          <h1>Profile</h1>
         </div>
       </header>
       <section>
-        <Form onSubmit={handleSubmit}>
+        <Form >
           <Row>
             <Col>
               <Input
@@ -144,7 +133,7 @@ const ProfilePage = () => {
             <Col>
               <Select
                 name="branch"
-                // value=""
+                value={department}
                 onChange={(e) => setDepartment(e.target.value)}
                 label="Branch or Department"
                 optionInitialValue=""
@@ -154,7 +143,6 @@ const ProfilePage = () => {
             </Col>
           </Row>
 
-          
           <RadioInput
             label="Gender"
             name="gender"
@@ -167,11 +155,11 @@ const ProfilePage = () => {
             handleChange={(val) => setGender(val)}
             checkedValue={gender}
           />
-          <Button
+          {/* <Button
             type="submit"
             text="Update Account"
             rightIcon={<ArrowRight />}
-          />
+          /> */}
         </Form>
       </section>
     </>
