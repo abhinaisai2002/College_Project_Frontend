@@ -68,8 +68,8 @@ const Signup = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (emailHasError || passwordHasError || cpasswordHasError) {
-      alert("Please fill out th details properly");
+    if (emailHasError || passwordHasError || cpasswordHasError || !gender) {
+      alert("Please fill out the details properly");
       return;
     }
 

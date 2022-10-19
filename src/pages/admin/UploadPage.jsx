@@ -92,9 +92,17 @@ const UploadPage = () => {
       alert("Please fill the options properly");
       return;
     }
-
+    console.log(file,filePurpose);
     const uploadData = async (body) => {
-      const response = await axios.post("ENDPOINT", body, {
+      const response = await axios.post(
+        `http://localhost:8000/api/${
+          ( ()=>{
+            if(filePurpose === 'students')return 'create-bulk-students';
+            else if(filePurpose === 'subjects')return 'create-subjects';
+          } )()
+
+        }`, 
+        body, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${user.access}`,
@@ -106,6 +114,7 @@ const UploadPage = () => {
 
     try {
       const data = await uploadData({ file, filePurpose });
+      console.log(data);
       toast.success("Uploaded succesfully");
     } catch (err) {
       toast.error("Upload failed");
