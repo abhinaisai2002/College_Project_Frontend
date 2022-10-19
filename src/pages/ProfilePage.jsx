@@ -15,10 +15,18 @@ import { ReactComponent as ArrowRight } from "../assets/ArrowRight.svg";
 
 import "../styles/LoginSignup.scss";
 
-const Signup = () => {
+const ProfilePage = () => {
   const dispatch = useDispatch();
 
-  const [department, setDepartment] = useState("");
+  const {
+    email:initialEmail,
+    department:initialDepartment,
+    phone:initialPhone,
+    name:initialName,
+    gender:initialGender,
+  } = useSelector((state) => state.auth.user);
+
+  const [department, setDepartment] = useState(initialDepartment);
   const {
     value: emailValue,
     isTouched: emailIsTouched,
@@ -26,7 +34,7 @@ const Signup = () => {
     handleReset: emailHandleReset,
     hasError: emailHasError,
     handleBlur: emailHandleBlur,
-  } = useInput("", validateEmail);
+  } = useInput(initialEmail, validateEmail);
 
   const {
     value: nameValue,
@@ -35,7 +43,7 @@ const Signup = () => {
     handleReset: nameHandleReset,
     hasError: nameHasError,
     handleBlur: nameHandleBlur,
-  } = useInput("", (name) => name.length > 0);
+  } = useInput(initialName, (name) => name.length > 0);
 
   const {
     value: phoneValue,
@@ -44,71 +52,38 @@ const Signup = () => {
     handleReset: phoneHandleReset,
     hasError: phoneHasError,
     handleBlur: phoneHandleBlur,
-  } = useInput("", validatePhoneNumber);
+  } = useInput(initialPhone, validatePhoneNumber);
 
-  const {
-    value: passwordValue,
-    isTouched: passwordIsTouched,
-    handleChange: passwordHandleChange,
-    handleReset: passwordHandleReset,
-    hasError: passwordHasError,
-    handleBlur: passwordHandleBlur,
-  } = useInput("", (password) => password.length >= 8);
-
-  const {
-    value: cpasswordValue,
-    isTouched: cpasswordIsTouched,
-    handleChange: cpasswordHandleChange,
-    handleReset: cpasswordHandleReset,
-    hasError: cpasswordHasError,
-    handleBlur: cpasswordHandleBlur,
-  } = useInput("", (password) => password.length >= 8);
-
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState(initialGender);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (emailHasError || passwordHasError || cpasswordHasError || !gender) {
-      alert("Please fill out the details properly");
-      return;
-    }
-
-    const data = {
-      email: emailValue,
-      password: passwordValue,
-      accountType: "teacher",
-      gender,
-      phone: phoneValue,
-      department,
-      name: nameValue,
-    };
+    // if (emailHasError || passwordHasError || cpasswordHasError) {
+    //   alert("Please fill out th details properly");
+    //   return;
+    // }
+    // const data = {
+    //   email: emailValue,
+    //   password: passwordValue,
+    //   accountType: "teacher",
+    //   gender,
+    //   phone: phoneValue,
+    //   department,
+    //   name: nameValue,
+    // };
     // console.log(data);
-    dispatch(signUpAction(data));
+    //   dispatch(signUpAction(data));
   };
 
   return (
-    <div className="container__wrap">
-      <section className="left__section">
-        <h1>Start your journey with us.</h1>
-        <p>
-          Discover the world’s best platform for students and teachers to review
-          and submit assignments.
-        </p>
-        <div className="image_wrapper">
-          <Saly className="image" />
+    <>
+      <header>
+        <div className="header__left">
+          <h1>Profile</h1>
         </div>
-      </section>
-
-      <section className="right__section">
-        <h1>Signup</h1>
-        <p>
-          Have an account already?{" "}
-          <Link to="/login" className="link">
-            Sign in
-          </Link>
-        </p>
-
-        <Form onSubmit={handleSubmit}>
+      </header>
+      <section>
+        <Form >
           <Row>
             <Col>
               <Input
@@ -122,7 +97,6 @@ const Signup = () => {
                 type="email"
                 name="email"
                 required
-                placeholder="Enter your email id."
               />
             </Col>
             <Col>
@@ -137,7 +111,6 @@ const Signup = () => {
                 type="text"
                 name="name"
                 required
-                placeholder="Enter your name."
               />
             </Col>
           </Row>
@@ -155,13 +128,12 @@ const Signup = () => {
                 type="phone"
                 name="phone"
                 required
-                placeholder="Enter your mobile number."
               />
             </Col>
             <Col>
               <Select
                 name="branch"
-                // value=""
+                value={department}
                 onChange={(e) => setDepartment(e.target.value)}
                 label="Branch or Department"
                 optionInitialValue=""
@@ -171,38 +143,6 @@ const Signup = () => {
             </Col>
           </Row>
 
-          <Row>
-            <Col>
-              <Input
-                value={passwordValue}
-                onChange={passwordHandleChange}
-                onBlur={passwordHandleBlur}
-                error="Please enter a strong password."
-                touched={passwordIsTouched}
-                errorCond={passwordIsTouched && passwordHasError}
-                label="Password"
-                type="password"
-                name="password"
-                placeholder="Please enter a strong password"
-                required
-              />
-            </Col>
-            <Col>
-              <Input
-                value={cpasswordValue}
-                onChange={cpasswordHandleChange}
-                onBlur={cpasswordHandleBlur}
-                error="Please enter the same password."
-                touched={cpasswordIsTouched}
-                errorCond={cpasswordIsTouched && cpasswordHasError}
-                placeholder="Confirm password"
-                label="Confirm Password"
-                type="password"
-                name="confirmPassword"
-                required
-              />
-            </Col>
-          </Row>
           <RadioInput
             label="Gender"
             name="gender"
@@ -215,16 +155,18 @@ const Signup = () => {
             handleChange={(val) => setGender(val)}
             checkedValue={gender}
           />
-          <Button
+          {/* <Button
             type="submit"
-            text="Create Account"
+            text="Update Account"
             rightIcon={<ArrowRight />}
-          />
+          /> */}
         </Form>
       </section>
-    </div>
+    </>
   );
 };
+
+export default ProfilePage;
 
 const validateEmail = (email) => {
   let emailRe = new RegExp("[a-zA-Z0-9]+@[a-z]+.[a-z]+");
@@ -235,5 +177,3 @@ const validatePhoneNumber = (phoneNumber) => {
   let phoneRe = new RegExp("[1-9][0-9]{9}");
   return phoneRe.test(phoneNumber);
 };
-
-export default Signup;

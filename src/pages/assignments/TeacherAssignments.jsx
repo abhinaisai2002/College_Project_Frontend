@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useContext } from "react";
+import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
 import DatePickerComponent from "../../components/UI/datePicker/DatePickerComponent";
+import { Select } from "../../components/UI/input/Input";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 import "../../styles/Assignments.scss";
+import "../../styles/TeacherAssignments.scss";
 
-const Assignments = ({ subjectColors, assignments }) => {
+const TeacherAssignments = ({ subjectColors, assignments }) => {
   const navigate = useNavigate();
 
   const { theme } = useContext(ThemeContext);
@@ -43,7 +46,7 @@ const Assignments = ({ subjectColors, assignments }) => {
 
   return (
     <>
-      <div className={`assignments__header ${theme}`}>
+      {/* <div className={`assignments__header ${theme}`}>
         <div className="header__left">
           <div className="subject_code__wrapper">
             {Object.entries(subjectColors)?.map(([subject, color]) => (
@@ -79,9 +82,44 @@ const Assignments = ({ subjectColors, assignments }) => {
             />
           </div>
         </div>
+      </div> */}
+
+      <div className={`teacher_filter__form ${theme}`}>
+        <form style={{ width: "20rem !important" }}>
+          <Select
+            label="Batch"
+            name="batch"
+            optionInitialValue=""
+            options={["2019", "2020", "2021", "2022"]}
+            required
+          />
+          <Select
+            label="Branch"
+            name="branch"
+            // value=""
+            optionInitialValue=""
+            options={["CSE", "IT", "ECE", "EEE", "CIVIL", "MECH"]}
+            required
+            // disabled={}
+          />
+          <Select
+            label="Subject"
+            name="subject"
+            optionInitialValue=""
+            options={["ML", "UML", "IOT", "BDA", "CNS"]}
+          />
+          <div className="section__wrapper">
+            <Form.Label>Section</Form.Label>
+            {["A", "B", "C", "D"].map((section) => (
+              <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label={section} />
+              </Form.Group>
+            ))}
+          </div>
+        </form>
       </div>
 
-      <div className={`assignments__wrapper ${theme}`}>
+      {/* <div className={`assignments__wrapper ${theme}`}>
         {subjectAssignments?.map((assignment) => (
           <div
             key={assignment.id}
@@ -101,7 +139,7 @@ const Assignments = ({ subjectColors, assignments }) => {
             </div>
           </div>
         ))}
-        {/* {!null && (
+        {!null && (
           <div className="assignment__wrapper is-loading">
             <div className="assignment_subject_color_code"></div>
             <div className="assignment_subject">
@@ -112,10 +150,10 @@ const Assignments = ({ subjectColors, assignments }) => {
               <span></span>
             </div>
           </div>
-        )} */}
-      </div>
+        )}
+      </div> */}
     </>
   );
 };
 
-export default Assignments;
+export default TeacherAssignments;

@@ -1,10 +1,11 @@
 import React from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
-import "../styles/Admin.scss";
+import {ThemeContext} from '../contexts/ThemeContext'
 
 const Admin = () => {
   const navigate = useNavigate();
+  const {theme} = useContext(ThemeContext)
   return (
     <>
       <header>
@@ -14,7 +15,7 @@ const Admin = () => {
         <div className="header__right"></div>
       </header>
       <section>
-        <ul>
+        <ul className={theme}>
           <li onClick={() => navigate("teachers")}>
             navigate to <span>/teachers</span>
           </li>

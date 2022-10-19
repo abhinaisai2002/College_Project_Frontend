@@ -1,16 +1,37 @@
 @import "../index.scss";
 
+.dashboard.light {
+  background: $light-bg-secondary;
+  .nav {
+    border-bottom: 2px solid $light-bg-primary;
+  }
+}
+
+.dashboard.dark {
+  background: #1c1f25;
+  .nav {
+    border-bottom: 2px solid $dark-bg-secondary;
+    .nav-item {
+      .nav-link {
+        color: $text-white;
+      }
+      .active {
+        background: $dark-bg-secondary;
+        color: $text-oceanblue;
+      }
+    }
+  }
+}
+
 .dashboard {
   margin: 1.5rem 0 !important;
   border-radius: 0.2rem;
-  background: #1c1f25;
   min-height: 30rem;
   padding: 2rem;
 
   .nav {
     width: 100%;
     padding-bottom: 1rem;
-    border-bottom: 2px solid #353a45;
     display: flex;
     flex-wrap: wrap;
     .nav-item {
@@ -18,7 +39,6 @@
       margin: 0 1rem;
       min-width: 18rem;
       .nav-link {
-        color: #fff;
         display: flex;
         align-items: center;
 
@@ -27,7 +47,6 @@
         .reviewed {
           width: 1rem !important;
           height: 1rem !important;
-          // border: 1px solid #fff;
           margin-right: 0.5rem;
           border-radius: 50%;
         }
@@ -42,8 +61,6 @@
         }
       }
       .active {
-        background: #353a45;
-        color: #86d9ca;
         font-weight: 600;
       }
     }
