@@ -4,14 +4,11 @@ import axios from "axios";
 import { assignmentActions } from "../reducers/assignmentSlice";
 
 export const loadAllAssignmentsAction = (token)=>{
-
+    console.log(token)
     return async (dispatch)=>{
         async function getAssignment(){
-            const response = await axios.post(
+            const response = await axios.get(
                 'http://localhost:8000/api/students/assignments',
-                {
-                    
-                },
                 {
                     headers:{
                         'Authorization':`Bearer ${token}`
@@ -33,7 +30,7 @@ export const loadAllAssignmentsAction = (token)=>{
     }
 }
 
-export const submitAssigment = (form_data)=>{
+export const submitAssigment = (form_data,token)=>{
     return async (dispatch) => {
         async function send_assignment(){
             const response = await axios.post(
@@ -41,6 +38,7 @@ export const submitAssigment = (form_data)=>{
                 form_data,
                 {
                     headers:{
+                        'Authorization':`Bearer ${token}`,
                         'Content-Type': 'multipart/form-data'
                     }
                 }

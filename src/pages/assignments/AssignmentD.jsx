@@ -10,69 +10,70 @@ import Button from "../../components/UI/button/Button";
 import LordIcon from "../../components/UI/lordIcons/LordIcon";
 import ModalComponent from "../../components/UI/modal/ModalComponent";
 import Upload from "../../components/Upload";
+import { submitAssigment } from "../../redux/actions/assignmentAction";
 // import Spinner from "../../components/UI/spinners/Spinner";
 
 import "../../styles/Assignment.scss";
 
-const DUMMY_ASSIGNMENTS = [
+// const DUMMY_ASSIGNMENTS = [
   
-  {
-    "id": 6,
-    "title": "title1",
-    "assignment_link": "https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2Ftitle1666024104928602307?alt=media&token=788986f0-df3e-440e-8712-03867a8c9ac1",
-    "datePosted": "2022-10-15T00:35:14Z",
-    "due_date": "2022-10-16T00:35:14Z",
-    "assignedBy": {
-        "teacherId": 1,
-        "teacherName": "teacher1"
-    },
-    "marks": null,
-    "reviewed": false,
-    "submitted": false,
-    "answerlink": null,
-    "subject_full_code": "Subj1",
-    "subject_short_code": "S1",
-    "submission_date": null,
-    "color_code": "#FF7A00",
-  },
-  {
-    "id": 7,
-    "title": "title2",
-    "assignment_link": "https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2Ftitle1666024104928602307?alt=media&token=788986f0-df3e-440e-8712-03867a8c9ac1",
-    "datePosted": "2022-10-15T00:35:14Z",
-    "due_date": "2022-10-14T00:35:14Z",
-    "assignedBy": {
-        "teacherId": 2,
-        "teacherName": "teacher2"
-    },
-    "marks": null,
-    "reviewed": false,
-    "submitted": true,
-    "answerlink":"https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2Ftitle1666024104928602307?alt=media&token=788986f0-df3e-440e-8712-03867a8c9ac1",
-    "subject_full_code": "Subj2",
-    "subject_short_code": "S2",
-    "submission_date": '2022-10-18T04:25:08Z',
-    "color_code": "#FF7A00",
-  },{
-    "id": 1,
-    "title": "title",
-    "assignment_link": "https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2Ftitle1666024104928602307?alt=media&token=788986f0-df3e-440e-8712-03867a8c9ac1",
-    "datePosted": "2022-10-15T00:35:14Z",
-    "due_date": "2022-10-14T00:35:14Z",
-    "assignedBy": {
-        "teacherId": 1,
-        "teacherName": "teacher1"
-    },
-    "marks": 9,
-    "reviewed": true,
-    "submitted": true,
-    "answerlink": "https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2FSubj14CSEC%2FCream%20and%20Green%20Creative%20Resume.pdf1666027691271191341?alt=media&token=f7a25d15-3701-4675-9c82-e811d41b39da",
-    "subject_full_code": "Subj3",
-    "subject_short_code": "S3",
-    "submission_date": "2022-10-18T04:25:08Z",
-    "color_code": "#FF7A00",
-  },
-];
+//   {
+//     "id": 6,
+//     "title": "title1",
+//     "assignment_link": "https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2Ftitle1666024104928602307?alt=media&token=788986f0-df3e-440e-8712-03867a8c9ac1",
+//     "datePosted": "2022-10-15T00:35:14Z",
+//     "due_date": "2022-10-16T00:35:14Z",
+//     "assignedBy": {
+//         "teacherId": 1,
+//         "teacherName": "teacher1"
+//     },
+//     "marks": null,
+//     "reviewed": false,
+//     "submitted": false,
+//     "answerlink": null,
+//     "subject_full_code": "Subj1",
+//     "subject_short_code": "S1",
+//     "submission_date": null,
+//     "color_code": "#FF7A00",
+//   },
+//   {
+//     "id": 7,
+//     "title": "title2",
+//     "assignment_link": "https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2Ftitle1666024104928602307?alt=media&token=788986f0-df3e-440e-8712-03867a8c9ac1",
+//     "datePosted": "2022-10-15T00:35:14Z",
+//     "due_date": "2022-10-14T00:35:14Z",
+//     "assignedBy": {
+//         "teacherId": 2,
+//         "teacherName": "teacher2"
+//     },
+//     "marks": null,
+//     "reviewed": false,
+//     "submitted": true,
+//     "answerlink":"https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2Ftitle1666024104928602307?alt=media&token=788986f0-df3e-440e-8712-03867a8c9ac1",
+//     "subject_full_code": "Subj2",
+//     "subject_short_code": "S2",
+//     "submission_date": '2022-10-18T04:25:08Z',
+//     "color_code": "#FF7A00",
+//   },{
+//     "id": 1,
+//     "title": "title",
+//     "assignment_link": "https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2Ftitle1666024104928602307?alt=media&token=788986f0-df3e-440e-8712-03867a8c9ac1",
+//     "datePosted": "2022-10-15T00:35:14Z",
+//     "due_date": "2022-10-14T00:35:14Z",
+//     "assignedBy": {
+//         "teacherId": 1,
+//         "teacherName": "teacher1"
+//     },
+//     "marks": 9,
+//     "reviewed": true,
+//     "submitted": true,
+//     "answerlink": "https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2FSubj14CSEC%2FCream%20and%20Green%20Creative%20Resume.pdf1666027691271191341?alt=media&token=f7a25d15-3701-4675-9c82-e811d41b39da",
+//     "subject_full_code": "Subj3",
+//     "subject_short_code": "S3",
+//     "submission_date": "2022-10-18T04:25:08Z",
+//     "color_code": "#FF7A00",
+//   },
+// ];
 
 
 const useAssignment = (id) => {
@@ -95,14 +96,12 @@ const useAssignment = (id) => {
         };
       });
 
-      let DUMMY_ASSIGNMENTSS = [...posts.pending,...posts.submitted,...posts.reviewed];
-      console.log(DUMMY_ASSIGNMENTS)
-      if(!DUMMY_ASSIGNMENTSS){
-        DUMMY_ASSIGNMENTSS = DUMMY_ASSIGNMENTS;
-      }
+      let DUMMY_ASSIGNMENTS = [...posts.pending,...posts.submitted,...posts.reviewed];
+      console.log(DUMMY_ASSIGNMENTS);
       const filteredAssignment = DUMMY_ASSIGNMENTS.filter(
         (assignment) => assignment.id === parseInt(id)
       )[0];
+      console.log(filteredAssignment);
 
       if (filteredAssignment) {
         setState((prev) => {
@@ -136,6 +135,8 @@ const Assignment = () => {
 
   const dispatch = useDispatch();
 
+  const user = useSelector(state => state.auth);
+
   const [file, setFile] = useState(null);
   const [fileDataURL, setFileDataURL] = useState(null);
   const [previewModalShow, setPreviewModalShow] = useState(false);
@@ -165,7 +166,21 @@ const Assignment = () => {
   const handleChange = (file) => setFile(file);
 
   const handleUpload = ()=>{
-    dis
+
+    if(!file)return alert("Please upload a file!!!");
+
+    const formData = new FormData();
+
+    let date = Date();
+    let dateList = date.split(' ');
+    dateList = dateList.slice(0,6);
+    let date_submitted = dateList.join(' ');
+
+    formData.append('file',file);
+    formData.append('assignmentId',assignment.id);
+    formData.append('date_submitted',date_submitted);
+    console.log(user.access);
+    dispatch(submitAssigment(formData,user.access));
   }
 
   return (
@@ -248,14 +263,14 @@ const Assignment = () => {
 
         </div>
         <div className="footer_right">
-          <a
+          {assignment?.answerlink && <a
             href={assignment?.answerlink}
             target="_blank"
             rel="noreferrer"
             className="btn"
           >
             Preview Submitted Assignment
-          </a>
+          </a>}
           <a
             href={assignment?.assignment_link}
             target="_blank"

@@ -10,6 +10,7 @@ import { useReducer } from "react";
 import { Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { assignmentActions } from "../redux/reducers/assignmentSlice";
+import { loadAllAssignmentsAction } from "../redux/actions/assignmentAction";
 
 const DUMMY_ASSIGNMENTS = [
   
@@ -156,13 +157,13 @@ const StudentDashboard = () => {
   const { theme } = useContext(ThemeContext);
 
   const assignments = useSelector(state => state.studentAssignments);
-
+  const student = useSelector(state => state.auth);
   const dispatch = useDispatch();
   useEffect( ()=>{
     // api call for all assignments and put them in the redux
-    dispatch(assignmentActions.loadAllAssignments({
-      'assignments':DUMMY_ASSIGNMENTS
-    }));
+    dispatch(
+      loadAllAssignmentsAction(student.access)
+    );
   },[])
 
   if(!assignments)

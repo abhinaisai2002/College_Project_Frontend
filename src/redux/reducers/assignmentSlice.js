@@ -10,6 +10,7 @@ const assignments = createSlice({
     reducers:{
         loadAllAssignments : (state,data)=>{
             const assignments = data.payload.assignments;
+            console.log(assignments);
             let pending=[];
             let submitted=[];
             let reviewed=[];

@@ -8,7 +8,6 @@ const PrivateRoute = ({ children }) => {
 
   const isLoading = useSelector(state => state.loader.showLoader);
 
-  console.log(isLoading);
   if(isLoading)
     return <Spinner />
 
