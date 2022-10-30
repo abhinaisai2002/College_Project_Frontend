@@ -9,24 +9,24 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import "../../styles/Assignments.scss";
 
 const Assignments = ({ subjectColors, assignments }) => {
-  const navigate = useNavigate();
-
   const { theme } = useContext(ThemeContext);
 
-  const [subjectAssignments, setSubjectAssignments] = useState(assignments);
-  const [realSubjectAssignments, setRealSubjectAssignments] =
-    useState(subjectAssignments);
+  const [subjectAssignments, setSubjectAssignments] = useState(() => assignments);
   const [query, setQuery] = useState("");
+
+  useEffect(()=>{
+    setSubjectAssignments( p => assignments);
+  },[assignments])
 
   useEffect(() => {
     if (query !== "") {
-      const tempAssignments = realSubjectAssignments.filter((assignment) =>
+      const tempAssignments = assignments.filter((assignment) =>
         ["title", "subject_short_code"].some((key) =>
           assignment[key].toLowerCase().includes(query.toLowerCase())
         )
       );
       setSubjectAssignments((prev) => tempAssignments);
-    } else setSubjectAssignments(realSubjectAssignments);
+    } else setSubjectAssignments(assignments);
   }, [query]);
 
   const onSubjectClickHandler = (subject) => {
@@ -65,7 +65,7 @@ const Assignments = ({ subjectColors, assignments }) => {
           </div>
         </div>
         <div className="header__right">
-          <button onClick={() => setSubjectAssignments(assignments)}>
+          <button  onClick={() => setSubjectAssignments(assignments)}>
             Show All
           </button>
           <div className={`search__wrapper ${theme}`}>
@@ -83,23 +83,7 @@ const Assignments = ({ subjectColors, assignments }) => {
 
       <div className={`assignments__wrapper ${theme}`}>
         {subjectAssignments?.map((assignment) => (
-          <div
-            key={assignment.id}
-            className="assignment__wrapper"
-            onClick={() => navigate(`assignment/${assignment.id}`)}
-          >
-            <div
-              className="assignment_subject_color_code"
-              style={{ background: assignment.color_code }}
-            />
-            <div className="assignment_subject">
-              {assignment.subject_short_code}
-            </div>
-            <div className="assignment_body">
-              <span>{assignment.title}</span>
-              <span>{assignment.due_date}</span>
-            </div>
-          </div>
+          <AssignmentCard key={assignment.id} assignment={assignment} />
         ))}
         {/* {!null && (
           <div className="assignment__wrapper is-loading">
@@ -117,5 +101,81 @@ const Assignments = ({ subjectColors, assignments }) => {
     </>
   );
 };
+
+const AssignmentCard = ({assignment}) => {
+  const navigate = useNavigate();
+  if(assignment.reviewed)
+    return (
+      <div
+        className="assignment__wrapper"
+        onClick={() => navigate(`assignment/${assignment.id}`)}
+      >
+        <div
+          className="assignment_subject_color_code"
+          style={{ background: assignment.color_code }}
+        />
+        <div className="assignment_subject">
+          {assignment.subject_short_code}
+        </div>
+        <div className="assignment_body">
+          <span>{assignment.title}</span>
+          <span>Marks : {assignment.marks}/10</span>
+        </div>
+      </div>
+    );
+  else if(assignment.submitted){
+    return (
+      <div
+        key={assignment.id}
+        className="assignment__wrapper"
+        onClick={() => navigate(`assignment/${assignment.id}`)}
+      >
+        <div
+          className="assignment_subject_color_code"
+          style={{ background: assignment.color_code }}
+        />
+        <div className="assignment_subject">
+          {assignment.subject_short_code}
+        </div>
+        <div className="assignment_body">
+          <span>{assignment.title}</span>
+          <span>Submitted on {getDate(assignment.submission_date)}</span>
+        </div>
+      </div>
+    );
+  }
+  else{
+    return (
+      <div
+        key={assignment.id}
+        className="assignment__wrapper"
+        onClick={() => navigate(`assignment/${assignment.id}`)}
+      >
+        <div
+          className="assignment_subject_color_code"
+          style={{ background: assignment.color_code }}
+        />
+        <div className="assignment_subject">
+          {assignment.subject_short_code}
+        </div>
+        <div className="assignment_body">
+          <span>{assignment.title}</span>
+          <span>Due Date{getDate(assignment.due_date)}</span>
+        </div>
+      </div>
+    );
+  }
+  
+}
+
+
+function getDate(dateS){
+  const date = new Date(dateS)
+  const months = ["Jan", "Feb", "March", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  let d = `
+  ${date.getFullYear()}/${months[date.getMonth()]}/${date.getDate()} ${date.getHours()}:${date.getMinutes()} ${date.getHours()>= 12 ? 'pm' : 'am'}
+    `
+  return d;
+}
 
 export default Assignments;

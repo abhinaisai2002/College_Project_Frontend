@@ -146,7 +146,7 @@ const UploadPage = () => {
         </div>
       </header>
       <section className="upload_page__wrapper">
-        <Upload {...{ handleChange, fileTypes: ["CSV", "JPEG"] }} />
+        <Upload {...{ handleChange, fileTypes: ["CSV", "JPEG","XLSX"] }} />
         <p className="file__name">
           {file ? `File name: ${file.name}` : "No Files Uploaded Yet"}
         </p>

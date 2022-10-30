@@ -28,7 +28,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // dispatch(loaderActions.showLoading());
+    dispatch(loaderActions.showLoading());
     ////////////////////////
     const access = localStorage.getItem("access");
     const refresh = localStorage.getItem("refresh");
