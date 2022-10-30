@@ -7,50 +7,83 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { useSelector } from "react-redux";
 import TeacherAssignments from "./assignments/TeacherAssignments";
 import { useReducer } from "react";
+import { Navigate } from "react-router-dom";
 
-const SUBJECT_COLORS = {
-  ML: "#FF7A00",
-  UML: "#00B607",
-  IOT: "#0085FF",
-};
+
 
 const DUMMY_ASSIGNMENTS = [
+  
   {
-    id: 1,
-    title: "ML Assignment - 1",
-    subject_short_code: "ML",
-    subject_full_code: "Machine Learning",
-    due_date: "08/08/2022",
-    color_code: "#FF7A00",
+    "id": 6,
+    "title": "title1",
+    "assignmentLink": "https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2Ftitle1666024104928602307?alt=media&token=788986f0-df3e-440e-8712-03867a8c9ac1",
+    "datePosted": "2022-10-15T00:35:14Z",
+    "due_date": "2022-10-14T00:35:14Z",
+    "assignedBy": {
+        "teacherId": 1,
+        "teacherName": "teacher1"
+    },
+    "marks": null,
+    "reviewed": false,
+    "submitted": false,
+    "answerlink": null,
+    "subject_full_code": "Subj1",
+    "subject_short_code": "S1",
+    "submissionDate": null,
+    "color_code": "#FF7A00",
   },
   {
-    id: 2,
-    title: "UML Assignment Mid - 1",
-    subject_short_code: "UML",
-    subject_full_code: "Unified Modelling Language",
-    due_date: "09/01/2022",
-    color_code: "#00B607",
-  },
-  {
-    id: 3,
-    title: "IOT Assignment - 1",
-    subject_short_code: "IOT",
-    subject_full_code: "Internet Of Things",
-    due_date: "26/06/2023",
-    color_code: "#0085FF",
-  },
-  {
-    id: 4,
-    title: "IOT Assignment - 2",
-    subject_short_code: "IOT",
-    subject_full_code: "Internet Of Things",
-    due_date: "26/06/2023",
-    color_code: "#0085FF",
+    "id": 7,
+    "title": "title2",
+    "assignmentLink": "https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2Ftitle1666024104928602307?alt=media&token=788986f0-df3e-440e-8712-03867a8c9ac1",
+    "datePosted": "2022-10-15T00:35:14Z",
+    "due_date": "2022-10-14T00:35:14Z",
+    "assignedBy": {
+        "teacherId": 2,
+        "teacherName": "teacher2"
+    },
+    "marks": null,
+    "reviewed": false,
+    "submitted": true,
+    "answerlink":"https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2Ftitle1666024104928602307?alt=media&token=788986f0-df3e-440e-8712-03867a8c9ac1",
+    "subject_full_code": "Subj2",
+    "subject_short_code": "S2",
+    "submissionDate": null,
+    "color_code": "#FF7A00",
+  },{
+    "id": 1,
+    "title": "title",
+    "assignmentLink": "https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2Ftitle1666024104928602307?alt=media&token=788986f0-df3e-440e-8712-03867a8c9ac1",
+    "datePosted": "2022-10-15T00:35:14Z",
+    "due_date": "2022-10-14T00:35:14Z",
+    "assignedBy": {
+        "teacherId": 1,
+        "teacherName": "teacher1"
+    },
+    "marks": 9,
+    "reviewed": true,
+    "submitted": true,
+    "answerlink": "https://firebasestorage.googleapis.com/v0/b/python-2c704.appspot.com/o/assignments%2FSubj14CSEC%2FCream%20and%20Green%20Creative%20Resume.pdf1666027691271191341?alt=media&token=f7a25d15-3701-4675-9c82-e811d41b39da",
+    "subject_full_code": "Subj3",
+    "subject_short_code": "S3",
+    "submissionDate": "2022-10-18T04:25:08Z",
+    "color_code": "#FF7A00",
   },
 ];
+const SUBJECT_COLORS = 
+  DUMMY_ASSIGNMENTS.
+  reduce( (curr,assignment)=>{
+    console.log(curr,assignment)
+    curr[assignment['subject_short_code']] = assignment['color_code']
+    return curr
+  } , {} )
 
 const Home = () => {
   const user_type = useSelector((state) => state.auth.user.user_type);
+
+  if(user_type === 'admin'){
+    return <Navigate to='/admin'/>
+  }
 
   return (
     <>
@@ -112,6 +145,8 @@ const TeacherDashboard = () => {
 
 const StudentDashboard = () => {
   const { theme } = useContext(ThemeContext);
+
+  
 
   return (
     <section className={`dashboard ${theme}`}>

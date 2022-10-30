@@ -24,7 +24,8 @@ export const signUpAction = (user)=>{
             dispatch(modalActions.showModal("Your account is in pending state, consult your admin to activate your account"));
         }
         catch(err){
-            console.log(err);
+            const { message } = err.response.data;
+            dispatch(modalActions.showModal(message));
         }
 
     }
