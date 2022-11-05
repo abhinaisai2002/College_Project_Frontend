@@ -2,6 +2,7 @@
 import axios from "axios";
 
 import { assignmentActions } from "../reducers/assignmentSlice";
+import { logOut } from "./loginAction";
 
 export const loadAllAssignmentsAction = (token)=>{
     console.log(token)
@@ -24,7 +25,10 @@ export const loadAllAssignmentsAction = (token)=>{
             dispatch(assignmentActions.loadAllAssignments(data));
         }
         catch(err){
-            const {message} = err.response.data;
+            const {message,success} = err.response.data;
+            if(success==4)
+                dispatch(logOut())
+            console.log(message,success);
         }
 
     }
@@ -53,6 +57,7 @@ export const submitAssigment = (form_data,token)=>{
         }
         catch(err){
             const {message} = err.response.data;
+            console.log(message);
         }
     }
 }
