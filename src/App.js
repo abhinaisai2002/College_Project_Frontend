@@ -131,6 +131,18 @@ function App() {
             }
           />
 
+          <Route
+            exact
+            path="/teachers/"
+            element={
+              <PrivateRoute>
+                <AdminRoute>
+                  <Teachers />
+                </AdminRoute>
+              </PrivateRoute>
+            }
+          />
+
           <Route exact path="*" element={<ErrorPage />} />
         </Routes>
 
