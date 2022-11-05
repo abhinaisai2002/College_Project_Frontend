@@ -103,7 +103,10 @@ const Sidebar = () => {
           <>
             <div className="footer__left"></div>
             <div className="footer__right">
-              <Button text="Proceed" onClick={() => setShowUploadAssignmentModal(false)} />
+              <Button
+                text="Proceed"
+                onClick={() => setShowUploadAssignmentModal(false)}
+              />
             </div>
           </>
         }
@@ -187,7 +190,6 @@ const Sidebar = () => {
                 />
 
                 {file ? file.name : "No Files Uploaded Yet"}
-
               </form>
             </div>
           </>
@@ -200,7 +202,12 @@ const Sidebar = () => {
                 text="Close"
                 onClick={() => setShowNewAssignmentModal(false)}
               />
-              <Button text="Create Assignment" onClick={() => {}} />
+              <Button
+                text="Create Assignment"
+                onClick={() => {
+                  console.log(formData);
+                }}
+              />
             </div>
           </>
         }
