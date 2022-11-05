@@ -26,7 +26,8 @@
 .dashboard {
   margin: 1.5rem 0 !important;
   border-radius: 0.2rem;
-  min-height: 30rem;
+  // min-height: 30rem;
+  height: fit-content !important;
   padding: 2rem;
 
   .nav {
