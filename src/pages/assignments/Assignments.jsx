@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
-import DatePickerComponent from "../../components/UI/datePicker/DatePickerComponent";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 import "../../styles/Assignments.scss";

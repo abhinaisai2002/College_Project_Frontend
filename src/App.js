@@ -24,12 +24,13 @@ import Teachers from "./pages/admin/Teachers";
 import Assignment from "./pages/assignments/AssignmentD";
 import ProfilePage from "./pages/ProfilePage";
 
+import TeacherReviewPage from "./pages/assignments/TeacherReviewPage";
+
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loaderActions.showLoading());
-    ////////////////////////
     const access = localStorage.getItem("access");
     const refresh = localStorage.getItem("refresh");
     const user =
@@ -38,7 +39,6 @@ function App() {
     } else {
       dispatch(authActions.loginDataFromLocal({ access, refresh, user }));
     }
-    ////////////////////////
     dispatch(loaderActions.stopLoading());
   }, []);
 
@@ -138,6 +138,18 @@ function App() {
               <PrivateRoute>
                 <AdminRoute>
                   <Teachers />
+                </AdminRoute>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            exact
+            path="/"
+            element={
+              <PrivateRoute>
+                <AdminRoute>
+                  <TeacherReviewPage />
                 </AdminRoute>
               </PrivateRoute>
             }

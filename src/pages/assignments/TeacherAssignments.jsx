@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useContext } from "react";
-import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as SearchIcon } from "../../assets/Search.svg";
-import DatePickerComponent from "../../components/UI/datePicker/DatePickerComponent";
-import { Select } from "../../components/UI/input/Input";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 import "../../styles/Assignments.scss";
 import "../../styles/TeacherAssignments.scss";
 
-const TeacherAssignments = ({ subjectColors, assignments }) => {
+const TeacherAssignments = ({
+  subjectColors,
+  assignments,
+  isHeaderRequired,
+}) => {
   const navigate = useNavigate();
 
   const { theme } = useContext(ThemeContext);
@@ -46,43 +47,45 @@ const TeacherAssignments = ({ subjectColors, assignments }) => {
 
   return (
     <>
-      <div className={`assignments__header ${theme}`}>
-        <div className="header__left">
-          <div className="subject_code__wrapper">
-            {Object.entries(subjectColors)?.map(([subject, color]) => (
-              <div
-                key={subject}
-                className="subject"
-                style={{ color }}
-                onClick={() => onSubjectClickHandler(subject)}
-              >
+      {isHeaderRequired && (
+        <div className={`assignments__header ${theme}`}>
+          <div className="header__left">
+            <div className="subject_code__wrapper">
+              {Object.entries(subjectColors)?.map(([subject, color]) => (
                 <div
-                  className="subject_color_code"
-                  style={{
-                    background: color,
-                  }}
-                />
-                {subject}
-              </div>
-            ))}
+                  key={subject}
+                  className="subject"
+                  style={{ color }}
+                  onClick={() => onSubjectClickHandler(subject)}
+                >
+                  <div
+                    className="subject_color_code"
+                    style={{
+                      background: color,
+                    }}
+                  />
+                  {subject}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="header__right">
+            <button onClick={() => setSubjectAssignments(assignments)}>
+              Show All
+            </button>
+            <div className={`search__wrapper ${theme}`}>
+              <SearchIcon className="search_icon" />
+              <input
+                className="search__inp"
+                type="text"
+                placeholder="Search"
+                value={query}
+                onChange={onSearchHandler}
+              />
+            </div>
           </div>
         </div>
-        <div className="header__right">
-          <button onClick={() => setSubjectAssignments(assignments)}>
-            Show All
-          </button>
-          <div className={`search__wrapper ${theme}`}>
-            <SearchIcon className="search_icon" />
-            <input
-              className="search__inp"
-              type="text"
-              placeholder="Search"
-              value={query}
-              onChange={onSearchHandler}
-            />
-          </div>
-        </div>
-      </div>
+      )}
 
       <div className={`assignments__wrapper ${theme}`}>
         {subjectAssignments?.map((assignment) => (

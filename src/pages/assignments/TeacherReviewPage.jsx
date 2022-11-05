@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useContext } from "react";
+
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 import { Table } from "react-bootstrap";
 
@@ -25,3 +26,5 @@ const TeacherReviewPage = () => {
     </div>
   );
 };
+
+export default TeacherReviewPage;

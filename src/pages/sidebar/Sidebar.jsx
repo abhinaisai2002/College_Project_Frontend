@@ -83,6 +83,8 @@ const Sidebar = () => {
         dateList = dateList.slice(0, 6);
         value = dateList.join(" ");
         break;
+      default:
+        break;
     }
 
     setFormData((prev) => ({ ...prev, [name]: value }));
