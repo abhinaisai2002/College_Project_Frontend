@@ -21,6 +21,8 @@ import { Input, RadioInput, Select } from "../../components/UI/input/Input";
 import "../../styles/Sidebar.scss";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import Upload from "../../components/Upload";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -30,6 +32,7 @@ const Sidebar = () => {
 
   const user_type = useSelector((state) => state.auth.user.user_type);
   const refresh = useSelector((state) => state.auth.refresh);
+  const user = useSelector((state) => state.auth);
 
   const [showNewAssignmentModal, setShowNewAssignmentModal] = useState(false);
 
@@ -63,6 +66,23 @@ const Sidebar = () => {
 
   console.log(formData);
 
+  const handleSubmit = (date) => {
+    let due_date = new Date(date);
+
+    let dateList = due_date.toString().split(" ");
+    dateList = dateList.slice(0, 6);
+    due_date = dateList.join(" ");
+
+    const body = {
+      ...formData,
+      due_date,
+    };
+
+    console.log(body);
+
+    postAssignment(body);
+  };
+
   const handleDate = (e) => {
     let due_date = new Date(e.target.value);
 
@@ -72,22 +92,53 @@ const Sidebar = () => {
     setFormData((prev) => ({ ...prev, due_date }));
   };
 
+  const getFormatDate = (date) => {
+    let dateList = date.toString().split(" ");
+    dateList = dateList.slice(0, 6);
+    return dateList.join(" ");
+  };
   const handleFormDataChange = (e) => {
     let { name, value } = e.target;
 
-    switch (name) {
-      case "due_date":
-        let due_date = new Date(e.target.value);
+    // switch (name) {
+    //   case "due_date":
+    //     let due_date = new Date(e.target.value);
 
-        let dateList = due_date.toString().split(" ");
-        dateList = dateList.slice(0, 6);
-        value = dateList.join(" ");
-        break;
-      default:
-        break;
-    }
+    //     let dateList = due_date.toString().split(" ");
+    //     dateList = dateList.slice(0, 6);
+    //     value = dateList.join(" ");
+    //     break;
+    //   default:
+    //     break;
+    // }
 
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const postAssignment = (formData) => {
+    const body = {
+      title: formData.title,
+      due_date: formData["due_date"],
+      date: formData["date"],
+      file: file,
+      year: formData["batch"],
+      branch: formData["branch"],
+      section: formData["section"],
+      subject: formData["subject"],
+    };
+    console.log(body);
+    axios
+      .post("http://localhost:8000/api/create-assignment", body, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user.access}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        toast.success("new assignment created");
+      })
+      .catch((err) => {});
   };
 
   return (
@@ -146,7 +197,7 @@ const Sidebar = () => {
                   label="Batch"
                   name="batch"
                   optionInitialValue=""
-                  options={["2019", "2020", "2021", "2022"]}
+                  options={["1", "2", "3", "4"]}
                   value={formData?.batch}
                   onChange={handleFormDataChange}
                   required
@@ -166,7 +217,7 @@ const Sidebar = () => {
                   name="subject"
                   value={formData?.subject}
                   optionInitialValue=""
-                  options={["ML", "UML", "IOT", "BDA", "CNS"]}
+                  options={["Subj1", "Subj2"]}
                   onChange={handleFormDataChange}
                 />
 
@@ -206,9 +257,14 @@ const Sidebar = () => {
               />
               <Button
                 text="Create Assignment"
-                onClick={() => {
-                  console.log(formData);
-                }}
+                onClick={
+                  handleSubmit
+                  // () => {
+                  // // formData["date"] = getFormatDate(new Date());
+                  // // postAssignment(formData);
+                  // handle
+                  // }
+                }
               />
             </div>
           </>
