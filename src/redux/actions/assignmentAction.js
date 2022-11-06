@@ -1,5 +1,6 @@
 
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import { assignmentActions } from "../reducers/assignmentSlice";
 import { logOut } from "./loginAction";
@@ -54,10 +55,14 @@ export const submitAssigment = (form_data,token)=>{
         try{
             const data = await send_assignment();
             dispatch(assignmentActions.submitAssigment(data));
+            toast.success("Submitted successfully");
+            return data;
         }
         catch(err){
             const {message} = err.response.data;
             console.log(message);
+            toast.error("Submitted successfully");
         }
     }
 }
+

@@ -8,6 +8,9 @@ import Button from "../components/UI/button/Button";
 import { RadioInput, Select } from "../components/UI/input/Input";
 
 import "../styles/Home.scss";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const DUMMY_ASSIGNMENTS = [
   {
@@ -77,62 +80,11 @@ const DUMMY_ASSIGNMENTS = [
 const TeacherDashboard = () => {
   const { theme } = useContext(ThemeContext);
 
-  const [assignments, setAssignments] = useState({
-    success: "1",
-    students_data: [
-      {
-        student_answer_link:
-          "https://firebasestorage.googleapis.com/v0/b/clg-proj-5d15e.appspot.com/o/assignments%2FSubj14CSEC%2FAbhinai%27s%20Resume.pdf1667655089003580049?alt=media&token=a12360c3-e608-4f81-a37d-954b404e98f7",
-        due_date: "2022-11-07T23:11:26Z",
-        submission_date: "2022-11-06T00:31:28Z",
-        marks: null,
-        roll_no: "19bq1a05i7",
-        subject: "Subj1",
-        subject_code: "S1",
-        subject_color: "#FF5733",
-      },
-      {
-        student_answer_link: null,
-        due_date: "2022-11-07T23:11:26Z",
-        submission_date: null,
-        marks: null,
-        roll_no: "19bq1a05f1",
-        subject: "Subj1",
-        subject_code: "S1",
-        subject_color: "#FF5733",
-      },
-      {
-        student_answer_link: null,
-        due_date: "2022-11-07T23:11:26Z",
-        submission_date: null,
-        marks: null,
-        roll_no: "19bq1a05d2",
-        subject: "Subj1",
-        subject_code: "S1",
-        subject_color: "#FF5733",
-      },
-      {
-        student_answer_link: null,
-        due_date: "2022-11-07T23:11:26Z",
-        submission_date: null,
-        marks: null,
-        roll_no: "19bq1a05d6",
-        subject: "Subj1",
-        subject_code: "S1",
-        subject_color: "#FF5733",
-      },
-      {
-        student_answer_link: null,
-        due_date: "2022-11-07T23:11:26Z",
-        submission_date: null,
-        marks: null,
-        roll_no: "19bq1a05d9",
-        subject: "Subj1",
-        subject_code: "S1",
-        subject_color: "#FF5733",
-      },
-    ],
-  });
+  const user = useSelector(state => state.auth);
+
+  const [assignments, setAssignments] = useState([]);
+
+  console.log(assignments)
 
   const [formData, setFormData] = useState({
     branch: "",
@@ -156,16 +108,60 @@ const TeacherDashboard = () => {
 
     let dateList = due_date.toString().split(" ");
     dateList = dateList.slice(0, 4);
-    console.log(dateList);
+    // console.log(dateList);
     due_date = dateList.join(" ");
     return due_date;
     // setFormData((prev) => ({ ...prev, due_date }));
   };
 
-  const handleMarks = () => {
-    let marks = prompt("Assign marks");
-    console.log(marks);
+  const handleMarks = (id,sid) => {
+    let marks = prompt("Assign marks for "+id+","+sid);
+    axios.post(
+      `http://localhost:8000/api/assign-marks`,
+      {
+        marks: marks,
+        assignmentId: id,
+        studentId:sid
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${user.access}`,
+          'Content-Type':'application/json'
+        }
+      }
+    ).then(res => {
+    console.log(assignments)
+      const tempAss = [...assignments];
+      console.log(tempAss)
+      let ind = tempAss.findIndex(ass => ass['student_id'] === sid);
+      let assign = tempAss[ind];
+      assign.marks = marks;
+      console.log(assign)
+      tempAss[ind] = assign;
+      setAssignments(p => tempAss);
+    
+    }).catch(err => {
+      toast.warn('Assign marks failed');
+    })
   };
+
+  const getAssignments = () => {
+    axios.get(
+      `http://localhost:8000/api/class-assignments?year=${formData.batch}&branch=${formData.branch}&section=${formData.section}&subject=${formData.subject}`
+      ,
+      {
+        headers: {
+          'Authorization' : `Bearer ${user.access}`
+        }
+      }
+    ).then(res => {
+      console.log(res.data);
+      setAssignments(p => res.data['students_data'])
+    }).catch(err => {
+      
+    })
+    // console.log(formData);
+  }
 
   return (
     <>
@@ -178,7 +174,7 @@ const TeacherDashboard = () => {
                 name="batch"
                 value={formData?.batch}
                 optionInitialValue=""
-                options={["2019", "2020", "2021", "2022"]}
+                options={["1", "2", "3", "4"]}
                 onChange={handleChange}
                 required
               />
@@ -204,7 +200,7 @@ const TeacherDashboard = () => {
                 name="subject"
                 value={formData?.subject}
                 optionInitialValue=""
-                options={["ML", "UML", "IOT", "BDA", "CNS"]}
+                options={["Subj1", "Subj2"]}
                 onChange={handleChange}
               />
             </Col>
@@ -227,13 +223,15 @@ const TeacherDashboard = () => {
             </Col>
           </Row>
 
-          <Button text="Get Assignments" onClick={() => {}} />
+          <Button text="Get Assignments" onClick={getAssignments} />
         </form>
       </div>
-      {assignments && (
+      {!assignments && <h1 className="text-white">No assignments to show.</h1>}
+      {/* {assignments && assignments === [] && <h1 className="text-white">No assignments to show.</h1>} */}
+      {assignments.length>0 && (
         <section className={`dashboard ${theme}`}>
           <div className={`assignments__wrapper ${theme}`}>
-            {assignments?.students_data?.map((assignment) => (
+            {assignments?.map((assignment) => (
               <div
                 key={assignment?.roll_no}
                 className="assignment__wrapper"
@@ -243,7 +241,12 @@ const TeacherDashboard = () => {
                   className="assignment_subject_color_code"
                   style={{ background: assignment?.subject_color }}
                 />
-                <div className="assignment_subject" onClick={handleMarks}>
+                <div
+                  className="assignment_subject"
+                  onClick={() =>
+                    handleMarks(assignment.id, assignment["student_id"])
+                  }
+                >
                   {assignment?.marks ? assignment.marks : "-"}/10
                 </div>
                 <div className="assignment_body">
@@ -268,7 +271,6 @@ const TeacherDashboard = () => {
           </div>
         </section>
       )}
-      
     </>
   );
 };
