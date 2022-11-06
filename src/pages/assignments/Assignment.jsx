@@ -122,6 +122,7 @@ const useAssignment = (id) => {
 
 const Assignment = () => {
   const { id } = useParams();
+  
 
   const [assignment, error, isLoading] = useAssignment(id);
 

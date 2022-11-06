@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form, Row, Col } from "react-bootstrap";
+
+import { ThemeContext } from "../../../contexts/ThemeContext";
+
 import "./Input.scss";
 
 export const Input = ({
@@ -11,8 +14,10 @@ export const Input = ({
   touched,
   ...other
 }) => {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <Form.Group className="input__wrapper">
+    <Form.Group className={`input__wrapper ${theme}`}>
       {label && (
         <Form.Label>
           {label}
@@ -39,8 +44,10 @@ export const RadioInput = ({
   error,
   checkedValue,
 }) => {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <Form.Group className="input__wrapper">
+    <Form.Group className={`input__wrapper ${theme}`}>
       <Form.Label>
         {label}
         {required && <span className="asterisk">*</span>}
@@ -62,14 +69,14 @@ export const RadioInput = ({
                     handleChange(item.value);
                   }}
                   type="radio"
-                  className={isChecked ? "radio_check_input" : null}
-                  style={
-                    isChecked
-                      ? {
-                          background: "#F4F7FF",
-                        }
-                      : {}
-                  }
+                  className={isChecked ? "radio_check_input " + theme : theme}
+                  // style={
+                    // isChecked
+                    //   ? theme === "light" ? {
+                    //       background: "#F4F7FF",
+                    //     }
+                    //   : theme === "dark" && { background: "#24272e" }
+                  // }
                 >
                   <Form.Check.Input
                     type="radio"
@@ -79,9 +86,9 @@ export const RadioInput = ({
                     checked={isChecked}
                   />
                   <Form.Check.Label
-                    style={
-                      isChecked ? { color: "#413DF2", fontWeight: 600 } : {}
-                    }
+                    // style={
+                    //   isChecked ? { color: "#413DF2", fontWeight: 600 } : {}
+                    // }
                   >
                     {item.label}
                   </Form.Check.Label>
@@ -112,8 +119,10 @@ export const Select = ({
   optionValue,
   valueLength,
 }) => {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <Form.Group className="input__wrapper">
+    <Form.Group className={`input__wrapper ${theme}`}>
       {label && (
         <Form.Label>
           {label}

@@ -1,14 +1,54 @@
 @import "../../../index.scss";
 
 .custom-modal-backdrop {
-    opacity: 0.8 !important;
+  opacity: 0.8 !important;
+}
+
+.modal {
+  .modal-dialog {
+    .modal-content.light {
+      background: #ffffff !important;
+      color: rgb(0, 0, 0) !important;
+      .modal-header {
+        border-bottom: 2px solid #e1e1e1;
+
+        .btn-close {
+          color: rgb(0, 0, 0) !important;
+          display: none !important;
+        }
+        button {
+          border: none !important;
+          outline: none !important;
+          background: transparent !important;
+        }
+      }
+      .modal-body {
+        background: #ffffff !important;
+      }
+      .modal-footer {
+        border-top: 2px solid #e1e1e1;
+
+        .footer__left {
+          .file__name {
+            color: #77b7d7 !important;
+            span {
+              color: #86d9ca !important;
+            }
+          }
+        }
+      }
+    }
+
+    .modal-content.dark {
+      background: #24272e !important;
+      color: #fff !important;
+    }
+  }
 }
 
 .modal {
   .modal-dialog {
     .modal-content {
-      background: #24272e !important;
-      color: #fff !important;
       font-family: $font-source-code-pro;
       .modal-header {
         border-bottom: 2px solid #2f333d;

@@ -18,7 +18,7 @@ input.error {
 }
 
 input.success {
-  border: 1.5px solid rgb(6, 82, 6)  !important;
+  border: 1.5px solid rgb(6, 82, 6) !important;
 }
 
 .input__wrapper {
@@ -52,7 +52,6 @@ input[type="password"] {
     font-size: 18px !important;
   }
 }
-
 
 // .form-select {
 //   appearance: none;
@@ -117,6 +116,37 @@ input[type="password"] {
   border: 1px solid #4442d0;
 }
 
-.error__message{
+.error__message {
   color: red !important;
+}
+
+.input__wrapper.light {
+}
+
+.input__wrapper.dark {
+  .form-label {
+    color: rgb(255, 255, 255);
+  }
+  .form-select {
+    background: $dark-bg-secondary;
+    color: rgb(227, 227, 227);
+    border: 1px solid $dark-border !important;
+  }
+
+  .form-check.dark {
+    border: 1px solid $dark-border !important;
+    background: $dark-bg-secondary;
+
+    .form-check-label {
+      color: #fff;
+    }
+  }
+
+  .radio_check_input.dark {
+    background: #484f5e;
+    .form-check-label {
+      color: #dad9ea;
+      font-weight: 600;
+    }
+  }
 }
