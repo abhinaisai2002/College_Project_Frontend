@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -16,8 +16,14 @@ import "../styles/LoginSignup.scss";
 import { loginAction } from "../redux/actions/loginAction";
 import { useDispatch } from "react-redux";
 
+import { ThemeContext } from "../contexts/ThemeContext";
+
 const Login = () => {
   const dispatch = useDispatch();
+
+  const { theme } = useContext(ThemeContext);
+
+
   const {
     value: emailValue,
     isTouched: emailIsTouched,
