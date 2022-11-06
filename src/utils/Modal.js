@@ -1,39 +1,42 @@
-import React from 'react';
+import React, { useContext } from "react";
 import ReactDOM from "react-dom";
-import { Button, Modal } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Modal } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 
+import { ThemeContext } from "../contexts/ThemeContext";
 
-import { modalActions } from '../redux/reducers/modalSlice';
+import { modalActions } from "../redux/reducers/modalSlice";
 
+const ModalComp = () => {
+  const { theme } = useContext(ThemeContext);
 
-const ModalComp = ()=>{
+  const modalState = useSelector((state) => state.modal);
 
-    const modalState = useSelector(state => state.modal);    
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  const handleClose = () => {
+    dispatch(modalActions.closeModal());
+  };
 
-    const handleClose = ()=>{
-        dispatch(modalActions.closeModal());
-    }
-
-
-    return (
-        ReactDOM.createPortal(
-            <Modal show={modalState.showModal} onHide={handleClose}>
-                <Modal.Header>
-                    <Modal.Title>Ooooops!!</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>{modalState.modalMessage}</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>,
-            document.getElementById('portal')
-        )
-    );
-}
+  return ReactDOM.createPortal(
+    <Modal
+      show={modalState.showModal}
+      onHide={handleClose}
+      dialogClassName={theme}
+      contentClassName={theme}
+    >
+      <Modal.Header>
+        <Modal.Title>Ooooops!!</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>{modalState.modalMessage}</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>,
+    document.getElementById("portal")
+  );
+};
 
 export default ModalComp;

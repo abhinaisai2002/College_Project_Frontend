@@ -26,8 +26,8 @@ const ModalComponent = ({
       aria-labelledby="contained-modal-title-vcenter"
       centered
       backdropClassName="custom-modal-backdrop"
-      dialogClassName={`${theme}`}
-      contentClassName={`${theme}`}
+      dialogClassName={theme}
+      contentClassName={theme}
     >
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
