@@ -128,9 +128,8 @@ input[type="password"] {
     color: rgb(255, 255, 255);
   }
 
-
-
-  .form-select, .form-control {
+  .form-select,
+  .form-control {
     background: $dark-bg-secondary;
     color: rgb(227, 227, 227);
     border: 1px solid $dark-border !important;

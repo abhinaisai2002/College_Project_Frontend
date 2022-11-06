@@ -70,13 +70,6 @@ export const RadioInput = ({
                   }}
                   type="radio"
                   className={isChecked ? "radio_check_input " + theme : theme}
-                  // style={
-                    // isChecked
-                    //   ? theme === "light" ? {
-                    //       background: "#F4F7FF",
-                    //     }
-                    //   : theme === "dark" && { background: "#24272e" }
-                  // }
                 >
                   <Form.Check.Input
                     type="radio"
@@ -85,13 +78,7 @@ export const RadioInput = ({
                     onChange={(e) => handleChange(e.target.value)}
                     checked={isChecked}
                   />
-                  <Form.Check.Label
-                    // style={
-                    //   isChecked ? { color: "#413DF2", fontWeight: 600 } : {}
-                    // }
-                  >
-                    {item.label}
-                  </Form.Check.Label>
+                  <Form.Check.Label>{item.label}</Form.Check.Label>
                 </Form.Check>
               </Col>
             );
