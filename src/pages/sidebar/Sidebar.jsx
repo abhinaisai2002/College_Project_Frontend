@@ -86,7 +86,7 @@ const Sidebar = () => {
   const handleDate = (e) => {
     let due_date = new Date(e.target.value);
 
-    let dateList = due_date.toString().split(" ");
+    let dateList = due_date.toString().split(" "); //
     dateList = dateList.slice(0, 6);
     due_date = dateList.join(" ");
     setFormData((prev) => ({ ...prev, due_date }));
