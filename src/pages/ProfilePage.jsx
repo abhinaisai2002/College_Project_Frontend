@@ -97,6 +97,7 @@ const ProfilePage = () => {
                 type="email"
                 name="email"
                 required
+                disabled
               />
             </Col>
             <Col>
@@ -111,6 +112,7 @@ const ProfilePage = () => {
                 type="text"
                 name="name"
                 required
+                disabled
               />
             </Col>
           </Row>
@@ -128,6 +130,7 @@ const ProfilePage = () => {
                 type="phone"
                 name="phone"
                 required
+                disabled
               />
             </Col>
             <Col>

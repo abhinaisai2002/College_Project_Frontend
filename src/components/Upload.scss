@@ -1,9 +1,20 @@
 @import '../index.scss';
 
+.file_upload__wrapper.light {
+  background: #f1f3f8;
+  &:hover {
+    
+  }
+}
+
+.file_upload__wrapper.dark {
+
+  background: #16181d;
+}
+
 .file_upload__wrapper {
     display: grid;
     place-items: center;
-    background: #16181d;
     padding: 1rem 0.5rem;
     border-radius: 1rem;
     min-width: 80% !important;

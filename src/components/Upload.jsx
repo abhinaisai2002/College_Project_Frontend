@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { FileUploader } from "react-drag-drop-files";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 import "./Upload.scss";
 
 const Upload = ({ handleChange, fileTypes }) => {
+
+  const {theme} = useContext(ThemeContext)
+
   return (
     <>
-      <div className="file_upload__wrapper">
+      <div className={`file_upload__wrapper ${theme}`}>
         <FileUploader
           multiple={false}
           handleChange={handleChange}

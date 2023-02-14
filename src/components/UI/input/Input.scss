@@ -133,6 +133,9 @@ input[type="password"] {
     background: $dark-bg-secondary;
     color: rgb(227, 227, 227);
     border: 1px solid $dark-border !important;
+    &:focus {
+      background: transparent !important;
+    }
   }
 
   .form-check.dark {

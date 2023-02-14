@@ -66,16 +66,12 @@ const Sidebar = () => {
 
   console.log(formData);
 
-  const handleSubmit = (date) => {
-    let due_date = new Date(date);
+  const handleSubmit = () => {
 
-    let dateList = due_date.toString().split(" ");
-    dateList = dateList.slice(0, 6);
-    due_date = dateList.join(" ");
 
     const body = {
       ...formData,
-      due_date,
+      date:getFormatDate(new Date()),
     };
 
     console.log(body);
@@ -94,7 +90,9 @@ const Sidebar = () => {
 
   const getFormatDate = (date) => {
     let dateList = date.toString().split(" ");
+    console.log(dateList);
     dateList = dateList.slice(0, 6);
+    console.log(dateList);
     return dateList.join(" ");
   };
   const handleFormDataChange = (e) => {
@@ -189,7 +187,7 @@ const Sidebar = () => {
                   label="Due Date"
                   name="due_date"
                   value={formData?.due_date}
-                  onChange={handleFormDataChange}
+                  onChange={handleDate}
                   required
                 />
 

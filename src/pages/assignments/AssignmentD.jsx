@@ -224,7 +224,7 @@ const Assignment = () => {
         </div>
       </header>
       {assignment && !assignment.submitted && <section className="assignment__section">
-        <Upload {...{ handleChange, fileTypes: ["PDF", "PPTX"] }} />
+        <Upload {...{ handleChange, fileTypes: ["PDF"] }} />
         <p
           className="file__name"
           style={{ margin: "1rem 0", textAlign: "center" }}

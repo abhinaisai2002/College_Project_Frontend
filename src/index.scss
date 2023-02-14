@@ -479,3 +479,12 @@ body {
 ::-webkit-scrollbar {
   display: none !important;
 }
+
+::-webkit-scrollbar-track {
+  display: none !important;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  display: none !important;
+}
