@@ -1,0 +1,24 @@
+.teacher_filter__form {
+  form {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    .wrapper {
+      width: 30rem !important;
+      .section__wrapper {
+        display: flex;
+        flex-direction: column;
+
+        .options {
+          display: flex;
+          gap: 1rem;
+        }
+      }
+
+      .form-check {
+        // width: 7rem !important;
+        color: #fff;
+      }
+    }
+  }
+}

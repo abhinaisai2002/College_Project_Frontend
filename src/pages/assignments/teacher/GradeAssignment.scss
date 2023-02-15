@@ -1,0 +1,16 @@
+.grade-assignment-section.dark {
+  background: #1c1f25;
+  margin: 1.5rem 0 !important;
+  border-radius: 0.2rem;
+  height: 100%;
+  padding: 2rem;
+
+  form {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    .wrapper {
+      width: 30rem !important;
+    }
+  }
+}

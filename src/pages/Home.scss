@@ -1,0 +1,79 @@
+@import "../index.scss";
+
+.dashboard.light {
+  background: $light-bg-secondary;
+  .nav {
+    border-bottom: 2px solid $light-bg-primary;
+  }
+}
+
+.dashboard.dark {
+  background: #1c1f25;
+  .nav {
+    border-bottom: 2px solid $dark-bg-secondary;
+    .nav-item {
+      .nav-link {
+        color: $text-white;
+      }
+      .active {
+        background: $dark-bg-secondary;
+        color: $text-oceanblue;
+      }
+    }
+  }
+}
+
+.dashboard {
+  margin: 1.5rem 0 !important;
+  border-radius: 0.2rem;
+  // min-height: 30rem;
+  height: 100%;
+  padding: 2rem;
+
+  .nav {
+    width: 100%;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    .nav-item {
+      width: 30%;
+      margin: 0 1rem;
+      min-width: 18rem;
+      .nav-link {
+        display: flex;
+        align-items: center;
+
+        .pending,
+        .submitted,
+        .reviewed {
+          width: 1rem !important;
+          height: 1rem !important;
+          margin-right: 0.5rem;
+          border-radius: 50%;
+        }
+        .pending {
+          background: rgb(255, 255, 73);
+        }
+        .submitted {
+          background: rgb(58, 133, 255);
+        }
+        .reviewed {
+          background: rgb(113, 255, 113);
+        }
+      }
+      .active {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .tab-content {
+    width: 100%;
+    height: 85%;
+    margin: 0.5rem 0;
+    .tab-pane {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
