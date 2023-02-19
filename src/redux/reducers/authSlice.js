@@ -3,15 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    // access: null,
-    // refresh: null,
-    // user: null,
-    // isAuthenticated: false,
+    access: null,
+    refresh: null,
+    user: null,
+    isAuthenticated: false,
 
-    access: 'hello',
-    refresh: 'hello',
-    user: {email: "19bq1a05i7@vvit.net", user_type: "teacher"},
-    isAuthenticated: true,
+    // access: "hello",
+    // refresh: "hello",
+    // user: { email: "19bq1a05i7@vvit.net", user_type: "teacher" },
+    // isAuthenticated: true,
   },
   reducers: {
     signup(state, data) {

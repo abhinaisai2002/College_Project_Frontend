@@ -1,187 +1,213 @@
-import React, { useState, useEffect } from "react";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Button from "../../../components/UI/button/Button";
-
-import { RadioInput, Select } from "../../../components/UI/input/Input";
+import { Input } from "../../../components/UI/input/Input";
+import ModalComponent from "../../../components/UI/modal/ModalComponent";
 import { ThemeContext } from "../../../contexts/ThemeContext";
+import { useGetClassAssignmentsBasedOnTitleQuery } from "../../../redux/reducers/teacherSlice";
 
-import "../Assignments.scss";
-import "./TeacherAssignments.scss";
+const DUMMY_ASSIGNMENTS = [
+  {
+    title: "title3",
+    id: 1,
+    student_roll_no: "19bq1a05i7",
+    subject: "Subj1",
+    student_name: "abhinai",
+    due_date: "2022-11-07T23:11:26Z",
+    creation_date: "2022-11-05T23:11:26Z",
+    submission_date: "2022-11-06T14:46:55Z",
+    submitted: true,
+    marks: 9,
+    feedback: null,
+    answer_link:
+      "https://firebasestorage.googleapis.com/v0/b/clg-proj-5d15e.appspot.com/o/assignments%2FSubj14CSEC%2FAbhinai%27s%20Resume.pdf1667706415842596796?alt=media&token=2f462244-fa4e-4149-b370-d5cd706d2669",
+    assignment_link:
+      "https://firebasestorage.googleapis.com/v0/b/clg-proj-5d15e.appspot.com/o/assignments%2Ftitle31667706274364792013?alt=media&token=2",
+    assigned_by: "teacher1",
+    color: "#36454F",
+    gender: null,
+  },
+  {
+    title: "title3",
+    id: 2,
+    student_roll_no: "19bq1a05f1",
+    subject: "Subj1",
+    student_name: "abhinai",
+    due_date: "2022-11-07T23:11:26Z",
+    creation_date: "2022-11-05T23:11:26Z",
+    submission_date: "2022-11-06T14:46:55Z",
+    submitted: true,
+    marks: 9,
+    feedback: null,
+    answer_link:
+      "https://firebasestorage.googleapis.com/v0/b/clg-proj-5d15e.appspot.com/o/assignments%2FSubj14CSEC%2FAbhinai%27s%20Resume.pdf1667706415842596796?alt=media&token=2f462244-fa4e-4149-b370-d5cd706d2669",
+    assignment_link:
+      "https://firebasestorage.googleapis.com/v0/b/clg-proj-5d15e.appspot.com/o/assignments%2Ftitle31667706274364792013?alt=media&token=2",
+    assigned_by: "teacher1",
+    color: "#36454F",
+    gender: null,
+  },
+];
 
-const TeacherAssignments = ({ subjectColors, assignments }) => {
-  const navigate = useNavigate();
+const assignmentsResponse = {data: DUMMY_ASSIGNMENTS}
 
+const TeacherAssignments = () => {
   const { theme } = useContext(ThemeContext);
 
-  const [subjectAssignments, setSubjectAssignments] = useState(assignments);
-  const [realSubjectAssignments, setRealSubjectAssignments] =
-    useState(subjectAssignments);
-  const [query, setQuery] = useState("");
+  const {
+    year,
+    branch,
+    semester,
+    section,
+    subject,
+    assignment_title,
+    assignment_id,
+  } = useParams();
 
-  const [teacherFormData, setTeacherFormData] = useState({
-    year: "",
-    branch: "",
-    section: "",
-    subject: "",
+  const [data, setData] = useState([]);
+
+  const [showFeedbackModal, setShowFeedbackModal] = useState({
+    show: false,
+  });
+
+  const {
+    // data: assignmentsResponse,
+    isLoading,
+    error,
+  } = useGetClassAssignmentsBasedOnTitleQuery({
+    year,
+    branch,
+    semester,
+    section,
+    subject,
+    assignment_title,
+    assignment_id,
   });
 
   useEffect(() => {
-    if (query !== "") {
-      const tempAssignments = realSubjectAssignments.filter((assignment) =>
-        ["title", "subject_short_code"].some((key) =>
-          assignment[key].toLowerCase().includes(query.toLowerCase())
+    if (assignmentsResponse?.data)
+      setData(
+        assignmentsResponse?.data?.sort((item1, item2) =>
+          item1?.student_roll_no.localeCompare(item2?.student_roll_no)
         )
       );
-      setSubjectAssignments((prev) => tempAssignments);
-    } else setSubjectAssignments(realSubjectAssignments);
-  }, [query]);
+  }, [
+    // assignmentsResponse
+  ]);
 
-  const onSubjectClickHandler = (subject) => {
-    const filteredAssignments = assignments?.filter(
-      (assignment) => assignment.subject_short_code === subject
-    );
-
-    if (filteredAssignments) {
-      setSubjectAssignments(filteredAssignments);
-    }
-  };
-
-  const onSearchHandler = (e) => setQuery(e.target.value);
-
-  const onHandleChange = (e) => {
-    const { name, value } = e.target;
-
-    switch (name) {
-      case "year":
-        value === "" &&
-          setTeacherFormData((prev) => ({
-            ...prev,
-            branch: "",
-            section: "",
-            subject: "",
-          }));
-        break;
-      case "branch":
-        setTeacherFormData((prev) => ({
-          ...prev,
-          branch: value,
-          section: "",
-          subject: "",
-        }));
-
-        break;
-      default:
-        break;
-    }
-
-    setTeacherFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  console.log(teacherFormData);
+  console.log(data)
 
   return (
     <>
-      <section className={`dashboard ${theme}`}>
-        <div className={`teacher_filter__form ${theme}`}>
-          <form style={{ maxWidth: "20rem !important" }}>
-            <div className="wrapper">
-              <Select
-                label="Batch"
-                name="year"
-                value={teacherFormData?.year}
-                onChange={onHandleChange}
-                optionInitialValue=""
-                options={["2019", "2020", "2021", "2022"]}
-                required
+      <ModalComponent
+        size="md"
+        show={showFeedbackModal?.show}
+        handleClose={() => setShowFeedbackModal({ show: false })}
+        title={showFeedbackModal?.student_roll_no}
+        body={
+          <>
+            <Input name="marks" label="Marks" type="number" min={0} max={10} />
+            <Input
+              as="textarea"
+              name="remarks"
+              label="Remarks"
+              placeholder="Enter your remarks here..."
+            />
+          </>
+        }
+        footer={
+          <>
+            <a
+              href={showFeedbackModal?.assignment_link}
+              target="_blank"
+              rel="noreferrer"
+              className="btn"
+            >
+              Question Paper
+            </a>
+            <a
+              href={showFeedbackModal?.answer_link}
+              target="_blank"
+              rel="noreferrer"
+              className="btn"
+            >
+              Answer
+            </a>
+            {/* <Button text="Question Paper" /> */}
+            {/* <Button text="Answer" /> */}
+            <Button text="Submit" />
+            {/* <div className="footer_left"></div> */}
+            {/* <div className="footer_right"> */}
+            {/* </div> */}
+          </>
+        }
+      />
+      <header>
+        <div className="header__left">
+          <h1>Title</h1>
+        </div>
+      </header>
+      <section className={`teacher-assignments ${theme}`}>
+        <div className={`assignments__wrapper ${theme}`}>
+          {data?.map((item) => (
+            <div
+              className="assignment__wrapper"
+              onClick={() =>
+                setShowFeedbackModal({
+                  show: true,
+                  ...item,
+                })
+              }
+            >
+              <div
+                className="assignment_subject_color_code"
+                style={{ background: item.subject_color }}
               />
-              {teacherFormData?.year !== "" && (
-                <Select
-                  label="Branch"
-                  name="branch"
-                  value={teacherFormData?.branch}
-                  onChange={onHandleChange}
-                  optionInitialValue=""
-                  options={["CSE", "IT", "ECE", "EEE", "CIVIL", "MECH"]}
-                  required
-                />
-              )}
-
-              {teacherFormData?.branch !== "" && (
-                <>
-                  <Select
-                    label="Subject"
-                    name="subject"
-                    value={teacherFormData?.subject}
-                    onChange={onHandleChange}
-                    optionInitialValue=""
-                    options={["ML", "UML", "IOT", "BDA", "CNS"]}
-                  />
-                  <RadioInput
-                    label="Gender"
-                    name="gender"
-                    required
-                    radioInputs={[
-                      { value: "A", label: "A" },
-                      { value: "B", label: "B" },
-                      { value: "C", label: "C" },
-                      { value: "D", label: "D" },
-                    ]}
-                    handleChange={(val) =>
-                      setTeacherFormData((prev) => ({ ...prev, section: val }))
-                    }
-                    checkedValue={teacherFormData?.section}
-                  />
-                </>
-              )}
+              <div className="assignment_subject">{item?.subject}</div>
+              <div className="assignment_body">
+                <span>{item?.student_roll_no}</span>
+                <span>
+                  {item?.submission_date
+                    ? getDate(item?.submission_date)
+                    : "Not Submitted"}
+                </span>
+              </div>
             </div>
-          </form>
+          ))}
         </div>
       </section>
-      <footer>
-        <div className="footer__left"></div>
-        <div className="footer__right">
-          <Button text="Get Assignments" />
-        </div>
-      </footer>
     </>
   );
 };
 
 export default TeacherAssignments;
 
-{
-  /* <div className={`assignments__wrapper ${theme}`}>
-  {subjectAssignments?.map((assignment) => (
-    <div
-      key={assignment.id}
-      className="assignment__wrapper"
-      onClick={() => navigate(`assignment/${assignment.id}`)}
-    >
-      <div
-        className="assignment_subject_color_code"
-        style={{ background: assignment.color_code }}
-      />
-      <div className="assignment_subject">
-        {assignment.subject_short_code}
-      </div>
-      <div className="assignment_body">
-        <span>{assignment.title}</span>
-        <span>{assignment.due_date}</span>
-      </div>
-    </div>
-  ))}
-  {!null && (
-    <div className="assignment__wrapper is-loading">
-      <div className="assignment_subject_color_code"></div>
-      <div className="assignment_subject">
-        <span></span>
-      </div>
-      <div className="assignment_body">
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  )}
-</div> */
+function getDate(dateS) {
+  const date = new Date(dateS);
+  const months = [
+    "Jan",
+    "Feb",
+    "March",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  let d = `
+  ${date.getFullYear()}/${
+    months[date.getMonth()]
+  }/${date.getDate()} ${date.getHours()}:${date.getMinutes()} ${
+    date.getHours() >= 12 ? "pm" : "am"
+  }
+    `;
+
+  let new_date = ``;
+
+  return d;
 }

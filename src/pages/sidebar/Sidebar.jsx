@@ -71,6 +71,12 @@ const Sidebar = () => {
           <LordIcon icon="notification" />
           Notifications
         </div>
+        {user_type === "teacher" && (
+          <div onClick={() => navigate("/create-assignment")}>
+            <LordIcon icon="file" />
+            Create Assignment
+          </div>
+        )}
         {user_type === "admin" && (
           <div onClick={() => navigate("admin/upload")}>
             {/* <Link to="/admin/upload" className="text-white"> */}

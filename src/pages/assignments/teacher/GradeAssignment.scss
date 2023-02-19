@@ -1,5 +1,6 @@
-.grade-assignment-section.dark {
-  background: #1c1f25;
+@import "../../../index.scss";
+
+.grade-assignment-section {
   margin: 1.5rem 0 !important;
   border-radius: 0.2rem;
   height: 100%;
@@ -13,4 +14,12 @@
       width: 30rem !important;
     }
   }
+}
+
+.grade-assignment-section.light {
+  background: $light-bg-secondary;
+}
+
+.grade-assignment-section.dark {
+  background: #1c1f25;
 }

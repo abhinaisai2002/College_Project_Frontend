@@ -21,9 +21,11 @@ import AdminRoute from "./utils/AdminRoute";
 import ModalComp from "./utils/Modal";
 import Layout from "./Layout";
 import Teachers from "./pages/admin/Teachers";
-import Assignment from "./pages/assignments/AssignmentD";
+import Assignment from "./pages/assignments/student/Assignment";
 import ProfilePage from "./pages/ProfilePage";
 import GradeAssignment from "./pages/assignments/teacher/GradeAssignment";
+import TeacherAssignments from "./pages/assignments/teacher/TeacherAssignments";
+import CreateAssignment from "./pages/assignments/teacher/CreateAssignment";
 
 const PRIVATE_ROUTES = [
   {
@@ -41,6 +43,14 @@ const PRIVATE_ROUTES = [
   {
     path: "/grade-assignment/:id",
     element: <GradeAssignment />,
+  },
+  {
+    path: "/teacher-assignments/:year/:branch/:semester/:section/:subject/:assignment_title/:assignment_id",
+    element: <TeacherAssignments />,
+  },
+  {
+    path: "/create-assignment",
+    element: <CreateAssignment />,
   },
 ];
 

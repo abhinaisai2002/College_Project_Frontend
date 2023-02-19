@@ -5,12 +5,19 @@ import LordIcon from "../lordIcons/LordIcon";
 
 import "./ModalComponent.scss";
 
-const ModalComponent = ({ show, handleClose, title, body, footer }) => {
+const ModalComponent = ({
+  show,
+  handleClose,
+  title,
+  body,
+  footer,
+  size = "lg",
+}) => {
   return (
     <Modal
       show={show}
       onHide={handleClose}
-      size="lg"
+      size={size}
       aria-labelledby="contained-modal-title-vcenter"
       closeVariant="red"
       centered

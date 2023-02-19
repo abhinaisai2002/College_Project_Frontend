@@ -14,7 +14,9 @@ const axiosBaseQuery =
       const result = await API({
         url: baseURL + url,
         method,
-        headers: {},
+        headers: {
+          Authorization: `bearer ${localStorage.getItem("access")}`,
+        },
         params,
         data,
       });
@@ -42,5 +44,3 @@ export const apiSlice = createApi({
   }),
   endpoints: (builder) => ({}),
 });
-
-

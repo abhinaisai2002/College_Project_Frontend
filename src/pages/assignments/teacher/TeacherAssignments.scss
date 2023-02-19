@@ -1,8 +1,11 @@
+@import "../../../index.scss";
+
 .teacher_filter__form {
   form {
     display: flex;
     align-self: center;
     justify-content: center;
+    margin-bottom: 2rem;
     .wrapper {
       width: 30rem !important;
       .section__wrapper {
@@ -21,4 +24,17 @@
       }
     }
   }
+}
+
+.teacher-assignments.dark {
+  background: #1c1f25;
+}
+
+.teacher-assignments.light {
+  background: $light-bg-secondary;
+}
+
+.teacher-assignments {
+  padding: 2rem;
+  height: 100%;
 }
