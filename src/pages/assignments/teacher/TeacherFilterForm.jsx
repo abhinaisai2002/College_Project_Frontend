@@ -77,7 +77,7 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
     {
       year: branchSkip?.year,
     },
-    { skip: branchSkip?.skip }
+    { skip: branchSkip?.skip , refetchOnMountOrArgChange:true}
   );
 
   const { data: sectionsResponse } = useGetSectionsByBranchYearQuery(
@@ -85,7 +85,7 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
       year: teacherFormData?.year,
       branch: sectionsSkip?.branch,
     },
-    { skip: sectionsSkip?.skip }
+    { skip: sectionsSkip?.skip, refetchOnMountOrArgChange: true }
   );
 
   const { data: subjectsResponse } = useGetSubjectByBranchYearSectionSemQuery(
@@ -95,12 +95,12 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
       semester: subjectsSkip?.semester,
       section: teacherFormData?.section,
     },
-    { skip: subjectsSkip?.skip }
+    { skip: subjectsSkip?.skip, refetchOnMountOrArgChange: true }
   );
 
   const { data: assignmentsResponse } = useGetAssignmentsByTeacherQuery(
     teacherFormData,
-    { skip: getAssignmentsSkip }
+    { skip: getAssignmentsSkip, refetchOnMountOrArgChange: true }
   );
 
   useEffect(() => {
@@ -217,7 +217,7 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
           </>
         }
       />
-      
+
       <section className={`dashboard ${theme}`}>
         <div className={`teacher_filter__form ${theme}`}>
           <form style={{ maxWidth: "20rem !important" }}>
@@ -239,7 +239,8 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
                   value={teacherFormData?.branch}
                   onChange={onHandleChange}
                   optionInitialValue=""
-                  options={["CSE", "IT", "ECE", "EEE", "CIVIL", "MECH"]}
+                  // options={["CSE", "IT", "ECE", "EEE", "CIVIL", "MECH"]}
+                  options={branchesResponse?.data}
                   required
                 />
               )}
@@ -249,12 +250,17 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
                   label="Section"
                   name="section"
                   required
-                  radioInputs={[
-                    { value: "A", label: "A" },
-                    { value: "B", label: "B" },
-                    { value: "C", label: "C" },
-                    { value: "D", label: "D" },
-                  ]}
+                  // radioInputs={[
+                  //   { value: "A", label: "A" },
+                  //   { value: "B", label: "B" },
+                  //   { value: "C", label: "C" },
+                  //   { value: "D", label: "D" },
+                  // ]}
+                  radioInputs={sectionsResponse?.data
+                    ?.map((section) => {
+                      return { value: section, label: section };
+                    })
+                    ?.sort((x, y) => x.value.localeCompare(y.value))}
                   handleChange={(val) =>
                     setTeacherFormData((prev) => ({ ...prev, section: val }))
                   }
@@ -280,7 +286,10 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
                     value={teacherFormData?.subject}
                     onChange={onHandleChange}
                     optionInitialValue=""
-                    options={["ML", "UML", "IOT", "BDA", "CNS"]}
+                    // options={["ML", "UML", "IOT", "BDA", "CNS"]}
+                    optionKey={'subject'}
+                    optionValue={'subject'}
+                    options={subjectsResponse?.data}
                   />
                 </>
               )}

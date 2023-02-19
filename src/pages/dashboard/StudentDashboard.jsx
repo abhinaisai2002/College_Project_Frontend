@@ -4,6 +4,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { useGetStudentAssignmentsQuery } from "../../redux/reducers/studentSlice";
 import Assignments from "../assignments/student/Assignments";
 
+/*
 const DUMMY_ASSIGNMENTS = [
   {
     id: 1,
@@ -89,6 +90,7 @@ const DUMMY_ASSIGNMENTS = [
     color_code: "#FF7A99",
   },
 ];
+*/
 
 const TABS = [
   {
@@ -105,7 +107,7 @@ const TABS = [
   },
 ];
 
-const studentAssignmentsResponse = { data: DUMMY_ASSIGNMENTS };
+// const studentAssignmentsResponse = { data: DUMMY_ASSIGNMENTS };
 
 const StudentDashboard = () => {
   const { theme } = useContext(ThemeContext);
@@ -119,7 +121,7 @@ const StudentDashboard = () => {
   const { pending, submitted, reviewed } = assignments;
 
   const {
-    // data: studentAssignmentsResponse,
+    data: studentAssignmentsResponse,
     isLoading,
     isError,
     error,
@@ -145,7 +147,7 @@ const StudentDashboard = () => {
 
       setAssignments((prev) => ({ ...prev, submitted, reviewed, pending }));
     }
-  }, []);
+  }, [studentAssignmentsResponse]);
 
   return (
     <section className={`dashboard ${theme}`}>

@@ -5,34 +5,29 @@ import { ThemeContext } from "../../../contexts/ThemeContext";
 
 import "./Input.scss";
 
-export const Input = ({
-  label,
-  required,
-  error,
-  success,
-  errorCond,
-  touched,
-  ...other
-}) => {
-  const { theme } = useContext(ThemeContext);
+export const Input = React.forwardRef(
+  ({ label, required, error, success, errorCond, touched, ...other }, ref) => {
+    const { theme } = useContext(ThemeContext);
 
-  return (
-    <Form.Group className={`input__wrapper ${theme}`}>
-      {label && (
-        <Form.Label>
-          {label}
-          {required && <span className="asterisk">*</span>}
-        </Form.Label>
-      )}
-      <Form.Control
-        className={`${touched ? (errorCond ? "error" : "success") : ""}`}
-        {...other}
-        required
-      />
-      {errorCond && <span className="error__message">{error}</span>}
-    </Form.Group>
-  );
-};
+    return (
+      <Form.Group className={`input__wrapper ${theme}`}>
+        {label && (
+          <Form.Label>
+            {label}
+            {required && <span className="asterisk">*</span>}
+          </Form.Label>
+        )}
+        <Form.Control
+          ref={ref}
+          className={`${touched ? (errorCond ? "error" : "success") : ""}`}
+          {...other}
+          required
+        />
+        {errorCond && <span className="error__message">{error}</span>}
+      </Form.Group>
+    );
+  }
+);
 
 export const RadioInput = ({
   label,

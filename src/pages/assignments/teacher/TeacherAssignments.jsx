@@ -1,11 +1,15 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../../../components/UI/button/Button";
 import { Input } from "../../../components/UI/input/Input";
 import ModalComponent from "../../../components/UI/modal/ModalComponent";
 import { ThemeContext } from "../../../contexts/ThemeContext";
-import { useGetClassAssignmentsBasedOnTitleQuery } from "../../../redux/reducers/teacherSlice";
+import {
+  useAssignMarksMutation,
+  useGetClassAssignmentsBasedOnTitleQuery,
+} from "../../../redux/reducers/teacherSlice";
 
+/*
 const DUMMY_ASSIGNMENTS = [
   {
     title: "title3",
@@ -48,8 +52,9 @@ const DUMMY_ASSIGNMENTS = [
     gender: null,
   },
 ];
+*/
 
-const assignmentsResponse = {data: DUMMY_ASSIGNMENTS}
+// const assignmentsResponse = {data: DUMMY_ASSIGNMENTS}
 
 const TeacherAssignments = () => {
   const { theme } = useContext(ThemeContext);
@@ -71,7 +76,7 @@ const TeacherAssignments = () => {
   });
 
   const {
-    // data: assignmentsResponse,
+    data: assignmentsResponse,
     isLoading,
     error,
   } = useGetClassAssignmentsBasedOnTitleQuery({
@@ -84,18 +89,33 @@ const TeacherAssignments = () => {
     assignment_id,
   });
 
-  useEffect(() => {
-    if (assignmentsResponse?.data)
-      setData(
-        assignmentsResponse?.data?.sort((item1, item2) =>
-          item1?.student_roll_no.localeCompare(item2?.student_roll_no)
-        )
-      );
-  }, [
-    // assignmentsResponse
-  ]);
+  const [assignMarks] = useAssignMarksMutation();
 
-  console.log(data)
+  /*
+  ?
+  .sort((item1, item2) =>
+  item1
+  ?.student_roll_no.localeCompare(item2?.student_roll_no)*/
+  useEffect(() => {
+    if (assignmentsResponse?.data) setData(assignmentsResponse?.data);
+  }, [assignmentsResponse]);
+
+  const submitButtonRef = useRef();
+  const marksRef = useRef();
+  const feedbackRef = useRef();
+
+  const submitHandler = function (event) {
+    event.preventDefault();
+
+    assignMarks({
+      marks: marksRef.current.value,
+      feedback: feedbackRef.current.value,
+      assignmentId: showFeedbackModal.id,
+      studentId: showFeedbackModal["student_id"],
+    });
+  };
+
+  console.log(data);
 
   return (
     <>
@@ -105,15 +125,30 @@ const TeacherAssignments = () => {
         handleClose={() => setShowFeedbackModal({ show: false })}
         title={showFeedbackModal?.student_roll_no}
         body={
-          <>
-            <Input name="marks" label="Marks" type="number" min={0} max={10} />
+          <form onSubmit={submitHandler}>
+            <Input
+              name="marks"
+              label="Marks"
+              type="number"
+              min={0}
+              max={10}
+              required
+              ref={marksRef}
+            />
             <Input
               as="textarea"
               name="remarks"
               label="Remarks"
               placeholder="Enter your remarks here..."
+              ref={feedbackRef}
+              required
             />
-          </>
+            <button
+              type="submit"
+              style={{ display: "none" }}
+              ref={submitButtonRef}
+            ></button>
+          </form>
         }
         footer={
           <>
@@ -133,9 +168,15 @@ const TeacherAssignments = () => {
             >
               Answer
             </a>
+
             {/* <Button text="Question Paper" /> */}
             {/* <Button text="Answer" /> */}
-            <Button text="Submit" />
+            <Button
+              text="Submit"
+              onClick={() => {
+                submitButtonRef.current.click();
+              }}
+            />
             {/* <div className="footer_left"></div> */}
             {/* <div className="footer_right"> */}
             {/* </div> */}
@@ -144,7 +185,7 @@ const TeacherAssignments = () => {
       />
       <header>
         <div className="header__left">
-          <h1>Title</h1>
+          <h1>{assignment_title}</h1>
         </div>
       </header>
       <section className={`teacher-assignments ${theme}`}>
@@ -152,18 +193,29 @@ const TeacherAssignments = () => {
           {data?.map((item) => (
             <div
               className="assignment__wrapper"
-              onClick={() =>
+              onClick={() => {
+                // if (!item?.submitted) {
+                //   return;
+                // }
+
+                if (item?.marks) {
+                  return alert("You already awarded this student");
+                }
+
                 setShowFeedbackModal({
                   show: true,
                   ...item,
-                })
-              }
+                });
+              }}
             >
               <div
                 className="assignment_subject_color_code"
-                style={{ background: item.subject_color }}
+                style={{ background: item.color }}
               />
-              <div className="assignment_subject">{item?.subject}</div>
+              <div className="assignment_subject">
+                {" "}
+                {item?.marks ? item.marks : "-"} / 10
+              </div>
               <div className="assignment_body">
                 <span>{item?.student_roll_no}</span>
                 <span>

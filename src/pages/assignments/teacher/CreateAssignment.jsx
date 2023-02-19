@@ -9,22 +9,39 @@ import {
   useGetSubjectByBranchYearSectionSemQuery,
 } from "../../../redux/reducers/teacherSlice";
 
+const dates = {
+  0: "01",
+  1: "02",
+  2: "03",
+  3: "04",
+  4: "05",
+  5: "06",
+  6: "07",
+  7: "08",
+  8: "09",
+  9: "10",
+  10: "11",
+  11: "12",
+};
+
+const initialState = {
+  title: "",
+  due_date: "",
+  date: "",
+  year: "",
+  branch: "",
+  section: "",
+  semester: "",
+  subject: "",
+  file: null,
+};
+
 const CreateAssignment = () => {
   const submitBtnRef = useRef(null);
 
   const { theme } = useContext(ThemeContext);
 
-  const [teacherFormData, setTeacherFormData] = useState({
-    title: "",
-    due_date: "",
-    date: "",
-    year: "",
-    branch: "",
-    section: "",
-    semester: "",
-    subject: "",
-    file: null,
-  });
+  const [teacherFormData, setTeacherFormData] = useState(initialState);
 
   const [branchSkip, setBranchSkip] = useState({ skip: true, year: null });
   const [subjectsSkip, setSubjectsSkip] = useState({
@@ -36,30 +53,30 @@ const CreateAssignment = () => {
     branch: null,
   });
 
-  // const { data: branchesResponse } = useGetBranchesByYearQuery(
-  //   {
-  //     year: branchSkip?.year,
-  //   },
-  //   { skip: branchSkip?.skip }
-  // );
+  const { data: branchesResponse } = useGetBranchesByYearQuery(
+    {
+      year: branchSkip?.year,
+    },
+    { skip: branchSkip?.skip }
+  );
 
-  // const { data: sectionsResponse } = useGetSectionsByBranchYearQuery(
-  //   {
-  //     year: teacherFormData?.year,
-  //     branch: sectionsSkip?.branch,
-  //   },
-  //   { skip: sectionsSkip?.skip }
-  // );
+  const { data: sectionsResponse } = useGetSectionsByBranchYearQuery(
+    {
+      year: teacherFormData?.year,
+      branch: sectionsSkip?.branch,
+    },
+    { skip: sectionsSkip?.skip }
+  );
 
-  // const { data: subjectsResponse } = useGetSubjectByBranchYearSectionSemQuery(
-  //   {
-  //     year: teacherFormData?.year,
-  //     branch: teacherFormData?.branch,
-  //     semester: subjectsSkip?.semester,
-  //     section: teacherFormData?.section,
-  //   },
-  //   { skip: subjectsSkip?.skip }
-  // );
+  const { data: subjectsResponse } = useGetSubjectByBranchYearSectionSemQuery(
+    {
+      year: teacherFormData?.year,
+      branch: teacherFormData?.branch,
+      semester: subjectsSkip?.semester,
+      section: teacherFormData?.section,
+    },
+    { skip: subjectsSkip?.skip }
+  );
 
   const [createAssignment] = useCreateAssignmentMutation();
 
@@ -118,12 +135,14 @@ const CreateAssignment = () => {
     let data = { ...teacherFormData };
 
     let date = Date();
+
     data["date"] = date.split(" ").slice(0, 6).join(" ");
 
-    let tdueDateList = data?.due_date?.split("-");
+    let tdueDateList = data?.due_date;
 
     let tdueDate = new Date(
-      tdueDateList[1] + "-" + tdueDateList[2] + "-" + tdueDateList[0]
+      // tdueDateList[0] + "-" + tdueDateList[1] + "-" + tdueDateList[2]
+      data?.due_date
     );
     data["due_date"] = tdueDate.toString().split(" ").slice(0, 6).join(" ");
 
@@ -133,7 +152,11 @@ const CreateAssignment = () => {
 
     Object.entries(data).forEach(([key, value]) => fd.append(key, value));
 
-    // createAssignment(teacherFormData);
+    createAssignment(fd).then((res) => {
+      if (res.data.success === 1) {
+        setTeacherFormData(initialState);
+      }
+    });
   };
 
   console.log(teacherFormData);
@@ -145,7 +168,7 @@ const CreateAssignment = () => {
           <h1>Create Assignment</h1>
         </div>
       </header> */}
-      <section className={`dashboard ${theme}`} >
+      <section className={`dashboard ${theme}`}>
         <div className={`teacher_filter__form ${theme}`}>
           <form
             style={{ maxWidth: "20rem !important" }}
@@ -164,6 +187,16 @@ const CreateAssignment = () => {
                 type="date"
                 name="due_date"
                 label="Due Date"
+                min={(() => {
+                  let d = new Date();
+                  return (
+                    d.getFullYear() +
+                    "-" +
+                    dates[d.getMonth()] +
+                    "-" +
+                    d.getUTCDate()
+                  );
+                })()}
                 value={teacherFormData?.due_date}
                 onChange={onHandleChange}
                 required
@@ -186,7 +219,8 @@ const CreateAssignment = () => {
                   value={teacherFormData?.branch}
                   onChange={onHandleChange}
                   optionInitialValue=""
-                  options={["CSE", "IT", "ECE", "EEE", "CIVIL", "MECH"]}
+                  // options={["CSE", "IT", "ECE", "EEE", "CIVIL", "MECH"]}
+                  options={branchesResponse?.data}
                   required
                 />
               )}
@@ -196,12 +230,17 @@ const CreateAssignment = () => {
                   label="Section"
                   name="section"
                   required
-                  radioInputs={[
-                    { value: "A", label: "A" },
-                    { value: "B", label: "B" },
-                    { value: "C", label: "C" },
-                    { value: "D", label: "D" },
-                  ]}
+                  // radioInputs={[
+                  //   { value: "A", label: "A" },
+                  //   { value: "B", label: "B" },
+                  //   { value: "C", label: "C" },
+                  //   { value: "D", label: "D" },
+                  // ]}
+                  radioInputs={sectionsResponse?.data
+                    ?.map((section) => {
+                      return { value: section, label: section };
+                    })
+                    ?.sort((x, y) => x.value.localeCompare(y.value))}
                   handleChange={(val) =>
                     setTeacherFormData((prev) => ({ ...prev, section: val }))
                   }
@@ -227,7 +266,10 @@ const CreateAssignment = () => {
                   value={teacherFormData?.subject}
                   onChange={onHandleChange}
                   optionInitialValue=""
-                  options={["ML", "UML", "IOT", "BDA", "CNS"]}
+                  // options={["ML", "UML", "IOT", "BDA", "CNS"]}
+                  optionKey={"subject"}
+                  optionValue={"subject"}
+                  options={subjectsResponse?.data}
                   required
                 />
               )}

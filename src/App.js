@@ -107,8 +107,8 @@ function App() {
               exact
               key={route?.path}
               path={route?.path}
-              element={<>{route?.element}</>}
-              // element={<PrivateRoute>{route?.element}</PrivateRoute>}
+              // element={<>{route?.element}</>}
+              element={<PrivateRoute>{route?.element}</PrivateRoute>}
             />
           ))}
 
@@ -117,12 +117,12 @@ function App() {
               exact
               key={route?.path}
               path={route?.path}
-              element={<>{route?.element}</>}
-              // element={
-              //   <PrivateRoute>
-              //     <AdminRoute>{route?.element}</AdminRoute>
-              //   </PrivateRoute>
-              // }
+              // element={<>{route?.element}</>}
+              element={
+                <PrivateRoute>
+                  <AdminRoute>{route?.element}</AdminRoute>
+                </PrivateRoute>
+              }
             />
           ))}
 
@@ -131,8 +131,8 @@ function App() {
               exact
               key={route?.path}
               path={route?.path}
-              element={<>{route?.element}</>}
-              // element={<PublicRoute>{route?.element}</PublicRoute>}
+              // element={<>{route?.element}</>}
+              element={<PublicRoute>{route?.element}</PublicRoute>}
             />
           ))}
 
