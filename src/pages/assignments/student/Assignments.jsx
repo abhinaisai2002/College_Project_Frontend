@@ -62,7 +62,7 @@ const Assignments = ({ assignments }) => {
               <div
                 key={subject}
                 className="subject"
-                style={{ color }}
+                style={{ color : `${theme === 'dark' ? 'white' : 'black'}` }}
                 onClick={() => onSubjectClickHandler(subject)}
               >
                 <div

@@ -4,7 +4,7 @@ export const teacherSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBranchesByYear: builder.query({
       query: (params) => ({
-        url: "/get-branchesby-year",
+        url: "/get-branches-by-year",
         method: "GET",
         params,
       }),
@@ -49,6 +49,15 @@ export const teacherSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: () => []
     }),
+
+    assignMarks: builder.mutation({
+      query: (data) => ({
+        url: "/assign-marks",
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: () => []
+    }),
   }),
 });
 
@@ -58,6 +67,6 @@ export const {
   useGetAssignmentsByTeacherQuery,
   useGetSubjectByBranchYearSectionSemQuery,
   useGetClassAssignmentsBasedOnTitleQuery,
-
+  useAssignMarksMutation,
   useCreateAssignmentMutation
 } = teacherSlice;

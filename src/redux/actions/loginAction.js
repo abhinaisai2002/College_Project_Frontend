@@ -16,14 +16,13 @@ export const loginAction = (user) => {
         method: "POST",
         data: user,
       });
-
+      console.log(response)
       // const response = await axios.post(
       //   `http://localhost:8000/api/auth/login`,
       //   user,
 
       // );
-      const { data } = response;
-      return data;
+      return response;
     };
 
     try {
