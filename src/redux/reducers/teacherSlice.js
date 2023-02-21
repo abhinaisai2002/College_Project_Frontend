@@ -58,6 +58,15 @@ export const teacherSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: () => []
     }),
+
+    myAssignmentsForTeacher: builder.query({
+      query: (params) => ({
+        url: "/my-assignment-teacher",
+        method: "GET",
+        params,
+      }),
+    })
+
   }),
 });
 
@@ -68,5 +77,6 @@ export const {
   useGetSubjectByBranchYearSectionSemQuery,
   useGetClassAssignmentsBasedOnTitleQuery,
   useAssignMarksMutation,
-  useCreateAssignmentMutation
+  useCreateAssignmentMutation,
+  useMyAssignmentsForTeacherQuery
 } = teacherSlice;

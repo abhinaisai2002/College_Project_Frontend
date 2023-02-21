@@ -164,19 +164,23 @@ const StudentDashboard = () => {
         </Nav>
         <Tab.Content>
           <Tab.Pane eventKey="pending">
-            <Assignments 
-            // subjectColors={SUBJECT_COLORS} 
-            assignments={pending} />
+            <Assignments
+              // subjectColors={SUBJECT_COLORS}
+              isLoading={isLoading}
+              assignments={pending}
+            />
           </Tab.Pane>
           <Tab.Pane eventKey="submitted">
             <Assignments
               // subjectColors={SUBJECT_COLORS}
+              isLoading={isLoading}
               assignments={submitted}
             />
           </Tab.Pane>
           <Tab.Pane eventKey="reviewed">
             <Assignments
               // subjectColors={SUBJECT_COLORS}
+              isLoading={isLoading}
               assignments={reviewed}
             />
           </Tab.Pane>

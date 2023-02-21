@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../../../components/UI/button/Button";
@@ -115,6 +116,37 @@ const TeacherAssignments = () => {
     });
   };
 
+  const downloadReport = function () {
+    axios.get("http://localhost:8000/api/get-class-assignments-title-report", {
+      params: {
+        year,
+        branch,
+        semester,
+        section,
+        subject,
+        assignment_title,
+        assignment_id,
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization":`Bearer ${localStorage.getItem('access')}`
+      },
+      responseType:'blob'
+    }).then(response => {
+      const href = URL.createObjectURL(response.data);
+
+      // create "a" HTML element with href to file & click
+      const link = document.createElement("a");
+      link.href = href;
+      link.setAttribute("download", "file.xls"); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+
+      // clean up "a" element & remove ObjectURL
+      document.body.removeChild(link);
+      URL.revokeObjectURL(href);
+    })
+  }
   console.log(data);
 
   return (
@@ -186,6 +218,12 @@ const TeacherAssignments = () => {
       <header>
         <div className="header__left">
           <h1>{assignment_title}</h1>
+          <span style={{color:'white'}}>
+            {subject}
+          </span>
+        </div>
+        <div className="header__right">
+          <Button text="Download Report" onClick={downloadReport} />
         </div>
       </header>
       <section className={`teacher-assignments ${theme}`}>

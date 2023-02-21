@@ -1,4 +1,5 @@
 import React, { useRef, useState, useContext } from "react";
+import { toast } from "react-toastify";
 import Button from "../../../components/UI/button/Button";
 import { Input, RadioInput, Select } from "../../../components/UI/input/Input";
 import { ThemeContext } from "../../../contexts/ThemeContext";
@@ -153,8 +154,9 @@ const CreateAssignment = () => {
     Object.entries(data).forEach(([key, value]) => fd.append(key, value));
 
     createAssignment(fd).then((res) => {
-      if (res.data.success === 1) {
+      if (res.data.success == 1) {
         setTeacherFormData(initialState);
+        toast.success("Created successfully");
       }
     });
   };

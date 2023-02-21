@@ -8,7 +8,7 @@ import { ThemeContext } from "../../../contexts/ThemeContext";
 
 import "./Assignments.scss";
 
-const Assignments = ({ assignments }) => {
+const Assignments = ({ assignments,isLoading }) => {
   const navigate = useNavigate();
 
   const { theme } = useContext(ThemeContext);
@@ -94,10 +94,13 @@ const Assignments = ({ assignments }) => {
       </div>
 
       <div className={`assignments__wrapper ${theme}`}>
-        {subjectAssignments?.map((assignment) => (
+        {!isLoading && subjectAssignments?.length === 0 && 
+          <h1 className="text-white">No assignment to show.</h1>
+        }
+        {!isLoading && subjectAssignments?.map((assignment) => (
           <AssignmentCard key={assignment.id} assignment={assignment} />
         ))}
-        {/* {!null && (
+        {isLoading && (
           <div className="assignment__wrapper is-loading">
             <div className="assignment_subject_color_code"></div>
             <div className="assignment_subject">
@@ -108,7 +111,7 @@ const Assignments = ({ assignments }) => {
               <span></span>
             </div>
           </div>
-        )} */}
+        )}
       </div>
     </>
   );
@@ -153,7 +156,7 @@ const AssignmentCard = ({ assignment }) => {
         </div>
         <div className="assignment_body">
           <span>{assignment.title}</span>
-          <span>Submitted on {getDate(assignment.submissionDate)}</span>
+          <span>Submitted on {getDate(assignment['submission_date'])}</span>
         </div>
       </div>
     );

@@ -8,25 +8,28 @@ import { baseURL } from "../../api/axiosConfig";
 import { authActions } from "../reducers/authSlice";
 import { modalActions } from "../reducers/modalSlice";
 
+import axios from 'axios'
+
 export const loginAction = (user) => {
   return async (dispatch) => {
     const login = async () => {
-      const response = await API({
-        url: baseURL + "/auth/login",
-        method: "POST",
-        data: user,
-      });
-      console.log(response)
-      // const response = await axios.post(
-      //   `http://localhost:8000/api/auth/login`,
-      //   user,
+      // const response = await API({
+      //   url: baseURL + "/auth/login",
+      //   method: "POST",
+      //   data: user,
+      // });
+      // console.log(response)
+      const response = await axios.post(
+        `http://localhost:8000/api/auth/login`,
+        user,
 
-      // );
-      return response;
+      );
+      return response.data;
     };
 
     try {
       const data = await login();
+      console.log(data);
       dispatch(authActions.login(data));
       toast.success("Login successfully");
     } catch (err) {

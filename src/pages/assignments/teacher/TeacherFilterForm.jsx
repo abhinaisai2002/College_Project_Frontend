@@ -103,6 +103,8 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
     { skip: getAssignmentsSkip, refetchOnMountOrArgChange: true }
   );
 
+  
+
   useEffect(() => {
     if (assignmentsResponse?.data) {
       setShowAssignments(true);
@@ -186,8 +188,9 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
         show={showAssignments}
         handleClose={() => setShowAssignments(false)}
         body={
-          <div className={`assignments__wrapper ${theme}`}>
-            {Object.entries(DUMMY_ASSIGNMENTS)?.map(([title, data]) => (
+          <>
+          {assignmentsResponse &&  <div className={`assignments__wrapper ${theme}`}>
+            { Object.entries(assignmentsResponse?.data)?.map(([title, data]) => (
               <div
                 className="assignment__wrapper"
                 style={{ background: "#414653 " }}
@@ -204,11 +207,12 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
                 <div className="assignment_subject">{data?.subject_code}</div>
                 <div className="assignment_body">
                   <span>{title}</span>
-                  <span>{getDate(data?.creation_data)}</span>
+                  <span>{getDate(data?.creation_date)}</span>
                 </div>
               </div>
             ))}
-          </div>
+          </div>}
+          </>
         }
         footer={
           <>
@@ -317,7 +321,7 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
 
 export default TeacherFilterForm;
 
-function getDate(dateS) {
+export function getDate(dateS) {
   const date = new Date(dateS);
   const months = [
     "Jan",

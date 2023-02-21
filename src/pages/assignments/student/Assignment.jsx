@@ -288,13 +288,14 @@ const SubmittedAssignment = () => {
 };
 
 const ReviewedAssignment = ({ marks, feedback }) => {
+
   return (
     <div className="text-white text-center">
       <h1>Congratulations</h1>
-      <h4 className="m-2">You have scored 8/10</h4>
+      <h4 className="m-2">You have scored {marks}/10</h4>
 
       {feedback ? (
-        <p>Feedback</p>
+        <p>{feedback}</p>
       ) : (
         <p>Your teacher haven't posted any feedback for you</p>
       )}
