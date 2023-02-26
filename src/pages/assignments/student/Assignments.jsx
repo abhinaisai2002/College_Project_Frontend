@@ -156,7 +156,8 @@ const AssignmentCard = ({ assignment }) => {
         </div>
         <div className="assignment_body">
           <span>{assignment.title}</span>
-          <span>Submitted on {getDate(assignment['submission_date'])}</span>
+          <span>Submitted on {getDate(assignment["submission_date"])}      </span>
+          <span>DueDate  {getDate(assignment["due_date"])}</span>
         </div>
       </div>
     );
@@ -202,9 +203,7 @@ function getDate(dateS) {
   let d = `
   ${date.getFullYear()}/${
     months[date.getMonth()]
-  }/${date.getDate()} ${date.getHours()}:${date.getMinutes()} ${
-    date.getHours() >= 12 ? "pm" : "am"
-  }
+  }/${date.getDate()} 
     `;
   return d;
 }

@@ -17,31 +17,6 @@ import {
 import "../student/Assignments.scss";
 import "./TeacherAssignments.scss";
 
-const DUMMY_ASSIGNMENTS = {
-  title3: {
-    id: 1,
-    due_date: "2022-11-07T23:11:26Z",
-    creation_data: "2022-11-05T23:11:26Z",
-    subject: "Subj1",
-    subject_code: "S1",
-    subject_color: "#36454F",
-    question_link:
-      "https://firebasestorage.googleapis.com/v0/b/clg-proj-5d15e.appspot.com/o/assignments%2Ftitle31667706274364792013?alt=media&token=2",
-    assignment_title: "title3",
-  },
-  assignment: {
-    id: 3,
-    due_date: "2023-01-19T11:00:00Z",
-    creation_data: "2023-01-17T03:18:47Z",
-    subject: "Subj1",
-    subject_code: "S1",
-    subject_color: "#36454F",
-    question_link:
-      "https://firebasestorage.googleapis.com/v0/b/clg-proj-5d15e.appspot.com/o/assignments_questions%2Fassignment1673885927893778958?alt=media&token=2",
-    assignment_title: "assignment",
-  },
-};
-
 const TeacherFilterForm = ({ subjectColors, assignments }) => {
   const navigate = useNavigate();
 
@@ -81,23 +56,25 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
       { skip: branchSkip?.skip, refetchOnMountOrArgChange: true }
     );
 
-  const { data: sectionsResponse } = useGetSectionsByBranchYearQuery(
-    {
-      year: teacherFormData?.year,
-      branch: sectionsSkip?.branch,
-    },
-    { skip: sectionsSkip?.skip, refetchOnMountOrArgChange: true }
-  );
+  const { data: sectionsResponse, isError: sectionsError } =
+    useGetSectionsByBranchYearQuery(
+      {
+        year: teacherFormData?.year,
+        branch: sectionsSkip?.branch,
+      },
+      { skip: sectionsSkip?.skip, refetchOnMountOrArgChange: true }
+    );
 
-  const { data: subjectsResponse } = useGetSubjectByBranchYearSectionSemQuery(
-    {
-      year: teacherFormData?.year,
-      branch: teacherFormData?.branch,
-      semester: subjectsSkip?.semester,
-      section: teacherFormData?.section,
-    },
-    { skip: subjectsSkip?.skip, refetchOnMountOrArgChange: true }
-  );
+  const { data: subjectsResponse, isError: subjectsError } =
+    useGetSubjectByBranchYearSectionSemQuery(
+      {
+        year: teacherFormData?.year,
+        branch: teacherFormData?.branch,
+        semester: subjectsSkip?.semester,
+        section: teacherFormData?.section,
+      },
+      { skip: subjectsSkip?.skip, refetchOnMountOrArgChange: true }
+    );
 
   const { data: assignmentsResponse } = useGetAssignmentsByTeacherQuery(
     teacherFormData,
@@ -150,8 +127,10 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
 
     switch (name) {
       case "year":
-        setBranchSkip({ skip: false, year: value });
-        value === "" &&
+        value !== ""
+          ? setBranchSkip({ skip: false, year: value })
+          : setBranchSkip({ skip: true, year: null });
+        (value === "" || value !== teacherFormData?.year) &&
           setTeacherFormData((prev) => ({
             ...prev,
             branch: "",
@@ -162,7 +141,9 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
 
         break;
       case "branch":
-        setSectionsSkip({ skip: false, branch: value });
+        value !== ""
+          ? setSectionsSkip({ skip: false, branch: value })
+          : setSectionsSkip({ skip: true, branch: null });
         value === "" &&
           setTeacherFormData((prev) => ({
             ...prev,
@@ -174,7 +155,9 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
 
         break;
       case "semester":
-        setSubjectsSkip({ skip: false, semester: value });
+        value !== ""
+          ? setSubjectsSkip({ skip: false, semester: value })
+          : setSubjectsSkip({ skip: true, semester: null });
         value === "" &&
           setTeacherFormData((prev) => ({
             ...prev,
@@ -190,6 +173,8 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
   };
 
   console.log(teacherFormData);
+
+  console.log("isEmpty", isEmpty({ year: teacherFormData?.year }));
 
   return (
     <>
@@ -253,38 +238,45 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
                 required
               />
 
-              {teacherFormData?.year !== "" && (
-                <Select
-                  label="Branch"
-                  name="branch"
-                  value={teacherFormData?.branch}
-                  onChange={onHandleChange}
-                  optionInitialValue=""
-                  // options={["CSE", "IT", "ECE", "EEE", "CIVIL", "MECH"]}
-                  options={branchesResponse?.data}
-                  required
-                />
-              )}
+              {isEmpty({ year: teacherFormData?.year }) &&
+                !branchesHasError && (
+                  <Select
+                    label="Branch"
+                    name="branch"
+                    value={teacherFormData?.branch}
+                    onChange={onHandleChange}
+                    optionInitialValue=""
+                    // options={["CSE", "IT", "ECE", "EEE", "CIVIL", "MECH"]}
+                    options={branchesResponse?.data}
+                    required
+                  />
+                )}
 
-              {teacherFormData?.branch !== "" && (
-                <RadioInput
-                  label="Section"
-                  name="section"
-                  required
-                 
-                  radioInputs={sectionsResponse?.data
-                    ?.map((section) => {
-                      return { value: section, label: section };
-                    })
-                    ?.sort((x, y) => x.value.localeCompare(y.value))}
-                  handleChange={(val) =>
-                    setTeacherFormData((prev) => ({ ...prev, section: val }))
-                  }
-                  checkedValue={teacherFormData?.section}
-                />
-              )}
-
-              {teacherFormData?.section !== "" && (
+              {isEmpty({
+                year: teacherFormData?.year,
+                branch: teacherFormData?.branch,
+              }) &&
+                !sectionsError && (
+                  <RadioInput
+                    label="Section"
+                    name="section"
+                    required
+                    radioInputs={sectionsResponse?.data
+                      ?.map((section) => {
+                        return { value: section, label: section };
+                      })
+                      ?.sort((x, y) => x.value.localeCompare(y.value))}
+                    handleChange={(val) =>
+                      setTeacherFormData((prev) => ({ ...prev, section: val }))
+                    }
+                    checkedValue={teacherFormData?.section}
+                  />
+                )}
+              {isEmpty({
+                year: teacherFormData?.year,
+                branch: teacherFormData?.branch,
+                section: teacherFormData?.section,
+              }) && (
                 <Select
                   name="semester"
                   label="Semester"
@@ -294,8 +286,13 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
                   optionInitialValue=""
                 />
               )}
-              {teacherFormData?.semester !== "" && (
-                <>
+              {isEmpty({
+                year: teacherFormData?.year,
+                branch: teacherFormData?.branch,
+                section: teacherFormData?.section,
+                semester: teacherFormData?.semester,
+              }) &&
+                !subjectsError && (
                   <Select
                     label="Subject"
                     name="subject"
@@ -307,8 +304,7 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
                     optionValue={"subject"}
                     options={subjectsResponse?.data}
                   />
-                </>
-              )}
+                )}
             </div>
           </form>
         </div>
@@ -358,7 +354,24 @@ export function getDate(dateS) {
   // }
   //   `;
 
-  let new_date = `${date?.getDate()}/${date?.getMonth()}/${date?.getFullYear()} `;
+  let new_date = `${date?.getDate()}/${date?.getMonth()}/${date?.getFullYear()} ${date.getHours()}:${date.getMinutes()} ${
+    date.getHours() >= 12 ? "pm" : "am"
+  }`;
 
   return new_date;
+}
+
+function isEmpty(obj) {
+  const VALUES = Object.values(obj);
+  console.log("VALUES", VALUES);
+  let lst = [];
+  VALUES?.forEach((value) => {
+    if (value == "") {
+      lst.push(value);
+    }
+  });
+
+  if (lst?.length !== 0) return false;
+
+  return true;
 }

@@ -113,7 +113,11 @@ const TeacherAssignments = () => {
       feedback: feedbackRef.current.value,
       assignmentId: showFeedbackModal.id,
       studentId: showFeedbackModal["student_id"],
-    });
+    }).then(res => {
+      setShowFeedbackModal(false);
+    }).catch(err => {
+      
+    })
   };
 
   const downloadReport = function () {
@@ -134,11 +138,11 @@ const TeacherAssignments = () => {
       responseType:'blob'
     }).then(response => {
       const href = URL.createObjectURL(response.data);
-
       // create "a" HTML element with href to file & click
       const link = document.createElement("a");
       link.href = href;
-      link.setAttribute("download", "file.xls"); //or any other extension
+      link.setAttribute("download",
+        year+'-'+branch+'-'+section+'-'+subject+'-'+assignment_title +".xls"); //or any other extension
       document.body.appendChild(link);
       link.click();
 
@@ -218,8 +222,13 @@ const TeacherAssignments = () => {
       <header>
         <div className="header__left">
           <h1>{assignment_title}</h1>
-          <span style={{color:'white'}}>
-            {subject}
+          <span style={{ color: `${theme === 'dark'?'white' : 'black'}` }}>{subject}  </span>
+          <span style={{ color: `${theme === 'dark' ? 'white' : 'black'}` }}>
+            {data?.length > 0 &&
+              <>
+                Due Date : {getDate(data[0]['due_date'])}
+              </>
+            }
           </span>
         </div>
         <div className="header__right">
@@ -292,10 +301,7 @@ function getDate(dateS) {
   let d = `
   ${date.getFullYear()}/${
     months[date.getMonth()]
-  }/${date.getDate()} ${date.getHours()}:${date.getMinutes()} ${
-    date.getHours() >= 12 ? "pm" : "am"
-  }
-    `;
+  }/${date.getDate()} `;
 
   let new_date = ``;
 

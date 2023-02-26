@@ -39,6 +39,7 @@ export const teacherSlice = apiSlice.injectEndpoints({
         method: "GET",
         params,
       }),
+      providesTags: () => ['Class Assignment Titles']
     }),
 
     createAssignment: builder.mutation({
@@ -56,7 +57,7 @@ export const teacherSlice = apiSlice.injectEndpoints({
         method: "POST",
         data,
       }),
-      invalidatesTags: () => []
+      invalidatesTags: () => ['Class Assignment Titles']
     }),
 
     myAssignmentsForTeacher: builder.query({

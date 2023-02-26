@@ -7,64 +7,58 @@ import { Form, Row, Col } from "react-bootstrap";
 import { Input, RadioInput, Select } from "../components/UI/input/Input";
 
 import "./auth/LoginSignup.scss";
+import { useGetProfileQuery } from "../redux/apiSlice";
+
+const FIELDS = [
+  [
+    {
+      name: "name",
+      label: "Username",
+    },
+    {
+      name: "roll_no",
+      label: "Roll Number",
+    },
+  ],
+  [
+    {
+      name: "phone_no",
+      label: "Mobile Number",
+    },
+  ],
+  [
+    {
+      label: "Batch",
+      name: "joinedIn",
+    },
+    {
+      name: "currentYear",
+      label: "Year",
+    },
+  ],
+  [
+    {
+      name: "currentBranch",
+      label: "Branch",
+    },
+    {
+      name: "currentSection",
+      label: "Section",
+    },
+    {
+      name: "currentSemester",
+      label: "Semester",
+    },
+  ],
+];
 
 const ProfilePage = () => {
-  const {
-    email: initialEmail,
-    department: initialDepartment,
-    phone: initialPhone,
-    name: initialName,
-    gender: initialGender,
-  } = useSelector((state) => state.auth.user);
-
-  const [department, setDepartment] = useState(initialDepartment);
-  const {
-    value: emailValue,
-    isTouched: emailIsTouched,
-    handleChange: emailHandleChange,
-    handleReset: emailHandleReset,
-    hasError: emailHasError,
-    handleBlur: emailHandleBlur,
-  } = useInput(initialEmail, validateEmail);
-
-  const {
-    value: nameValue,
-    isTouched: nameIsTouched,
-    handleChange: nameHandleChange,
-    handleReset: nameHandleReset,
-    hasError: nameHasError,
-    handleBlur: nameHandleBlur,
-  } = useInput(initialName, (name) => name.length > 0);
-
-  const {
-    value: phoneValue,
-    isTouched: phoneIsTouched,
-    handleChange: phoneHandleChange,
-    handleReset: phoneHandleReset,
-    hasError: phoneHasError,
-    handleBlur: phoneHandleBlur,
-  } = useInput(initialPhone, validatePhoneNumber);
-
-  const [gender, setGender] = useState(initialGender);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // if (emailHasError || passwordHasError || cpasswordHasError) {
-    //   alert("Please fill out th details properly");
-    //   return;
-    // }
-    // const data = {
-    //   email: emailValue,
-    //   password: passwordValue,
-    //   accountType: "teacher",
-    //   gender,
-    //   phone: phoneValue,
-    //   department,
-    //   name: nameValue,
-    // };
-    // console.log(data);
-    //   dispatch(signUpAction(data));
-  };
+  const { data: profileResponse } = useGetProfileQuery(
+    {
+      studentId: JSON.parse(localStorage.getItem("user"))?.id,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
 
   return (
     <>
@@ -74,88 +68,172 @@ const ProfilePage = () => {
         </div>
       </header>
       <section>
-        <Form>
+        {FIELDS?.map((row) => (
           <Row>
-            <Col>
-              <Input
-                value={emailValue}
-                onChange={emailHandleChange}
-                onBlur={emailHandleBlur}
-                error="Please enter your college email id."
-                touched={emailIsTouched}
-                errorCond={emailIsTouched && emailHasError}
-                label="Email"
-                type="email"
-                name="email"
-                required
-              />
-            </Col>
-            <Col>
-              <Input
-                value={nameValue}
-                onChange={nameHandleChange}
-                onBlur={nameHandleBlur}
-                error="Name cant be empty."
-                touched={nameIsTouched}
-                errorCond={nameIsTouched && nameHasError}
-                label="Name"
-                type="text"
-                name="name"
-                required
-              />
-            </Col>
+            {row.map((col) => (
+              <Col>
+                <Input
+                  {...col}
+                  value={profileResponse?.data[col?.name]}
+                  disabled
+                />
+              </Col>
+            ))}
           </Row>
-
-          <Row>
-            <Col>
-              <Input
-                value={phoneValue}
-                onChange={phoneHandleChange}
-                onBlur={phoneHandleBlur}
-                error="Please enter your mobile number properly."
-                touched={phoneIsTouched}
-                errorCond={phoneIsTouched && phoneHasError}
-                label="Phone"
-                type="phone"
-                name="phone"
-                required
-              />
-            </Col>
-            <Col>
-              <Select
-                name="branch"
-                value={department}
-                onChange={(e) => setDepartment(e.target.value)}
-                label="Branch or Department"
-                optionInitialValue=""
-                required
-                options={["CSE", "IT", "ECE", "EEE", "CIVIL", "MECH"]}
-              />
-            </Col>
-          </Row>
-
-          <RadioInput
-            label="Gender"
-            name="gender"
-            required
-            radioInputs={[
-              { value: "male", label: "Male" },
-              { value: "female", label: "Female" },
-              { value: "others", label: "Others" },
-            ]}
-            handleChange={(val) => setGender(val)}
-            checkedValue={gender}
-          />
-          {/* <Button
-            type="submit"
-            text="Update Account"
-            rightIcon={<ArrowRight />}
-          /> */}
-        </Form>
+        ))}
       </section>
     </>
   );
 };
+
+// const ProfilePage = () => {
+//   const {
+//     email: initialEmail,
+//     department: initialDepartment,
+//     phone: initialPhone,
+//     name: initialName,
+//     gender: initialGender,
+//   } = useSelector((state) => state.auth.user);
+
+//   const [department, setDepartment] = useState(initialDepartment);
+//   const {
+//     value: emailValue,
+//     isTouched: emailIsTouched,
+//     handleChange: emailHandleChange,
+//     handleReset: emailHandleReset,
+//     hasError: emailHasError,
+//     handleBlur: emailHandleBlur,
+//   } = useInput(initialEmail, validateEmail);
+
+//   const {
+//     value: nameValue,
+//     isTouched: nameIsTouched,
+//     handleChange: nameHandleChange,
+//     handleReset: nameHandleReset,
+//     hasError: nameHasError,
+//     handleBlur: nameHandleBlur,
+//   } = useInput(initialName, (name) => name.length > 0);
+
+//   const {
+//     value: phoneValue,
+//     isTouched: phoneIsTouched,
+//     handleChange: phoneHandleChange,
+//     handleReset: phoneHandleReset,
+//     hasError: phoneHasError,
+//     handleBlur: phoneHandleBlur,
+//   } = useInput(initialPhone, validatePhoneNumber);
+
+//   const [gender, setGender] = useState(initialGender);
+
+//   const handleSubmit = (event) => {
+//     event.preventDefault();
+//     // if (emailHasError || passwordHasError || cpasswordHasError) {
+//     //   alert("Please fill out th details properly");
+//     //   return;
+//     // }
+//     // const data = {
+//     //   email: emailValue,
+//     //   password: passwordValue,
+//     //   accountType: "teacher",
+//     //   gender,
+//     //   phone: phoneValue,
+//     //   department,
+//     //   name: nameValue,
+//     // };
+//     // console.log(data);
+//     //   dispatch(signUpAction(data));
+//   };
+
+//   return (
+//     <>
+//       <header>
+//         <div className="header__left">
+//           <h1>Profile</h1>
+//         </div>
+//       </header>
+//       <section>
+//         <Form>
+//           <Row>
+//             <Col>
+//               <Input
+//                 value={emailValue}
+//                 onChange={emailHandleChange}
+//                 onBlur={emailHandleBlur}
+//                 error="Please enter your college email id."
+//                 touched={emailIsTouched}
+//                 errorCond={emailIsTouched && emailHasError}
+//                 label="Email"
+//                 type="email"
+//                 name="email"
+//                 required
+//               />
+//             </Col>
+//             <Col>
+//               <Input
+//                 value={nameValue}
+//                 onChange={nameHandleChange}
+//                 onBlur={nameHandleBlur}
+//                 error="Name cant be empty."
+//                 touched={nameIsTouched}
+//                 errorCond={nameIsTouched && nameHasError}
+//                 label="Name"
+//                 type="text"
+//                 name="name"
+//                 required
+//               />
+//             </Col>
+//           </Row>
+
+//           <Row>
+//             <Col>
+//               <Input
+//                 value={phoneValue}
+//                 onChange={phoneHandleChange}
+//                 onBlur={phoneHandleBlur}
+//                 error="Please enter your mobile number properly."
+//                 touched={phoneIsTouched}
+//                 errorCond={phoneIsTouched && phoneHasError}
+//                 label="Phone"
+//                 type="phone"
+//                 name="phone"
+//                 required
+//               />
+//             </Col>
+//             <Col>
+//               <Select
+//                 name="branch"
+//                 value={department}
+//                 onChange={(e) => setDepartment(e.target.value)}
+//                 label="Branch or Department"
+//                 optionInitialValue=""
+//                 required
+//                 options={["CSE", "IT", "ECE", "EEE", "CIVIL", "MECH"]}
+//               />
+//             </Col>
+//           </Row>
+
+//           <RadioInput
+//             label="Gender"
+//             name="gender"
+//             required
+//             radioInputs={[
+//               { value: "male", label: "Male" },
+//               { value: "female", label: "Female" },
+//               { value: "others", label: "Others" },
+//             ]}
+//             handleChange={(val) => setGender(val)}
+//             checkedValue={gender}
+//           />
+//           {/* <Button
+//             type="submit"
+//             text="Update Account"
+//             rightIcon={<ArrowRight />}
+//           /> */}
+//         </Form>
+//       </section>
+//     </>
+//   );
+// };
 
 export default ProfilePage;
 

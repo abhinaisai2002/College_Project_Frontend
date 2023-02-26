@@ -30,12 +30,14 @@ const Sidebar = () => {
   const refresh = useSelector((state) => state.auth.refresh);
 
   const [showAssignments, setShowAssignments] = useState(false);
-  
-  const { data: assignmentsResponse } = useMyAssignmentsForTeacherQuery({
-    
-  }, {
-    refetchOnMountOrArgChange:true
-  });
+
+  const { data: assignmentsResponse } = useMyAssignmentsForTeacherQuery(
+    {},
+    {
+      skip: !showAssignments,
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   // useEffect(() => {
   //   document.addEventListener("keydown", detectKeyDown, true);
@@ -45,13 +47,10 @@ const Sidebar = () => {
   //   console.log(e);
   // };
 
-
-
   const handleLogout = () => {
     dispatch(logOut(refresh));
   };
   return (
-    
     <>
       <ModalComponent
         size="lg"
@@ -60,31 +59,36 @@ const Sidebar = () => {
         handleClose={() => setShowAssignments(false)}
         body={
           <>
-          {assignmentsResponse && <div className={`assignments__wrapper`}>
-              {Object.entries(assignmentsResponse?.data)?.map(([title,data]) => (
-                <div
-                  className="assignment__wrapper"
-                  style={{ background: "#414653 " }}
-                  onClick={() => {
-                    setShowAssignments(false);
-                    navigate(
-                      `/teacher-assignments/${data?.year}/${data?.branch}/${data?.semester}/${data?.section}/${data?.subject}/${title}/${data?.id}`
-                    )
-                  }
-                  }
-                >
-                  <div
-                    className="assignment_subject_color_code"
-                    style={{ background: data?.subject_color }}
-                  />
-                  <div className="assignment_subject">{data?.subject_code}</div>
-                  <div className="assignment_body">
-                    <span>{title}</span>
-                    <span>{getDate(data?.creation_date)}</span>
-                  </div>
-                </div>
-              ))}
-            </div>}
+            {assignmentsResponse && (
+              <div className={`assignments__wrapper`}>
+                {Object.entries(assignmentsResponse?.data)?.map(
+                  ([title, data]) => (
+                    <div
+                      className="assignment__wrapper"
+                      style={{ background: "#414653 " }}
+                      onClick={() => {
+                        setShowAssignments(false);
+                        navigate(
+                          `/teacher-assignments/${data?.year}/${data?.branch}/${data?.semester}/${data?.section}/${data?.subject}/${title}/${data?.id}`
+                        );
+                      }}
+                    >
+                      <div
+                        className="assignment_subject_color_code"
+                        style={{ background: data?.subject_color }}
+                      />
+                      <div className="assignment_subject">
+                        {data?.subject_code}
+                      </div>
+                      <div className="assignment_body">
+                        <span>{title}</span>
+                        <span>Created on :{getDate(data?.creation_date)}</span>
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+            )}
           </>
         }
         footer={
@@ -100,7 +104,6 @@ const Sidebar = () => {
           theme === "dark" ? "sidebar__wrapper-dark" : "sidebar__wrapper-light"
         }`}
       >
-        
         <header>
           <div className="header__left">
             <h3 onClick={() => navigate("/")}>Assignments</h3>
@@ -113,7 +116,9 @@ const Sidebar = () => {
             )}
           </div>
         </header>
-        <div className={`search__wrapper ${theme === "dark" ? "dark" : "light"}`}>
+        <div
+          className={`search__wrapper ${theme === "dark" ? "dark" : "light"}`}
+        >
           <SearchIcon className="search_icon" />
           <input className="search__inp" type="text" placeholder="Search" />
         </div>
@@ -123,7 +128,10 @@ const Sidebar = () => {
             Profile
           </div>
           <div>
-            <img src={theme === "light" ? SettingDarkIcon : SettingIcon} alt="" />
+            <img
+              src={theme === "light" ? SettingDarkIcon : SettingIcon}
+              alt=""
+            />
             Settings
           </div>
           <div>
@@ -137,7 +145,7 @@ const Sidebar = () => {
             </div>
           )}
           {user_type === "teacher" && (
-            <div onClick={ ()=>setShowAssignments(true) }>
+            <div onClick={() => setShowAssignments(true)}>
               <LordIcon icon="assignment" />
               My Assignments
             </div>
