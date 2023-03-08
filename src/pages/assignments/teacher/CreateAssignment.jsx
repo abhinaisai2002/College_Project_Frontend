@@ -1,4 +1,6 @@
+import JoditEditor from "jodit-react";
 import React, { useRef, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Button from "../../../components/UI/button/Button";
 import { Input, RadioInput, Select } from "../../../components/UI/input/Input";
@@ -10,7 +12,7 @@ import {
   useGetSubjectByBranchYearSectionSemQuery,
 } from "../../../redux/reducers/teacherSlice";
 
-const dates = {
+export const dates = {
   0: "01",
   1: "02",
   2: "03",
@@ -56,30 +58,37 @@ const CreateAssignment = () => {
 
   const { data: branchesResponse } = useGetBranchesByYearQuery(
     {
-      year: branchSkip?.year,
+      edu_year: branchSkip?.year,
+      year: 2019,
     },
     { skip: branchSkip?.skip }
   );
 
   const { data: sectionsResponse } = useGetSectionsByBranchYearQuery(
     {
-      year: teacherFormData?.year,
+      edu_year: teacherFormData?.year,
       branch: sectionsSkip?.branch,
+      year: 2019,
     },
     { skip: sectionsSkip?.skip }
   );
 
   const { data: subjectsResponse } = useGetSubjectByBranchYearSectionSemQuery(
     {
-      year: teacherFormData?.year,
+      edu_year: teacherFormData?.year,
       branch: teacherFormData?.branch,
       semester: subjectsSkip?.semester,
       section: teacherFormData?.section,
+      year: 2019,
     },
     { skip: subjectsSkip?.skip }
   );
 
+
   const [createAssignment] = useCreateAssignmentMutation();
+
+  const navigate = useNavigate();
+
 
   const onHandleChange = (e) => {
     let { name, value } = e.target;
@@ -133,7 +142,7 @@ const CreateAssignment = () => {
   const onCreateAssignmentSubmitHandler = (e) => {
     e.preventDefault();
 
-    let data = { ...teacherFormData };
+    let data = { ...teacherFormData, year: 2019, edu_year: 4 };
 
     let date = Date();
 
@@ -153,6 +162,7 @@ const CreateAssignment = () => {
 
     Object.entries(data).forEach(([key, value]) => fd.append(key, value));
 
+    console.log(fd);
     createAssignment(fd).then((res) => {
       if (res.data.success == 1) {
         setTeacherFormData(initialState);
@@ -170,6 +180,7 @@ const CreateAssignment = () => {
           <h1>Create Assignment</h1>
         </div>
       </header> */}
+
       <section className={`dashboard ${theme}`}>
         <div className={`teacher_filter__form ${theme}`}>
           <form
@@ -196,7 +207,9 @@ const CreateAssignment = () => {
                     "-" +
                     dates[d.getMonth()] +
                     "-" +
-                    d.getUTCDate()
+                    (d.getUTCDate() < 10
+                      ? "0" + d.getUTCDate()
+                      : d.getUTCDate())
                   );
                 })()}
                 value={teacherFormData?.due_date}
@@ -276,16 +289,31 @@ const CreateAssignment = () => {
                 />
               )}
 
-              {teacherFormData?.subject !== "" && (
-                <Input
-                  name="file"
-                  label="Attachment"
-                  type="file"
-                  accept=".pdf"
-                  onChange={onHandleChange}
-                  required
-                />
-              )}
+              <div style={{ display: "flex", alignItems: "flex-end" }}>
+                {teacherFormData?.subject !== "" && (
+                  <Input
+                    name="file"
+                    label="Attachment"
+                    type="file"
+                    accept=".pdf"
+                    onChange={onHandleChange}
+                    required
+                  />
+                )}
+
+                {teacherFormData?.subject !== "" && (
+                  <div style={{ margin: "16px" }}>
+                    <Button
+                      text="Type"
+                      onClick={() => {
+                        // submitButtonRef.current.click();
+                        localStorage.setItem('type-assignment-details', JSON.stringify(teacherFormData));
+                        navigate(`/type-assignment`)
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
 
             <button
@@ -308,5 +336,7 @@ const CreateAssignment = () => {
     </>
   );
 };
+
+
 
 export default CreateAssignment;

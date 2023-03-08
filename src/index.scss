@@ -201,7 +201,7 @@ body {
 
     .app_content {
       width: 100%;
-      height: 100vh;
+      height: 95%;
       overflow-y: scroll;
       // padding: 2rem 0;
       margin: 0 2.5rem;
@@ -498,6 +498,7 @@ body {
     }
   }
 }
+
 
 ::-webkit-scrollbar {
   display: none !important;

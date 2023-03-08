@@ -38,3 +38,32 @@
   padding: 2rem;
   height: 100%;
 }
+
+
+.teacher-assignments__filters.light{
+  color: black;
+}
+
+.teacher-assignments__filters.dark{
+  color: white;
+}
+
+.teacher-assignments__filters{
+  padding: 10px 5px;
+}
+
+.teacher-assignments__filters button{
+  display: inline;
+  // width: 50px;
+  padding: 2.5px 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+}
+
+.teacher-assignments__filters button.active{
+  background-color: #9400FF;
+  color: white;
+
+}

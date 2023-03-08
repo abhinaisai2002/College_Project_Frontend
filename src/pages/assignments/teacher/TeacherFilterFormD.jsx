@@ -51,7 +51,8 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
   const { data: branchesResponse, isError: branchesHasError } =
     useGetBranchesByYearQuery(
       {
-        year: branchSkip?.year,
+        edu_year: branchSkip?.year,
+        year: 2019,
       },
       { skip: branchSkip?.skip, refetchOnMountOrArgChange: true }
     );
@@ -59,8 +60,9 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
   const { data: sectionsResponse, isError: sectionsError } =
     useGetSectionsByBranchYearQuery(
       {
-        year: teacherFormData?.year,
+        edu_year: teacherFormData?.year,
         branch: sectionsSkip?.branch,
+        year: 2019,
       },
       { skip: sectionsSkip?.skip, refetchOnMountOrArgChange: true }
     );
@@ -68,16 +70,17 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
   const { data: subjectsResponse, isError: subjectsError } =
     useGetSubjectByBranchYearSectionSemQuery(
       {
-        year: teacherFormData?.year,
+        edu_year: teacherFormData?.year,
         branch: teacherFormData?.branch,
         semester: subjectsSkip?.semester,
         section: teacherFormData?.section,
+        year: 2019,
       },
       { skip: subjectsSkip?.skip, refetchOnMountOrArgChange: true }
     );
 
   const { data: assignmentsResponse } = useGetAssignmentsByTeacherQuery(
-    teacherFormData,
+    {...teacherFormData,year:2019,edu_year:4},
     { skip: getAssignmentsSkip, refetchOnMountOrArgChange: true }
   );
 

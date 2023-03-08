@@ -1,0 +1,102 @@
+.consolidation_container_wrapper {
+  width: 100%;
+  overflow: hidden !important;
+  margin-bottom: 2rem;
+
+  .card {
+    width: 100%;
+
+    .card-body {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      min-height: calc(100vh - 15rem);
+      overflow: auto;
+
+      .table-wrapper.dark > .row{
+        background-color:#353a45 !important ;
+        color: white;
+      }
+      .table-wrapper.light>.row {
+        background-color: grey !important;
+        color: black;
+      }
+      .table-wrapper {
+        font-size: 18px;
+        font-family: "Inter";
+        border: 1px solid lightgray;
+        width: 40rem;
+        height: fit-content;
+
+        .table-header {
+          border-bottom: 1px solid lightgray;
+          width: 100%;
+          margin: 0;
+          background: lightgray;
+
+          .col {
+            text-align: center;
+            padding: 1rem !important;
+            font-weight: 600;
+            border-right: 1px solid rgb(118, 118, 118);
+          }
+        }
+
+        .table-body {
+          .row {
+            margin: 0;
+            border-bottom: 1px solid lightgray;
+          }
+
+          .level-1 {
+            font-weight: bold;
+
+            .col {
+              padding: 1rem !important;
+              border-right: 1px solid lightgray;
+
+              .arrow-right,
+              .arrow-down {
+                cursor: pointer;
+
+                path {
+                  fill: grey;
+                }
+              }
+
+              .arrow-down {
+                transform: rotate(90deg);
+              }
+            }
+
+            // padding: 0.2rem;
+          }
+
+          .level-2 {
+            font-size: 16px;
+
+            .col {
+              padding: 1rem 4rem !important;
+              //   padding: 0.4rem;
+            }
+          }
+        }
+
+        .table-footer {
+          margin: 0;
+
+          .col {
+            border-right: 1px solid lightgray;
+            font-weight: bold;
+            text-align: center;
+            padding: 1rem 4rem !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.consolidation_container_wrapper.dark > section > .card{
+  background-color: #24272e !important;
+}

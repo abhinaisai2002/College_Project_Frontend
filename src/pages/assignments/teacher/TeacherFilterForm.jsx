@@ -77,6 +77,7 @@ const TeacherFilterForm = ({ subjectColors, assignments }) => {
     useGetBranchesByYearQuery(
       {
         year: branchSkip?.year,
+        edu_year:2019
       },
       { skip: branchSkip?.skip, refetchOnMountOrArgChange: true }
     );

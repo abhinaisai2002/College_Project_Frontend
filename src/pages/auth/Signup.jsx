@@ -72,6 +72,7 @@ const Signup = () => {
       return;
     }
 
+
     const data = {
       email: emailValue,
       password: passwordValue,

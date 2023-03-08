@@ -9,6 +9,7 @@ import {
   useAssignMarksMutation,
   useGetClassAssignmentsBasedOnTitleQuery,
 } from "../../../redux/reducers/teacherSlice";
+import { dates } from "./CreateAssignment";
 
 /*
 const DUMMY_ASSIGNMENTS = [
@@ -72,9 +73,17 @@ const TeacherAssignments = () => {
 
   const [data, setData] = useState([]);
 
+  const [filter,setFilter] = useState('');
+
   const [showFeedbackModal, setShowFeedbackModal] = useState({
     show: false,
   });
+
+    const [showExtendDataModal, setShowExtendModal] = useState({
+      show: false,
+    });
+  
+  const [extendDate,setExtendDate] = useState('');
 
   const {
     data: assignmentsResponse,
@@ -123,7 +132,8 @@ const TeacherAssignments = () => {
   const downloadReport = function () {
     axios.get("http://localhost:8000/api/get-class-assignments-title-report", {
       params: {
-        year,
+        year: 2019,
+        edu_year:4,
         branch,
         semester,
         section,
@@ -151,7 +161,37 @@ const TeacherAssignments = () => {
       URL.revokeObjectURL(href);
     })
   }
-  console.log(data);
+
+  const handleExtendDueDate = async function (event) {
+    event.preventDefault();
+
+    let tdueDate = new Date(
+      extendDate
+    );
+    let extDate = tdueDate.toString().split(" ").slice(0, 6).join(" ");
+    axios
+      .post(
+        "http://localhost:8000/api/extend-due-date",
+        {
+          assignmentId: assignment_id,
+          new_date: extDate,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("access")}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      });
+  }
+  console.log(data,filter);
+
+  const handleFilter = (val) => {
+    setFilter(val)
+  }
 
   return (
     <>
@@ -219,60 +259,138 @@ const TeacherAssignments = () => {
           </>
         }
       />
+      <ModalComponent
+        size="md"
+        show={showExtendDataModal?.show}
+        handleClose={() => setShowExtendModal({ show: false })}
+        title={"Extend Due Date"}
+        body={
+          <form onSubmit={handleExtendDueDate}>
+            <Input
+              type="date"
+              name="due_date"
+              label="Extend Date"
+              min={(() => {
+                let d = new Date();
+                let min_date =
+                  d.getFullYear() +
+                  "-" +
+                  dates[d.getMonth()] +
+                  "-" +
+                  (d.getUTCDate() < 10 ? '0'+d.getUTCDate() : d.getUTCDate());
+                // console.log(min_date);
+                return min_date
+              })()}
+              value={extendDate}
+              onChange={(event) => setExtendDate(event.target.value)}
+              required
+            />
+            <button
+              type="submit"
+              style={{ display: "none" }}
+              ref={submitButtonRef}
+            ></button>
+          </form>
+        }
+        footer={
+          <>
+            <Button
+              text="Submit"
+              onClick={() => {
+                submitButtonRef.current.click();
+              }}
+            />
+          </>
+        }
+      />
       <header>
         <div className="header__left">
           <h1>{assignment_title}</h1>
-          <span style={{ color: `${theme === 'dark'?'white' : 'black'}` }}>{subject}  </span>
-          <span style={{ color: `${theme === 'dark' ? 'white' : 'black'}` }}>
-            {data?.length > 0 &&
-              <>
-                Due Date : {getDate(data[0]['due_date'])}
-              </>
-            }
+          <span style={{ color: `${theme === "dark" ? "white" : "black"}` }}>
+            {subject}{" "}
+          </span>
+          <span style={{ color: `${theme === "dark" ? "white" : "black"}` }}>
+            {data?.length > 0 && <>Due Date : {getDate(data[0]["due_date"])}</>}
           </span>
         </div>
         <div className="header__right">
+          <Button
+            style={{margin:'0px 10px'}}
+            text="Extend DueDate"
+            onClick={() => setShowExtendModal({ show: true })}
+          />
           <Button text="Download Report" onClick={downloadReport} />
         </div>
       </header>
       <section className={`teacher-assignments ${theme}`}>
+        <div className={`teacher-assignments__filters ${theme}`}>
+          <button
+            onClick={() => handleFilter("pending")}
+            className={`${filter === "pending" ? "active" : ""}`}
+          >
+            Pending
+          </button>
+          <button
+            onClick={() => handleFilter("submitted")}
+            className={`${filter === "submitted" ? "active" : ""}`}
+          >
+            Submitted
+          </button>
+          <button
+            onClick={() => handleFilter("reviewed")}
+            className={`${filter === "reviewed" ? "active" : ""}`}
+          >
+            Reviewed
+          </button>
+          <button
+            onClick={() => handleFilter("")}
+            className={`${filter === "" ? "active" : ""}`}
+          >
+            All
+          </button>
+        </div>
         <div className={`assignments__wrapper ${theme}`}>
-          {data?.map((item) => (
-            <div
-              className="assignment__wrapper"
-              onClick={() => {
-                // if (!item?.submitted) {
-                //   return;
-                // }
-
-                if (item?.marks) {
-                  return alert("You already awarded this student");
-                }
-
-                setShowFeedbackModal({
-                  show: true,
-                  ...item,
-                });
-              }}
-            >
+          {data
+            ?.filter((item) => {
+              if (filter === "") return true;
+              else return item.status === filter;
+            })
+            .map((item) => (
               <div
-                className="assignment_subject_color_code"
-                style={{ background: item.color }}
-              />
-              <div className="assignment_subject">
-                {" "}
-                {item?.marks ? item.marks : "-"} / 10
+                className="assignment__wrapper"
+                onClick={() => {
+                  // if (!item?.submitted) {
+                  //   return;
+                  // }
+
+                  if (item?.marks) {
+                    return alert("You already awarded this student");
+                  }
+
+                  setShowFeedbackModal({
+                    show: true,
+                    ...item,
+                  });
+                }}
+              >
+                <div
+                  className="assignment_subject_color_code"
+                  style={{ background: item.color }}
+                />
+                <div className="assignment_subject">
+                  {" "}
+                  {item?.marks ? item.marks : "-"} / 10
+                </div>
+                <div className="assignment_body">
+                  <span>{item?.student_roll_no}</span>
+                  <span>
+                    {item?.submission_date
+                      ? getDate(item?.submission_date)
+                      : "Not Submitted"}
+                  </span>
+                </div>
               </div>
-              <div className="assignment_body">
-                <span>{item?.student_roll_no}</span>
-                <span>
-                  {item?.submission_date
-                    ? getDate(item?.submission_date)
-                    : "Not Submitted"}
-                </span>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       </section>
     </>
@@ -303,7 +421,7 @@ function getDate(dateS) {
     months[date.getMonth()]
   }/${date.getDate()} `;
 
-  let new_date = ``;
+  console.log(d);
 
   return d;
 }

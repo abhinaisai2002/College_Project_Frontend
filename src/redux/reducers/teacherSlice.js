@@ -37,7 +37,7 @@ export const teacherSlice = apiSlice.injectEndpoints({
       query: (params) => ({
         url: "/get-class-assignments-title",
         method: "GET",
-        params,
+        params:{...params,edu_year:4,year:2019},
       }),
       providesTags: () => ['Class Assignment Titles']
     }),
@@ -66,6 +66,22 @@ export const teacherSlice = apiSlice.injectEndpoints({
         method: "GET",
         params,
       }),
+    }),
+
+    getAllSemsForStudent: builder.query({
+      query: (params) => ({
+        url: '/get-student-consolidation-sems',
+        method: "GET",
+        params
+      })
+    }),
+
+    getSemDetailsForStudent: builder.query({
+      query: (params) => ({
+        url: '/get-student-consolidation-by-sem',
+        method: "GET",
+        params
+      })
     })
 
   }),
@@ -79,5 +95,7 @@ export const {
   useGetClassAssignmentsBasedOnTitleQuery,
   useAssignMarksMutation,
   useCreateAssignmentMutation,
-  useMyAssignmentsForTeacherQuery
+  useMyAssignmentsForTeacherQuery,
+  useGetAllSemsForStudentQuery,
+  useGetSemDetailsForStudentQuery
 } = teacherSlice;

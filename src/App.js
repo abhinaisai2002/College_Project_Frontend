@@ -26,6 +26,9 @@ import ProfilePage from "./pages/ProfilePage";
 import GradeAssignment from "./pages/assignments/teacher/GradeAssignment";
 import TeacherAssignments from "./pages/assignments/teacher/TeacherAssignments";
 import CreateAssignment from "./pages/assignments/teacher/CreateAssignment";
+import TypeAssignment from "./pages/assignments/teacher/TypeAssignment";
+import Consolidations from "./pages/assignments/teacher/Consolidations";
+import ForgotPassword from "./pages/auth/ForgotPassword";
 
 const PRIVATE_ROUTES = [
   {
@@ -52,6 +55,14 @@ const PRIVATE_ROUTES = [
     path: "/create-assignment",
     element: <CreateAssignment />,
   },
+  {
+    path: '/type-assignment',
+    element: <TypeAssignment />
+  },
+  {
+    path: '/see-consolidations',
+    element : <Consolidations />
+  }
 ];
 
 const ADMIN_ROUTES = [
@@ -78,6 +89,10 @@ const PUBLIC_ROUTES = [
     path: "/login",
     element: <Login />,
   },
+  {
+    path: '/forgot-password',
+    element: <ForgotPassword />
+  }
 ];
 
 function App() {

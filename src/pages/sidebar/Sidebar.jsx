@@ -150,6 +150,18 @@ const Sidebar = () => {
               My Assignments
             </div>
           )}
+          {(user_type === "teacher" || user_type === "admin") && (
+            <div onClick={() => navigate('/see-consolidations')}>
+              <LordIcon icon="assignment" />
+              See Consolidations
+            </div>
+          )}
+          {user_type === "teacher" && (
+            <div onClick={() => navigate("/type-assignment")}>
+              <LordIcon icon="assignment" />
+              Show Saved
+            </div>
+          )}
           {user_type === "admin" && (
             <div onClick={() => navigate("admin/upload")}>
               {/* <Link to="/admin/upload" className="text-white"> */}

@@ -77,5 +77,16 @@
       bottom: 0;
       right: 5rem;
     }
+
+    button[position="no"]{
+      position: static;
+    }
   }
+}
+
+input[data-testid="input"]{
+  height: 4rem !important;
+  width: 4rem !important;
+  font-size: 2.5rem;
+  border: 1px solid black;
 }

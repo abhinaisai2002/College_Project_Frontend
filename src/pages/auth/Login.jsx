@@ -70,15 +70,19 @@ const Login = () => {
         </p>
 
         <Form onSubmit={handleSubmit}>
-          <Input
-            value={emailValue}
-            onChange={emailHandleChange}
-            label="Email"
-            type="email"
-            name="email"
-            required
-            placeholder="Enter your email id."
-          />
+          <Row>
+            <Col>
+              <Input
+                value={emailValue}
+                onChange={emailHandleChange}
+                label="Email"
+                type="email"
+                name="email"
+                required
+                placeholder="Enter your email id."
+              />
+            </Col>
+          </Row>
           <Row>
             <Col>
               <Input
@@ -92,6 +96,12 @@ const Login = () => {
               />
             </Col>
           </Row>
+          <div className="d-flex justify-content-end text-bg">
+            <Link to="/forgot-password" className="link">
+              Forgot Password?
+            </Link>
+          </div>
+        
 
           <Button type="submit" text="Login" rightIcon={<ArrowRight />} />
         </Form>
