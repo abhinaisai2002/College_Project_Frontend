@@ -29,6 +29,7 @@ import CreateAssignment from "./pages/assignments/teacher/CreateAssignment";
 import TypeAssignment from "./pages/assignments/teacher/TypeAssignment";
 import Consolidations from "./pages/assignments/teacher/Consolidations";
 import ForgotPassword from "./pages/auth/ForgotPassword";
+import PromoteStudents from "./pages/admin/PromoteStudents";
 
 const PRIVATE_ROUTES = [
   {
@@ -78,6 +79,10 @@ const ADMIN_ROUTES = [
     path: "/admin/teachers",
     element: <Teachers />,
   },
+  {
+    path: "/admin/promote-students",
+    element:<PromoteStudents />
+  }
 ];
 
 const PUBLIC_ROUTES = [

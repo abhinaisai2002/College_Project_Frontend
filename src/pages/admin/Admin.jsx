@@ -21,6 +21,9 @@ const Admin = () => {
           </li>
           <li onClick={() => navigate("upload")}>
             navigate to <span>/upload</span>
+          </li>{" "}
+          <li onClick={() => navigate("promote-students")}>
+            navigate to <span>/promote-students</span>
           </li>
         </ul>
       </section>

@@ -129,6 +129,7 @@ export const Select = ({
         value={value}
         onChange={onChange}
         disabled={disabled}
+        required
       >
         {optionInitialValue === "" && (
           <option value={optionInitialValue}>Select</option>
